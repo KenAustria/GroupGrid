@@ -26,7 +26,7 @@ module.exports = (req, res, next) => {
 		})
 		.then(data => { // assign handle and image from data
 			req.user.handle = data.docs[0].data().handle;
-			req.user.imageUrl = data.docs[0].data().imageUrl;
+			req.user.profileImage = data.docs[0].data().profileImage;
 			return next();
 		})
 		.catch(err => {
