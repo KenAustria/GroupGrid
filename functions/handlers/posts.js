@@ -21,13 +21,12 @@ exports.getPosts = (req, res) => {
 		.catch((err) => console.error(err));
 };
 
-
 // Create a Post
 exports.createPost = (req, res) => {
 	// newPost object's properties
 	const newPost = {
 		body: req.body.body,
-		userHandle: req.body.userHandle,
+		userHandle: req.user.handle,
 		createdAt: admin.firestore.Timestamp.fromDate(new Date())
 	};
 
