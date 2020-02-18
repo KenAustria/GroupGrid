@@ -2,6 +2,7 @@ const { db } = require('../utilities/admin');
 const firebaseConfig = require('../utilities/firebaseConfig');
 const firebase = require('firebase');
 firebase.initializeApp(firebaseConfig);
+const { validateSignup, validateLogin } = require('../utilities/validators');
 
 // Signup a User
 exports.signup = (req, res) => {
@@ -12,6 +13,10 @@ exports.signup = (req, res) => {
     confirmPassword: req.body.confirmPassword,
     handle: req.body.handle
 	};
+
+	// handle errors
+	const { errors, valid } = validateSignup(newUser);
+	if (!valid) return res.status(400).json(errors);
 
 	// host variables for access
 	let token, userId;
@@ -63,6 +68,10 @@ exports.login = (req, res) => {
 		email: req.body.email,
 		password: req.body.password
 	}
+
+	// handle errors
+	const { errors, valid } = validateLogin(user);
+	if (!valid) return res.status(400).json(errors);
 
 	// login user to firebase
 	firebase
