@@ -16,7 +16,7 @@ let db = {
 	posts: [
     {
       userHandle: 'user',
-      body: 'This is a sample post',
+      body: 'this is a body',
       createdAt: '2019-03-15T10:59:52.798Z',
       likeCount: 5,
       commentCount: 3
@@ -25,24 +25,24 @@ let db = {
 };
 
 const userDetails = {
-  credentials: {
-    userId: '9D834959PI349V74NID',
-    email: 'user@email.com',
-    handle: 'user',
-    createdAt: '2020-02-08T04:43:52.798Z',
-    profileImage: 'image/asdfg/hjkl',
-    bio: 'this is my bio',
-    website: 'https://mywebsite.com',
-    location: 'San Francisco, USA'
+	credentials: {
+    userId: 'ZFSeLYwMVCOOcW0pdhmWTz9K1jh1',
+    email: 'user@yahoo.com',
+    handle: 'iamuser',
+    createdAt: '2020-02-19T03:05:45.200Z',
+    profileImage: 'https://firebasestorage.googleapis.com/v0/b/groupgrid-1d191.appspot.com/o/17131003133.jpg?alt=media',
+    bio: 'this is a bio',
+		website: 'https://website.com',
+		location: 'San Francisco'
 	},
 	likes: [
-    {
-      userHandle: 'user',
-      screamId: 'aadfu9384t3nukyfy9q8wr'
-    },
-    {
-      userHandle: 'user',
-      screamId: 'sudh9834tkjsc753a8u2mu'
-    }
-  ]
+		{
+			userHandle: 'iamuser',
+			postId: 'V9arJWWj53fkgK7flqeD'
+		},
+		{
+			userHandle: 'alsouser',
+			postId: 'V9arJWWj53fkgK7flqeD'
+		}
+	]
 };

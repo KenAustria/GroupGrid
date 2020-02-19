@@ -41,3 +41,33 @@ exports.createPost = (req, res) => {
 			console.error(err);
 		});
 };
+
+// Get a Post
+exports.getPost = (req, res) => {
+  let postData = {}; // declare empty post object
+  db.doc(`/posts/${req.params.postId}`) // access post by post id
+    .get()
+    .then(doc => {
+      if (!doc.exists) {
+        return res.status(404).json({ error: 'Post does not exist.' });
+      }
+      postData = doc.data(); // assign returned data to references
+      postData.postId = doc.id;
+      return db
+				.collection('comments')
+				.orderBy('createdAt', 'desc')
+        .where('postId', '==', req.params.postId)
+        .get();
+    })
+    .then(data => {
+      postData.comments = []; // list comments
+      data.forEach((doc) => {
+        postData.comments.push(doc.data());
+      });
+      return res.json(postData);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ error: err.code });
+    });
+};
