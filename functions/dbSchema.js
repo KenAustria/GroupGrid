@@ -34,5 +34,15 @@ const userDetails = {
     bio: 'this is my bio',
     website: 'https://mywebsite.com',
     location: 'San Francisco, USA'
-  }
+	},
+	likes: [
+    {
+      userHandle: 'user',
+      screamId: 'aadfu9384t3nukyfy9q8wr'
+    },
+    {
+      userHandle: 'user',
+      screamId: 'sudh9834tkjsc753a8u2mu'
+    }
+  ]
 };

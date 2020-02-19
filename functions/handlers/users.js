@@ -177,3 +177,30 @@ exports.addUserDetails = (req, res) => {
       return res.status(500).json({ error: err.code });
     });
 };
+
+// Get User's Details
+exports.getUserDetails = (req, res) => {
+  let userData = {}; // declare empty user object
+  db.doc(`/users/${req.user.handle}`) // access user's document by handle
+    .get()
+    .then((doc) => {
+      if (doc.exists) { // assign data to user's credentials if user exist
+        userData.credentials = doc.data();
+        return db
+          .collection('likes')
+          .where('userHandle', '==', req.user.handle)
+          .get();
+      }
+    })
+    .then((data) => { // list likes user has received
+      userData.likes = [];
+      data.forEach((doc) => {
+        userData.likes.push(doc.data());
+      });
+      return res.json(userData);
+    })
+    .catch((err) => {
+      console.error(err);
+      return res.status(500).json({ error: err.code });
+    });
+};
