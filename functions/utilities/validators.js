@@ -55,3 +55,23 @@ exports.validateLogin = (data) => {
     valid: Object.keys(errors).length === 0 ? true : false
   };
 };
+
+// User Details Validation
+exports.reduceUserDetails = (data) => {
+  let userDetails = {};
+
+	// user bio field validation
+	if (!isEmpty(data.bio.trim())) userDetails.bio = data.bio;
+
+	// currently not working, user website field will not be allowed to be empty and no 'https'
+  // if (!isEmpty(data.website.trim())) {
+  //   if (data.website.trim().substring(0, 4) !== 'http') {
+  //     userDetails.website = `http://${data.website.trim()}`;
+  //   } else userDetails.website = data.website;
+	// }
+
+	// user location field validation
+  if (!isEmpty(data.location.trim())) userDetails.location = data.location;
+
+  return userDetails;
+};

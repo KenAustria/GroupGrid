@@ -1,3 +1,5 @@
+// Reference Point to minimize reads, as Firebase charges on the amount of reads.
+// To minimize reads that execute each time every user sends a request, store in this file.
 let db = {
   users: [
 		{
@@ -20,4 +22,17 @@ let db = {
       commentCount: 3
     }
 	]
+};
+
+const userDetails = {
+  credentials: {
+    userId: '9D834959PI349V74NID',
+    email: 'user@email.com',
+    handle: 'user',
+    createdAt: '2020-02-08T04:43:52.798Z',
+    profileImage: 'image/asdfg/hjkl',
+    bio: 'this is my bio',
+    website: 'https://mywebsite.com',
+    location: 'San Francisco, USA'
+  }
 };

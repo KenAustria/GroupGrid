@@ -2,7 +2,7 @@ const { admin, db } = require('../utilities/admin');
 const firebaseConfig = require('../utilities/firebaseConfig');
 const firebase = require('firebase');
 firebase.initializeApp(firebaseConfig);
-const { validateSignup, validateLogin } = require('../utilities/validators');
+const { validateSignup, validateLogin, reduceUserDetails } = require('../utilities/validators');
 
 // Signup a User
 exports.signup = (req, res) => {
@@ -160,3 +160,20 @@ exports.uploadProfileImage = (req, res) => {
 	// rawBody is a property of every request object
 	busboy.end(req.rawBody);
 }
+
+// Add User's Details
+exports.addUserDetails = (req, res) => {
+	// assign values returned from validator
+	let userDetails = reduceUserDetails(req.body);
+
+	// access user’s object in db and update with user’s details
+  db.doc(`/users/${req.user.handle}`)
+    .update(userDetails)
+    .then(() => {
+      return res.json({ message: 'Details added successfully' });
+    })
+    .catch((err) => {
+      console.error(err);
+      return res.status(500).json({ error: err.code });
+    });
+};
