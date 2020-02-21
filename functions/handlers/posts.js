@@ -207,4 +207,31 @@ exports.unlikePost = (req, res) => {
       console.error(err);
       res.status(500).json({ error: err.code });
     });
-} 
+}
+
+// Delete a Post
+exports.deletePost = (req, res) => {
+	// access document and save to a reference
+	const document = db.doc(`/posts/${req.params.postId}`);
+
+	// checks before deleting post
+	document
+    .get()
+    .then((doc) => { // cannot delete a non-existing post
+      if (!doc.exists) {
+        return res.status(404).json({ error: 'Post not found' });
+      } // only user can delete their own post
+      if (doc.data().userHandle !== req.user.handle) {
+        return res.status(403).json({ error: 'Unauthorized' });
+      } else {
+        return document.delete();
+      }
+    })
+    .then(() => {
+      res.json({ message: 'Post deleted successfully' });
+    })
+    .catch((err) => {
+      console.error(err);
+      return res.status(500).json({ error: err.code });
+    });
+};
