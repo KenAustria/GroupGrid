@@ -2,7 +2,7 @@ const functions = require('firebase-functions');
 const express = require('express');
 const app = express();
 const firebaseAuth = require('./utilities/firebaseAuth');
-const { getPosts, createPost, getPost, commentOnPost, likePost } = require('./handlers/posts');
+const { getPosts, createPost, getPost, commentOnPost, likePost, unlikePost } = require('./handlers/posts');
 const { signup, login, uploadProfileImage, addUserDetails, getUserDetails } = require('./handlers/users');
 
 // Posts Routes
@@ -11,6 +11,7 @@ app.post('/post', firebaseAuth, createPost);
 app.get('/post/:postId', getPost);
 app.post('/post/:postId/comment', firebaseAuth, commentOnPost);
 app.get('/post/:postId/like', firebaseAuth, likePost);
+app.get('/post/:postId/unlike', firebaseAuth, unlikePost);
 
 // User Routes
 app.post('/signup', signup);

@@ -161,3 +161,50 @@ exports.likePost = (req, res) => {
       res.status(500).json({ error: err.code });
     });
 }
+
+// Unlike a Post
+exports.unlikePost = (req, res) => {
+	// check if like document exist by accessing post liked by user
+	const likeDocument = db
+    .collection('likes')
+    .where('userHandle', '==', req.user.handle)
+    .where('postId', '==', req.params.postId)
+    .limit(1);
+
+	// check if post exist, can't unlike a nonexistent post
+	const postDocument = db.doc(`/posts/${req.params.postId}`);
+	let postData = {};
+
+	// check if document exists, if so assign data and id to postData
+	postDocument
+    .get()
+    .then((doc) => {
+      if (doc.exists) {
+        postData = doc.data();
+        postData.postId = doc.id;
+        return likeDocument.get();
+      } else {
+        return res.status(404).json({ error: 'Post does not exist.' });
+      }
+    })
+		.then((data) => { // empty data means post is not liked yet
+      if (data.empty) {
+        return res.status(400).json({ error: 'Cannot unlike a post that is not first liked.' });
+      } else { // post has been liked, let's unlike the post decrementing like count and deleting document
+        return db
+          .doc(`/likes/${data.docs[0].id}`)
+          .delete()
+          .then(() => {
+            postData.likeCount--;
+            return postDocument.update({ likeCount: postData.likeCount });
+          })
+          .then(() => {
+            res.json(postData);
+          });
+      }
+    })
+		.catch((err) => {
+      console.error(err);
+      res.status(500).json({ error: err.code });
+    });
+} 
