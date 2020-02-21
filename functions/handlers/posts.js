@@ -30,14 +30,13 @@ exports.createPost = (req, res) => {
 		profileImage: req.user.profileImage,
 		likeCount: 0,
 		commentCount: 0,
-		createdAt: admin.firestore.Timestamp.fromDate(new Date())
+		createdAt: new Date().toISOString()
 	};
 
 	// add newPost object to posts collection
 	db.collection('posts')
 		.add(newPost)
 		.then(doc => {
-			res.json({ message: 'Document created successfully.' });
 			const resPost = newPost;
 			resPost.postId = doc.id;
 			res.json({resPost});
@@ -112,3 +111,53 @@ exports.commentOnPost = (req, res) => {
       res.status(500).json({ error: 'Something went wrong' });
     });
 };
+
+// Like a Post
+exports.likePost = (req, res) => {
+	// check if like document exist by accessing post liked by user
+	const likeDocument = db
+    .collection('likes')
+    .where('userHandle', '==', req.user.handle)
+    .where('postId', '==', req.params.postId)
+    .limit(1);
+
+	// check if post exist, can't like a nonexistent post
+	const postDocument = db.doc(`/posts/${req.params.postId}`);
+	let postData = {};
+
+	// check if document exists, if so assign data and id to postData
+	postDocument
+    .get()
+    .then((doc) => {
+      if (doc.exists) {
+        postData = doc.data();
+        postData.postId = doc.id;
+        return likeDocument.get();
+      } else {
+        return res.status(404).json({ error: 'Post does not exist.' });
+      }
+    })
+		.then((data) => { // user has yet to like post if data array is empty; data: [ ]
+      if (data.empty) {
+        return db
+          .collection('likes')
+          .add({
+            postId: req.params.postId,
+            userHandle: req.user.handle
+          })
+          .then(() => {
+            postData.likeCount++;
+            return postDocument.update({ likeCount: postData.likeCount });
+          })
+          .then(() => {
+            return res.json(postData);
+          });
+      } else {
+        return res.status(400).json({ error: 'Post already liked' });
+      }
+    })
+		.catch((err) => {
+      console.error(err);
+      res.status(500).json({ error: err.code });
+    });
+}
