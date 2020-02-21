@@ -27,6 +27,9 @@ exports.createPost = (req, res) => {
 	const newPost = {
 		body: req.body.body,
 		userHandle: req.user.handle,
+		profileImage: req.user.profileImage,
+		likeCount: 0,
+		commentCount: 0,
 		createdAt: admin.firestore.Timestamp.fromDate(new Date())
 	};
 
@@ -34,7 +37,10 @@ exports.createPost = (req, res) => {
 	db.collection('posts')
 		.add(newPost)
 		.then(doc => {
-			return res.json({ message: 'Document created successfully.' });
+			res.json({ message: 'Document created successfully.' });
+			const resPost = newPost;
+			resPost.postId = doc.id;
+			res.json({resPost});
 		})
 		.catch(err => {
 			res.status(500).json({ error: 'Something went wrong.' });
@@ -69,5 +75,40 @@ exports.getPost = (req, res) => {
     .catch(err => {
       console.error(err);
       res.status(500).json({ error: err.code });
+    });
+};
+
+// Comment on a Post
+exports.commentOnPost = (req, res) => {
+  if (req.body.body.trim() === '') {
+    return res.status(400).json({ error: 'Cannot be empty' });
+	}
+
+  const newComment = {
+    body: req.body.body,
+    createdAt: new Date().toISOString(),
+    postId: req.params.postId,
+    userHandle: req.user.handle,
+    profileImage: req.user.profileImage
+  };
+
+  db.doc(`/posts/${req.params.postId}`)
+    .get()
+    .then((doc) => {
+      if (!doc.exists) {
+        return res.status(404).json({ error: 'Post does not exist.' });
+			}
+			// after gaining access to document, use prefix reference to update comment count
+			return doc.ref.update({ commentCount: doc.data().commentCount + 1 })
+		})
+		.then(() => { // add newComment to comments collection
+			return db.collection('comments').add(newComment);
+		})
+    .then(() => {
+      res.json(newComment);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ error: 'Something went wrong' });
     });
 };
