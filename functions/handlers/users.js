@@ -196,6 +196,26 @@ exports.getUserDetails = (req, res) => {
       userData.likes = [];
       data.forEach((doc) => {
         userData.likes.push(doc.data());
+			});
+			return db
+        .collection('notifications')
+        .where('recipient', '==', req.user.handle)
+        .orderBy('createdAt', 'desc')
+        .limit(10)
+        .get();
+    })
+    .then((data) => { // return user’s notifications to be accessed and rendered in front end.
+      userData.notifications = [];
+      data.forEach((doc) => {
+        userData.notifications.push({
+          recipient: doc.data().recipient,
+          sender: doc.data().sender,
+          createdAt: doc.data().createdAt,
+          postId: doc.data().postId,
+          type: doc.data().type,
+          read: doc.data().read,
+          notificationId: doc.id
+        });
       });
       return res.json(userData);
     })
