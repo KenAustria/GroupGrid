@@ -79,3 +79,18 @@ exports.createNotificationOnComment = functions
         return; // response not needed for return as it’s a db trigger not api endpoint
       });
 	});
+
+	// Delete notification if user removes their original like by unliking
+exports.deleteNotificationOnUnLike = functions
+.firestore.document('likes/{id}') // access like id from likes document
+.onDelete((snapshot) => {
+	db.doc(`/notifications/${snapshot.id}`)
+		.delete()
+		.then(() => { // result not needed so leave argument empty
+			return;
+		})
+		.catch((err) => {
+			console.error(err);
+			return;
+		});
+});
