@@ -2,6 +2,7 @@ const functions = require('firebase-functions');
 const express = require('express');
 const app = express();
 const firebaseAuth = require('./utilities/firebaseAuth');
+const { db } = require('./utilities/admin');
 const { getPosts, createPost, getPost, commentOnPost, likePost, unlikePost, deletePost } = require('./handlers/posts');
 const { signup, login, uploadProfileImage, addUserDetails, getUserDetails } = require('./handlers/users');
 
@@ -20,6 +21,33 @@ app.get('/login', login);
 app.post('/user/profileImage', firebaseAuth, uploadProfileImage);
 app.post('/user', firebaseAuth, addUserDetails);
 app.get('/user', firebaseAuth, getUserDetails);
+
+// Receive a notification when another user has liked your post.
+exports.createNotificationOnLike = functions
+  .firestore.document('likes/{id}') // access like id from likes document
+  .onCreate(snapshot => {
+    db.doc(`/posts/${snapshot.data().postId}`) // access postId from post snapshot when created
+      .get()
+      .then(doc => {
+        if (doc.exists) { // create a notification if document exist
+          return db.doc(`/notifications/${snapshot.id}`).set({
+            createdAt: new Date().toISOString(),
+            recipient: doc.data().userHandle,
+            sender: snapshot.data().userHandle,
+            type: 'like',
+            read: false, // default to unread
+            postId: doc.id
+          });
+        }
+      })
+      .then(() => { // promise holds a write result, but not needed so just return
+        return;
+      })
+      .catch(err => {
+        console.error(err);
+        return; // response not needed for return as it’s a db trigger not api endpoint
+      });
+	});
 
 // api prefix to tell firebase that app contains the routes
 exports.api = functions.https.onRequest(app);

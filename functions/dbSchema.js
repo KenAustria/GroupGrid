@@ -29,6 +29,16 @@ let db = {
 			body: 'this is a comment',
 		  createdAt: '2019-03-15T10:59:52.798Z'
 		}
+	],
+	notifications: [
+		{
+			recipient: 'user',
+			sender: 'goku',
+			read: 'true | false',
+			postId: 'V9arJWWj53fkgK7flqeD',
+			type: 'like | comment',
+			createdAt: '2019-03-15T10:59:52.798Z'
+		}
 	]
 };
 
