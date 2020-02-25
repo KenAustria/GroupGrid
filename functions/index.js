@@ -1,3 +1,4 @@
+/* eslint-disable promise/always-return */
 const functions = require('firebase-functions');
 const express = require('express');
 const app = express();
@@ -22,7 +23,10 @@ app.post('/user/profileImage', firebaseAuth, uploadProfileImage);
 app.post('/user', firebaseAuth, addUserDetails);
 app.get('/user', firebaseAuth, getUserDetails);
 
-// Receive a notification when another user has liked your post.
+// api prefix to tell firebase that app contains the routes
+exports.api = functions.https.onRequest(app);
+
+// Create a notification when user has liked a post.
 exports.createNotificationOnLike = functions
   .firestore.document('likes/{id}') // access like id from likes document
   .onCreate(snapshot => {
@@ -49,5 +53,29 @@ exports.createNotificationOnLike = functions
       });
 	});
 
-// api prefix to tell firebase that app contains the routes
-exports.api = functions.https.onRequest(app);
+// Create a notification when a user has commented on a post.
+exports.createNotificationOnComment = functions
+	.firestore.document('comments/{id}') // access like id from likes document
+  .onCreate((snapshot) => { // access postId from post snapshot when document is created to access data
+    db.doc(`/posts/${snapshot.data().postId}`)
+      .get()
+      .then((doc) => {
+        if (doc.exists) { // create a notification if document exist
+          return db.doc(`/notifications/${snapshot.id}`).set({ // like and comment share same snapshot id
+            createdAt: new Date().toISOString(),
+            recipient: doc.data().userHandle,
+            sender: snapshot.data().userHandle,
+            type: 'comment',
+            read: false, // default to unread
+            postId: doc.id
+          });
+        }
+      })
+      .then(() => { // promise holds a write result, but not needed so just return
+        return;
+      })
+      .catch((err) => {
+        console.error(err);
+        return; // response not needed for return as it’s a db trigger not api endpoint
+      });
+	});
