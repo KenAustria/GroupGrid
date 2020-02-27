@@ -52,10 +52,10 @@ exports.createNotificationOnLike = functions
 // Create a notification when a user has commented on a post.
 exports.createNotificationOnComment = functions
 	.firestore.document('comments/{id}') // access like id from likes document
-  .onCreate((snapshot) => { // access postId from post snapshot when document is created to access data
+  .onCreate(snapshot => { // access postId from post snapshot when document is created to access data
     return db.doc(`/posts/${snapshot.data().postId}`)
       .get()
-      .then((doc) => {
+      .then(doc => {
         if (doc.exists && doc.data().userHandle !== snapshot.data().userHandle) { // create a notification if document exist
           return db.doc(`/notifications/${snapshot.id}`).set({ // like and comment share same snapshot id
             createdAt: new Date().toISOString(),
@@ -67,7 +67,7 @@ exports.createNotificationOnComment = functions
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         console.error(err);
         return; // response not needed for return as it’s a db trigger not api endpoint
       });
@@ -76,10 +76,10 @@ exports.createNotificationOnComment = functions
 	// Delete notification if user removes their original like by unliking
 exports.deleteNotificationOnUnLike = functions
 .firestore.document('likes/{id}') // access like id from likes document
-.onDelete((snapshot) => {
+.onDelete(snapshot => {
 	return db.doc(`/notifications/${snapshot.id}`)
 		.delete()
-		.catch((err) => {
+		.catch(err => {
 			console.error(err);
 			return;
 		});

@@ -20,7 +20,7 @@ exports.getPosts = (req, res) => {
 			});
 			return res.json(posts);
 		})
-		.catch((err) => console.error(err));
+		.catch(err => console.error(err));
 };
 
 // Create a Post
@@ -68,7 +68,7 @@ exports.getPost = (req, res) => {
     })
     .then(data => {
       postData.comments = []; // list comments
-      data.forEach((doc) => {
+      data.forEach(doc => {
         postData.comments.push(doc.data());
       });
       return res.json(postData);
@@ -95,7 +95,7 @@ exports.commentOnPost = (req, res) => {
 
   db.doc(`/posts/${req.params.postId}`)
     .get()
-    .then((doc) => {
+    .then(doc => {
       if (!doc.exists) {
         return res.status(404).json({ error: 'Post does not exist.' });
 			}
@@ -108,7 +108,7 @@ exports.commentOnPost = (req, res) => {
     .then(() => {
       res.json(newComment);
     })
-    .catch((err) => {
+    .catch(err => {
       console.log(err);
       res.status(500).json({ error: 'Something went wrong' });
     });
@@ -130,7 +130,7 @@ exports.likePost = (req, res) => {
 	// check if document exists, if so assign data and id to postData
 	postDocument
     .get()
-    .then((doc) => {
+    .then(doc => {
       if (doc.exists) {
         postData = doc.data();
         postData.postId = doc.id;
@@ -139,7 +139,7 @@ exports.likePost = (req, res) => {
         return res.status(404).json({ error: 'Post does not exist.' });
       }
     })
-		.then((data) => { // user has yet to like post if data array is empty; data: [ ]
+		.then(data => { // user has yet to like post if data array is empty; data: [ ]
       if (data.empty) {
         return db
           .collection('likes')
@@ -158,7 +158,7 @@ exports.likePost = (req, res) => {
         return res.status(400).json({ error: 'Post already liked' });
       }
     })
-		.catch((err) => {
+		.catch(err => {
       console.error(err);
       res.status(500).json({ error: err.code });
     });
@@ -180,7 +180,7 @@ exports.unlikePost = (req, res) => {
 	// check if document exists, if so assign data and id to postData
 	postDocument
     .get()
-    .then((doc) => {
+    .then(doc => {
       if (doc.exists) {
         postData = doc.data();
         postData.postId = doc.id;
@@ -189,7 +189,7 @@ exports.unlikePost = (req, res) => {
         return res.status(404).json({ error: 'Post does not exist.' });
       }
     })
-		.then((data) => { // empty data means post is not liked yet
+		.then(data => { // empty data means post is not liked yet
       if (data.empty) {
         return res.status(400).json({ error: 'Cannot unlike a post that is not first liked.' });
       } else { // post has been liked, let's unlike the post decrementing like count and deleting document
@@ -205,7 +205,7 @@ exports.unlikePost = (req, res) => {
           });
       }
     })
-		.catch((err) => {
+		.catch(err => {
       console.error(err);
       res.status(500).json({ error: err.code });
     });
@@ -219,7 +219,7 @@ exports.deletePost = (req, res) => {
 	// checks before deleting post
 	document
     .get()
-    .then((doc) => { // cannot delete a non-existing post
+    .then(doc => { // cannot delete a non-existing post
       if (!doc.exists) {
         return res.status(404).json({ error: 'Post not found' });
       } // only user can delete their own post
@@ -232,7 +232,7 @@ exports.deletePost = (req, res) => {
     .then(() => {
       res.json({ message: 'Post deleted successfully' });
     })
-    .catch((err) => {
+    .catch(err => {
       console.error(err);
       return res.status(500).json({ error: err.code });
     });

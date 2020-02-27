@@ -151,7 +151,7 @@ exports.uploadProfileImage = (req, res) => {
 			.then(() => {
 				return res.json({ message: 'Image uploaded successfully' }); // then return json response with message key
 			})
-			.catch((err) => {
+			.catch(err => {
 				console.error(err);
 				return res.status(500).json({ error: err.code });
 			});
@@ -172,7 +172,7 @@ exports.addUserDetails = (req, res) => {
     .then(() => {
       return res.json({ message: 'Details added successfully' });
     })
-    .catch((err) => {
+    .catch(err => {
       console.error(err);
       return res.status(500).json({ error: err.code });
     });
@@ -183,7 +183,7 @@ exports.getUserDetails = (req, res) => {
   let userData = {}; // declare empty user object
   db.doc(`/users/${req.user.handle}`) // access user's document by handle
     .get()
-    .then((doc) => {
+    .then(doc => {
       if (doc.exists) { // assign data to user's credentials if user exist
         userData.credentials = doc.data();
         return db
@@ -192,7 +192,7 @@ exports.getUserDetails = (req, res) => {
           .get();
       }
     })
-    .then((data) => { // list likes user has received
+    .then(data => { // list likes user has received
       userData.likes = [];
       data.forEach((doc) => {
         userData.likes.push(doc.data());
@@ -204,7 +204,7 @@ exports.getUserDetails = (req, res) => {
         .limit(10)
         .get();
     })
-    .then((data) => { // return user’s notifications to be accessed and rendered in front end.
+    .then(data => { // return user’s notifications to be accessed and rendered in front end.
       userData.notifications = [];
       data.forEach((doc) => {
         userData.notifications.push({
@@ -219,7 +219,7 @@ exports.getUserDetails = (req, res) => {
       });
       return res.json(userData);
     })
-    .catch((err) => {
+    .catch(err => {
       console.error(err);
       return res.status(500).json({ error: err.code });
     });
@@ -249,7 +249,7 @@ exports.getAnyUserDetails = (req, res) => {
           body: doc.data().body,
           createdAt: doc.data().createdAt,
           userHandle: doc.data().userHandle,
-          userImage: doc.data().userImage,
+          profileImage: doc.data().profileImage,
           likeCount: doc.data().likeCount,
           commentCount: doc.data().commentCount,
           postId: doc.id
@@ -257,7 +257,7 @@ exports.getAnyUserDetails = (req, res) => {
       });
       return res.json(userData);
     })
-    .catch((err) => {
+    .catch(err => {
       console.error(err);
       return res.status(500).json({ error: err.code });
     });
@@ -277,7 +277,7 @@ exports.markNotificationsRead = (req, res) => {
     .then(() => {
       return res.json({ message: 'Notifications marked read' });
     })
-    .catch((err) => {
+    .catch(err => {
       console.error(err);
       return res.status(500).json({ error: err.code });
     });
