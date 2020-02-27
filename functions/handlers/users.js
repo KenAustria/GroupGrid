@@ -61,7 +61,7 @@ exports.signup = (req, res) => {
 			// conditional if email is used
 			if (err.code === `auth/email-already-in-use`) {
 				return res.status(400).json({ email: 'Email already exist.' });
-			} else return res.status(500).json({ error: err.code }); // catch server error
+			} else return res.status(500).json({ general: 'Something went wrong, please try again' }); // show server error on client side
 		})
 };
 
@@ -92,7 +92,7 @@ exports.login = (req, res) => {
 			// conditional if email is used
 			if(err.code === 'auth/wrong-password') {
 				return res.status(403).json({ general: 'Wrong credentials, please try again.'});
-			} else return res.status(500).json({ error: err.code }); // catch server error
+			} else return res.status(500).json({ general: 'Something went wrong, please try again' }); // show server error on client side
 		});
 }
 
