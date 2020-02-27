@@ -15,7 +15,7 @@ exports.getPosts = (req, res) => {
 					body: doc.data().body,
 					createdAt: doc.data().createdAt,
 					likeCount: doc.data().likeCount,
-					userImage: doc.data().userImage
+					profileImage: doc.data().profileImage
 				});
 			});
 			return res.json(posts);
