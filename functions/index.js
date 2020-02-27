@@ -84,3 +84,26 @@ exports.deleteNotificationOnUnLike = functions
 			return;
 		});
 });
+
+// Change Profile Photo of all Posts Belonging to User When User Changes Profile Photo
+exports.onProfileImageChange = functions
+	.firestore.document('/users/{userId}') // access user from users document
+	.onUpdate(change => {
+		console.log(change.before.data());
+		console.log(change.after.data());
+		if (change.before.data().profileImage !== change.after.data().profileImage) { // if the user's image url has changed
+			console.log('Image has changed');
+			const batch = db.batch(); // batch to update all posts belonging to user with new image url
+			return db
+				.collection('posts')
+				.where('userHandle', '==', change.before.data().handle) // access user
+				.get()
+				.then(data => { // access all posts of user
+					data.forEach(doc => {
+						const post = db.doc(`/posts/${doc.id}`);
+						batch.update(post, { profileImage: change.after.data().profileImage });
+					});
+					return batch.commit();
+				});
+		} else return true;
+});
