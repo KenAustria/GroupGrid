@@ -262,3 +262,23 @@ exports.getAnyUserDetails = (req, res) => {
       return res.status(500).json({ error: err.code });
     });
 };
+
+// Mark a Notification as Read
+exports.markNotificationsRead = (req, res) => {
+	// if user has unread notifications, client will send an array of notifications that have been read,
+	// so that server can update it's list of notifications
+  let batch = db.batch(); // using batch to update multiple documents
+  req.body.forEach((notificationId) => { // iterate each notification of body array
+    const notification = db.doc(`/notifications/${notificationId}`);
+    batch.update(notification, { read: true }); // update multiple documents to true
+  });
+  batch
+    .commit()
+    .then(() => {
+      return res.json({ message: 'Notifications marked read' });
+    })
+    .catch((err) => {
+      console.error(err);
+      return res.status(500).json({ error: err.code });
+    });
+};
