@@ -32,10 +32,10 @@ exports.api = functions.https.onRequest(app);
 exports.createNotificationOnLike = functions
   .firestore.document('likes/{id}') // access like id from likes document
   .onCreate(snapshot => {
-    db.doc(`/posts/${snapshot.data().postId}`) // access postId from post snapshot when created
+    return db.doc(`/notifications/${snapshot.id}`) // access postId from post snapshot when created
       .get()
       .then(doc => {
-        if (doc.exists) { // create a notification if document exist
+        if (doc.exists && doc.data().userHandle !== snapshot.data().userHandle) { // create a notification if document exist
           return db.doc(`/notifications/${snapshot.id}`).set({
             createdAt: new Date().toISOString(),
             recipient: doc.data().userHandle,
@@ -46,23 +46,17 @@ exports.createNotificationOnLike = functions
           });
         }
       })
-      .then(() => { // promise holds a write result, but not needed so just return
-        return;
-      })
-      .catch(err => {
-        console.error(err);
-        return; // response not needed for return as it’s a db trigger not api endpoint
-      });
+      .catch(err => console.error(err));
 	});
 
 // Create a notification when a user has commented on a post.
 exports.createNotificationOnComment = functions
 	.firestore.document('comments/{id}') // access like id from likes document
   .onCreate((snapshot) => { // access postId from post snapshot when document is created to access data
-    db.doc(`/posts/${snapshot.data().postId}`)
+    return db.doc(`/posts/${snapshot.data().postId}`)
       .get()
       .then((doc) => {
-        if (doc.exists) { // create a notification if document exist
+        if (doc.exists && doc.data().userHandle !== snapshot.data().userHandle) { // create a notification if document exist
           return db.doc(`/notifications/${snapshot.id}`).set({ // like and comment share same snapshot id
             createdAt: new Date().toISOString(),
             recipient: doc.data().userHandle,
@@ -72,9 +66,6 @@ exports.createNotificationOnComment = functions
             postId: doc.id
           });
         }
-      })
-      .then(() => { // promise holds a write result, but not needed so just return
-        return;
       })
       .catch((err) => {
         console.error(err);
@@ -86,11 +77,8 @@ exports.createNotificationOnComment = functions
 exports.deleteNotificationOnUnLike = functions
 .firestore.document('likes/{id}') // access like id from likes document
 .onDelete((snapshot) => {
-	db.doc(`/notifications/${snapshot.id}`)
+	return db.doc(`/notifications/${snapshot.id}`)
 		.delete()
-		.then(() => { // result not needed so leave argument empty
-			return;
-		})
 		.catch((err) => {
 			console.error(err);
 			return;
