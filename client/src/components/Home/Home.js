@@ -1,21 +1,43 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import Post from '../Post/Post';
+import axios from 'axios';
+// Material-UI
 import Grid from '@material-ui/core/Grid';
 
 class Home extends Component {
+	state = {
+		posts: null
+	}
+
+	componentDidMount = () => {
+		axios
+			.get('/posts')
+			.then(res => {
+				console.log(res.data);
+				this.setState({
+					posts: res.data
+				})
+			})
+			.catch(err => console.log(err));
+	}
+
 	render() {
+		let posts = this.state.posts ? (
+      this.state.posts.map((post, i) => <Post post={post} />)
+    ) : (
+      <p>Loading...</p>
+		);
 		return (
-			<div>
-				<Grid container spacing={16}>
-					<Grid sm={4} xl={12}>
-						<p>Profile</p>
-					</Grid>
-					<Grid sm={8} xl={12}>
-						<p>Posts</p>
-					</Grid>
+			<Grid container spacing={2}>
+				<Grid item sm={4} xl={12}>
+					<p>Profile</p>
 				</Grid>
-			</div>
+				<Grid item sm={8} xl={12}>
+					{posts}
+				</Grid>
+			</Grid>
 		)
 	}
 }
 
-export default Home; 
+export default Home;

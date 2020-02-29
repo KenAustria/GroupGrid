@@ -32,5 +32,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "proxy": "https://us-central1-groupgrid-1d191.cloudfunctions.net/api"
 }
