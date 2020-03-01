@@ -5,6 +5,8 @@ import Home from './components/Home/Home';
 import Signup from './components/Signup/Signup';
 import Login from './components/Login/Login';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import jwtDecode from 'jwt-decode';
+import AuthRoute from './components/AuthRoute/AuthRoute';
 // import { MuiThemeProvider } from '@material-ui/core/styles/MuiThemeProvider';
 // import { createMuiTheme } from '@material-ui/core/styles';
 // import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
@@ -23,6 +25,21 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 //   }
 // })
 
+let authenticated;
+// access token from local storage
+const token = localStorage.FirebaseIdToken;
+// if token exist, decode json web token access expiry date
+if (token) {
+  const decodedToken = jwtDecode(token);
+	// if expired, redirect to login page
+	if (decodedToken.exp * 1000 < Date.now()) {
+    authenticated = false;
+    window.location.href = '/login';
+  } else {
+    authenticated = true;
+	}
+}
+
 function App() {
 	return (
 		// <MuiThemeProvider>
@@ -32,8 +49,8 @@ function App() {
 				<div className="container">
 					<Switch>
 						<Route exact path='/' component={Home}/>
-						<Route exact path='/signup' component={Signup} />
-						<Route exact path='/login' component={Login}/>
+						<AuthRoute exact path="/login" component={Login} authenticated={authenticated} />
+						<AuthRoute exact path="/signup" component={Signup} authenticated={authenticated} />
 					</Switch>
 				</div>
 			</Router>

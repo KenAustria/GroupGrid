@@ -23,7 +23,7 @@ class Home extends Component {
 
 	render() {
 		let posts = this.state.posts ? (
-      this.state.posts.map((post, i) => <Post post={post} />)
+      this.state.posts.map((post, index) => <Post post={post} key={index} />)
     ) : (
       <p>Loading...</p>
 		);

@@ -51,6 +51,8 @@ class Login extends Component {
 				this.setState({
 					loading: false
 				});
+				// store token in local storage to keep authenticated
+				localStorage.setItem('FirebaseIdToken', `Bearer ${res.data.token}`);
 				this.props.history.push('/');
 			})
 			.catch(err => {
