@@ -5,9 +5,12 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import { Link } from 'react-router-dom';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 
 class Post extends Component {
 	render() {
+		dayjs.extend(relativeTime);
 		const {
       post: {
         body,
@@ -23,7 +26,7 @@ class Post extends Component {
 				<CardHeader
 					avatar={<Avatar alt='Profile Image' src={profileImage} />}
 					title={userHandle}
-					subheader={createdAt}
+					subheader={dayjs(createdAt).fromNow()}
 					component={Link}
 					to={`/users/${userHandle}`}
 				/>
