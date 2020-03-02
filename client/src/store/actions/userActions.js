@@ -1,4 +1,4 @@
-import { SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI } from '../actions/actionTypes';
+import { SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_UNAUTHENTICATED } from '../actions/actionTypes';
 import axios from 'axios';
 
 export const loginUser = (userData, history) => (dispatch) => {
@@ -52,6 +52,14 @@ export const getUserData = () => (dispatch) => {
       });
     })
     .catch((err) => console.log(err));
+};
+
+export const logoutUser = () => (dispatch) => {
+	// remove token from storage
+	localStorage.removeItem('FirebaseIdToken');
+	// remove Authorization header from axios defaults
+	delete axios.defaults.headers.common['Authorization'];
+  dispatch({ type: SET_UNAUTHENTICATED });
 };
 
 // helper method for signupUser and loginUser
