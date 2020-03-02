@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
-import withStyles from '@material-ui/core/styles/withStyles';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import './Login.css';
-
-import GroupGridIcon from '../../images/groupgridicon.png';
-import Grid from '@material-ui/core/Grid';
+// Redux
+import { loginUser } from '../../store/actions/userActions';
+import { connect } from 'react-redux';
+// Material-UI
 import CircularProgress from '@material-ui/core/CircularProgress';
+import withStyles from '@material-ui/core/styles/withStyles';
+import GroupGridIcon from '../../images/groupgridicon.png';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 
 const styles = {
 	form: {
@@ -26,9 +28,15 @@ class Login extends Component {
 	state = {
 		email: '',
 		password: '',
-		loading: false,
 		errors: {}
 	}
+
+	UNSAFE_componentWillReceiveProps(nextProps) {
+		// if we receive errors, set errors to local errors state object
+		if (nextProps.ui.errors) {
+      this.setState({ errors: nextProps.ui.errors });
+    }
+  }
 
 	inputChangeHandler = (event) => {
 		this.setState({
@@ -38,35 +46,17 @@ class Login extends Component {
 
 	submitFormHandler = (event) => {
 		event.preventDefault();
-		this.setState({
-			loading: true
-		});
 		const userData = {
 			email: this.state.email,
 			password: this.state.password
-		}
-		axios.post('/login', userData)
-			.then(res => {
-				console.log(res.data)
-				this.setState({
-					loading: false
-				});
-				// store token in local storage to keep authenticated
-				localStorage.setItem('FirebaseIdToken', `Bearer ${res.data.token}`);
-				this.props.history.push('/');
-			})
-			.catch(err => {
-				this.setState({
-					errors: err.response.data,
-					loading: false
-				})
-			})
+		};
+		this.props.loginUser(userData, this.props.history);
 	}
 
 	// helperText is not working
 	render() {
-		const { classes } = this.props;
-		const { email, password, loading, errors } = this.state;
+		const { classes, ui: { loading } } = this.props;
+		const { email, password, errors } = this.state;
 		return (
 			<Grid container className={classes.form}>
 				<Grid item sm />
@@ -127,8 +117,20 @@ class Login extends Component {
 	}
 }
 
-Login.propTypes = {
-  classes: PropTypes.object.isRequired
+const mapStateToProps = (state) => ({
+  user: state.user,
+  ui: state.ui
+});
+
+const mapActionsToProps = {
+  loginUser
 };
 
-export default withStyles(styles)(Login);
+Login.propTypes = {
+	classes: PropTypes.object.isRequired,
+	loginUser: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
+  ui: PropTypes.object.isRequired
+};
+
+export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(Login));
