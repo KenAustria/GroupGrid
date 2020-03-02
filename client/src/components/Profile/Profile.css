@@ -1,0 +1,51 @@
+.paper {
+  padding: 20px;
+}
+
+.imageWrapper {
+  text-align: center;
+  position: relative;
+}
+
+.imageWrapper .button {
+  position: absolute;
+  top: 80%;
+  left: 70%;
+}
+
+.profileImage {
+  width: 200%;
+  height: 200%;
+  object-fit: cover;
+  max-width: 100%;
+  border-radius: 50%;
+}
+
+.profileDetails {
+  text-align: center;
+}
+
+.profileDetails span svg {
+  vertical-align: middle;
+}
+
+.profileDetails a {
+  color: blue;
+}
+
+hr {
+  border: none;
+  margin: 0 0 10px 0;
+}
+
+svg.button:hover {
+  cursor: pointer;
+}
+
+.buttons {
+  text-align: center;
+}
+
+.buttons a {
+  margin: 20px 10px;
+}

@@ -1,4 +1,4 @@
-import { SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_UNAUTHENTICATED } from '../actions/actionTypes';
+import { SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_UNAUTHENTICATED, LOADING_USER } from '../actions/actionTypes';
 import axios from 'axios';
 
 export const loginUser = (userData, history) => (dispatch) => {
@@ -42,6 +42,7 @@ export const signupUser = (newUserData, history) => (dispatch) => {
 };
 
 export const getUserData = () => (dispatch) => {
+	dispatch({ type: LOADING_USER });
 	// send get request, if response exist, then dispatch SET_USER action
 	axios
     .get('/user')
@@ -69,3 +70,4 @@ const setAuthorizationHeader = (token) => {
 	// specify config defaults that will be applied to every request
   axios.defaults.headers.common['Authorization'] = FirebaseIdToken;
 };
+

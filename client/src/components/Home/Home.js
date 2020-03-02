@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Profile from '../Profile/Profile';
 import Post from '../Post/Post';
 import axios from 'axios';
 // Material-UI
@@ -30,7 +31,7 @@ class Home extends Component {
 		return (
 			<Grid container spacing={2}>
 				<Grid item sm={4} xl={12}>
-					<p>Profile</p>
+					<Profile />
 				</Grid>
 				<Grid item sm={8} xl={12}>
 					{posts}
