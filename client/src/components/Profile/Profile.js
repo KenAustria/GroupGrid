@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import EditProfileDetails from '../EditProfileDetails/EditProfileDetails';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
@@ -96,6 +97,7 @@ class Profile extends Component {
 								<KeyboardReturn color='primary' />
 							</IconButton>
 						</Tooltip>
+						<EditProfileDetails />
           </div>
         </Paper>
       ) : (
