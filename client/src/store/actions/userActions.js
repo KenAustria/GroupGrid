@@ -71,3 +71,12 @@ const setAuthorizationHeader = (token) => {
   axios.defaults.headers.common['Authorization'] = FirebaseIdToken;
 };
 
+export const uploadProfileImage = (formData) => (dispatch) => {
+	dispatch({ type: LOADING_USER });
+	axios
+    .post('/user/profileImage', formData)
+    .then(() => {
+      dispatch(getUserData());
+    })
+    .catch((err) => console.log(err));
+}

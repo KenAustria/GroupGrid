@@ -5,6 +5,9 @@ import dayjs from 'dayjs';
 import './Profile.css';
 // MUI stuff
 import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
+import EditIcon from '@material-ui/icons/Edit';
 import Button from '@material-ui/core/Button';
 import MuiLink from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
@@ -14,10 +17,22 @@ import LocationOn from '@material-ui/icons/LocationOn';
 import LinkIcon from '@material-ui/icons/Link';
 //Redux
 import { connect } from 'react-redux';
-
+import { uploadProfileImage } from '../../store/actions/userActions';
 
 class Profile extends Component {
-  render() {
+	profileImageChangeHandler = (event) => {
+		const image = event.target.files[0];
+    const formData = new FormData();
+    formData.append('image', image, image.name);
+    this.props.uploadProfileImage(formData);
+	}
+
+	preProfileImageChangeHandler = () => {
+		const fileInput = document.getElementById('imageInput');
+    fileInput.click();
+	}
+
+	render() {
     const {
       user: {
         credentials: { handle, createdAt, profileImage, bio, website, location },
@@ -32,6 +47,12 @@ class Profile extends Component {
           <div className='profile'>
             <div className='imageWrapper'>
               <img src={profileImage} alt='profile' className='profileImage' />
+							<input type='file' id='imageInput' hidden='hidden' onChange={this.profileImageChangeHandler} />
+							<Tooltip title='Update Profile Photo' placement='top'>
+								<IconButton onClick={this.preProfileImageChangeHandler} className='button'>
+									<EditIcon color='primary' />
+								</IconButton>
+							</Tooltip>
             </div>
             <hr />
             <div className='profileDetails'>
@@ -104,8 +125,11 @@ const mapStateToProps = (state) => ({
   user: state.user
 });
 
+const mapActionsToProps = { uploadProfileImage };
+
 Profile.propTypes = {
-  user: PropTypes.object.isRequired
+	user: PropTypes.object.isRequired,
+	uploadProfileImage: PropTypes.func.isRequired
 };
 
-export default connect(mapStateToProps)(Profile);
+export default connect(mapStateToProps, mapActionsToProps)(Profile);
