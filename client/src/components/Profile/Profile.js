@@ -12,12 +12,13 @@ import Button from '@material-ui/core/Button';
 import MuiLink from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
 // Icons
+import KeyboardReturn from '@material-ui/icons/KeyboardReturn';
 import CalendarToday from '@material-ui/icons/CalendarToday';
 import LocationOn from '@material-ui/icons/LocationOn';
 import LinkIcon from '@material-ui/icons/Link';
 //Redux
 import { connect } from 'react-redux';
-import { uploadProfileImage } from '../../store/actions/userActions';
+import { uploadProfileImage, logoutUser } from '../../store/actions/userActions';
 
 class Profile extends Component {
 	profileImageChangeHandler = (event) => {
@@ -30,6 +31,10 @@ class Profile extends Component {
 	preProfileImageChangeHandler = () => {
 		const fileInput = document.getElementById('imageInput');
     fileInput.click();
+	}
+
+	logoutUserHandler = () => {
+		this.props.logoutUser();
 	}
 
 	render() {
@@ -86,6 +91,11 @@ class Profile extends Component {
               <CalendarToday color='primary' />{' '}
               <span>Joined {dayjs(createdAt).format('MMM YYYY')}</span>
             </div>
+						<Tooltip title='Logout' placement='top'>
+							<IconButton onClick={this.logoutUserHandler}>
+								<KeyboardReturn color='primary' />
+							</IconButton>
+						</Tooltip>
           </div>
         </Paper>
       ) : (
@@ -125,7 +135,10 @@ const mapStateToProps = (state) => ({
   user: state.user
 });
 
-const mapActionsToProps = { uploadProfileImage };
+const mapActionsToProps = { 
+	uploadProfileImage,
+	logoutUser
+ };
 
 Profile.propTypes = {
 	user: PropTypes.object.isRequired,
