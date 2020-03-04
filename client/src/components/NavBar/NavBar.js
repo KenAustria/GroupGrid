@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import './NavBar.css';
 // Material-UI
 // import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -38,19 +39,19 @@ class NavBar extends Component {
 							<Fragment>
 								<Tooltip title='Create a Post' placement='top'>
 									<IconButton>
-										<AddIcon color='primary' />
+										<AddIcon className='iconColor' />
 									</IconButton>
 								</Tooltip>
 								<Link to='/'>
 									<Tooltip title='Home' placement='top'>
 										<IconButton>
-											<HomeIcon color='primary' />
+											<HomeIcon className='iconColor' />
 										</IconButton>
 									</Tooltip>
 								</Link>
 								<Tooltip title='Notifications' placement='top'>
 									<IconButton>
-										<Notifications color='primary' />
+										<Notifications className='iconColor' />
 									</IconButton>
 								</Tooltip>
 							</Fragment>
