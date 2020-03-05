@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import DeletePost from '../DeletePost/DeletePost';
 // Material-UI
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -40,11 +42,15 @@ class Post extends Component {
         body,
         createdAt,
         profileImage,
-        userHandle,
+				userHandle,
+				postId,
         likeCount,
         commentCount
 			},
-			user: { authenticated }
+			user: {
+				authenticated,
+				credentials: {handle}
+			}
 		} = this.props;
 		const likeButton = !authenticated ? (
       <Tooltip title='Like' placement='top'>
@@ -66,7 +72,11 @@ class Post extends Component {
 					<FavoriteBorder color='primary' />
 				</IconButton>
 			</Tooltip>
-    );
+		);
+		const deleteButton =
+      (authenticated && (userHandle === handle)) ? (
+        <DeletePost postId={postId} />
+      ) : null;
 		return (
 			<Card className='card'>
 				<CardHeader
@@ -77,21 +87,28 @@ class Post extends Component {
 					to={`/users/${userHandle}`}
 				/>
 				<CardContent className='content'>
-					<Typography>{body}</Typography>
-					<Typography>{likeCount}</Typography>
-					<Typography>{commentCount}</Typography>
+					{deleteButton}
+          <Typography variant="body1">{body}</Typography>
 					{likeButton}
           <span>{likeCount} Likes</span>
-					<Tooltip title='Comments' placement='top'>
+          <Tooltip title='Comments' placement='top'>
 						<IconButton>
-							<ChatIcon color="primary" />
+							<ChatIcon color='primary' />
 						</IconButton>
 					</Tooltip>
-				</CardContent>
+          <span>{commentCount} Comments</span>
+        </CardContent>
     	</Card>
 		)
 	}
 }
+
+Post.propTypes = {
+  likePost: PropTypes.func.isRequired,
+  unlikePost: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
+  post: PropTypes.object.isRequired
+};
 
 const mapStateToProps = (state) => ({
   user: state.user

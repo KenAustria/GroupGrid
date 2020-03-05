@@ -1,9 +1,10 @@
 .card {
-  display: "flex";
+  position: relative;
+  display: flex;
   margin-bottom: 20px;
 }
 
 .content {
   padding: 25px;
-  object-fit: "cover";
+  object-fit: cover;
 }
