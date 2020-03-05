@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import CreatePost from '../CreatePost/CreatePost';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import './NavBar.css';
@@ -11,7 +12,6 @@ import Button from '@material-ui/core/Button';
 import Tooltip from '@material-ui/core/Tooltip';
 // Icons
 import IconButton from '@material-ui/core/IconButton';
-import AddIcon from '@material-ui/icons/Add';
 import HomeIcon from '@material-ui/icons/Home';
 import Notifications from '@material-ui/icons/Notifications';
 // Redux
@@ -37,11 +37,7 @@ class NavBar extends Component {
 					<Toolbar>
 						{authenticated ? (
 							<Fragment>
-								<Tooltip title='Create a Post' placement='top'>
-									<IconButton>
-										<AddIcon className='iconColor' />
-									</IconButton>
-								</Tooltip>
+								<CreatePost />
 								<Link to='/'>
 									<Tooltip title='Home' placement='top'>
 										<IconButton>
