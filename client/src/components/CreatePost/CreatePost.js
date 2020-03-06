@@ -2,16 +2,17 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 // Material-UI
 import withStyles from '@material-ui/core/styles/withStyles';
-import AddIcon from '@material-ui/icons/Add';
-import CloseIcon from '@material-ui/icons/Close';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import TextField from '@material-ui/core/TextField';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Button from '@material-ui/core/Button';
+// Icons
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
-import Button from '@material-ui/core/Button';
+import AddIcon from '@material-ui/icons/Add';
+import CloseIcon from '@material-ui/icons/Close';
 // Redux
 import { connect } from 'react-redux';
 import { createPost } from '../../store/actions/dataActions';
@@ -121,10 +122,6 @@ class CreatePost extends Component {
 	}
 }
 
-const mapActionsToProps = {
-	createPost
-}
-
 const mapStateToProps = (state) => ({
   ui: state.ui
 });
@@ -134,4 +131,4 @@ CreatePost.propTypes = {
 	ui: PropTypes.object.isRequired
 };
 
-export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(CreatePost));
+export default connect(mapStateToProps, {createPost})(withStyles(styles)(CreatePost));
