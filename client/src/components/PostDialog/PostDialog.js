@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import LikeButton from '../LikeButton/LikeButton';
+import Comments from '../Comments/Comments';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
@@ -68,7 +69,8 @@ class PostDialog extends Component {
 				userHandle,
 				postId,
         likeCount,
-        commentCount
+				commentCount,
+				comments
 			},
 			ui: {
 				loading
@@ -100,6 +102,8 @@ class PostDialog extends Component {
 					</Tooltip>
 					<span>{commentCount} Comments</span>
         </Grid>
+				<hr className={classes.visibleSeparator} />
+        <Comments comments={comments} />
       </Grid>
     );
 		return (
