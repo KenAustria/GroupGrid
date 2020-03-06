@@ -7,7 +7,9 @@ import {
 	DELETE_POST,
 	CREATE_POST,
 	SET_ERRORS,
-	CLEAR_ERRORS } from '../actions/actionTypes';
+	CLEAR_ERRORS,
+	STOP_LOADING_UI,
+	SET_POST} from '../actions/actionTypes';
 import axios from 'axios';
 
 export const getPosts = () => (dispatch) => {
@@ -65,17 +67,33 @@ export const createPost = (newPost) => (dispatch) => {
   dispatch({ type: LOADING_UI });
   axios
     .post('/post', newPost)
-    .then((res) => {
+    .then(res => {
       dispatch({
         type: CREATE_POST,
         payload: res.data
       });
       dispatch({ type: CLEAR_ERRORS });
     })
-    .catch((err) => {
+    .catch(err => {
       dispatch({
         type: SET_ERRORS,
         payload: err.response.data
       });
     });
+};
+
+export const getPost = (postId) => (dispatch) => {
+	dispatch({ type: LOADING_UI });
+	axios
+		.get(`/post/${postId}`)
+		.then(res => {
+			dispatch({
+				type: SET_POST,
+				payload: res.data
+			})
+			dispatch({ type: STOP_LOADING_UI });
+		})
+		.catch(err => {
+			console.log(err);
+		});
 };

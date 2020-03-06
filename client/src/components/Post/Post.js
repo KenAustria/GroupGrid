@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import DeletePost from '../DeletePost/DeletePost';
+import PostDialog from '../PostDialog/PostDialog';
 // Material-UI
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -97,6 +98,7 @@ class Post extends Component {
 						</IconButton>
 					</Tooltip>
           <span>{commentCount} Comments</span>
+					<PostDialog postId={postId} userHandle={userHandle} />
         </CardContent>
     	</Card>
 		)
