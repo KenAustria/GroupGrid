@@ -4,6 +4,7 @@ import NavBar from '../NavBar/NavBar';
 import Home from '../Home/Home';
 import Signup from '../Signup/Signup';
 import Login from '../Login/Login';
+import UserProfile from '../UserProfile/UserProfile';
 import AuthRoute from '../AuthRoute/AuthRoute';
 // Libraries
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -38,8 +39,9 @@ function App() {
 				<div className="container">
 					<Switch>
 						<Route exact path='/' component={Home}/>
-						<AuthRoute exact path="/login" component={Login} />
-						<AuthRoute exact path="/signup" component={Signup} />
+						<AuthRoute exact path='/login' component={Login} />
+						<AuthRoute exact path='/signup' component={Signup} />
+						<Route exact path='/users/:handle' component={UserProfile} />
 					</Switch>
 				</div>
 			</Router>

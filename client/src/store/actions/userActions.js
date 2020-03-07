@@ -1,4 +1,4 @@
-import { SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_UNAUTHENTICATED, LOADING_USER } from '../actions/actionTypes';
+import { SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_UNAUTHENTICATED, LOADING_USER, LOADING_DATA, SET_POSTS, SET_POST } from '../actions/actionTypes';
 import axios from 'axios';
 
 export const loginUser = (userData, history) => (dispatch) => {
@@ -90,3 +90,21 @@ export const editUserDetails = (userDetails) => (dispatch) => {
     })
     .catch((err) => console.log(err));
 };
+
+export const getUserProfile = (userHandle) => (dispatch) => {
+	dispatch({ type: LOADING_DATA });
+	axios
+		.get(`/user/${userHandle}`)
+		.then(res => {
+			dispatch({
+				type: SET_POSTS,
+				payload: res.data.posts
+			})
+		})
+		.catch(err => {
+			dispatch({
+				type: SET_POST,
+				payload: null
+			})
+		})
+}

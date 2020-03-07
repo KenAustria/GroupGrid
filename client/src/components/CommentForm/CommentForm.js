@@ -9,9 +9,6 @@ import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
 import { submitComment } from '../../store/actions/dataActions';
 
-// const styles = () => ({
-  
-// });
 
 class CommentForm extends Component {
 	state = {
@@ -86,4 +83,3 @@ CommentForm.propTypes = {
 };
 
 export default connect(mapStateToProps, { submitComment })(withStyles()(CommentForm));
-// export default connect(mapStateToProps, { submitComment })(CommentForm);

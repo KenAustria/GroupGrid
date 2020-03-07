@@ -52,7 +52,7 @@ class Post extends Component {
 				/>
 				<CardContent className='content'>
 					{deleteButton}
-          <Typography variant="body1">{body}</Typography>
+          <Typography variant='body1'>{body}</Typography>
 						<LikeButton postId={postId} />
           <span>{likeCount} Likes</span>
           <Tooltip title='Comments' placement='top'>
