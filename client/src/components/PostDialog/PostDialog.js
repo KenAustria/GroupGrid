@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import LikeButton from '../LikeButton/LikeButton';
 import Comments from '../Comments/Comments';
+import CommentForm from '../CommentForm/CommentForm';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
@@ -19,7 +20,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import ChatIcon from '@material-ui/icons/Chat';
 // Redux
 import { connect } from 'react-redux';
-import { getPost } from '../../store/actions/dataActions';
+import { getPost, clearErrors } from '../../store/actions/dataActions';
 
 const styles = {
 	invisibleSeparator: {
@@ -56,7 +57,8 @@ class PostDialog extends Component {
 	};
 
 	closeHandler = () => {
-		this.setState({ open: false })
+		this.setState({ open: false });
+		this.props.clearErrors();
 	};
 
 	render() {
@@ -103,6 +105,7 @@ class PostDialog extends Component {
 					<span>{commentCount} Comments</span>
         </Grid>
 				<hr className={classes.visibleSeparator} />
+				<CommentForm postId={postId} />
         <Comments comments={comments} />
       </Grid>
     );
@@ -133,7 +136,8 @@ PostDialog.propTypes = {
   postId: PropTypes.string.isRequired,
   userHandle: PropTypes.string.isRequired,
   post: PropTypes.object.isRequired,
-  ui: PropTypes.object.isRequired
+	ui: PropTypes.object.isRequired,
+	clearErrors: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -142,11 +146,13 @@ const mapStateToProps = (state) => ({
 });
 
 const mapActionsToProps = {
-	getPost
+	getPost,
+	clearErrors
 };
 
 PostDialog.propTypes = {
-	getPost: PropTypes.func.isRequired
+	getPost: PropTypes.func.isRequired,
+	clearErrors: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(PostDialog));

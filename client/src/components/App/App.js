@@ -4,10 +4,11 @@ import NavBar from '../NavBar/NavBar';
 import Home from '../Home/Home';
 import Signup from '../Signup/Signup';
 import Login from '../Login/Login';
+import AuthRoute from '../AuthRoute/AuthRoute';
+// Libraries
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
-import AuthRoute from '../AuthRoute/AuthRoute';
 // Redux
 import store from '../../store/myStore';
 import { logoutUser, getUserData } from '../../store/actions/userActions';
