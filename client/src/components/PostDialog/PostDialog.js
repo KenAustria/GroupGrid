@@ -48,15 +48,29 @@ const styles = {
 
 class PostDialog extends Component {
 	state = {
-		open: false
+		open: false,
+		oldUrl: '',
+		newUrl: ''
 	}
 
 	openHandler = () => {
-		this.setState({ open: true });
+		let oldUrl = window.location.pathname;
+		const { userHandle, postId } = this.props;
+		let newUrl = `/users/${userHandle}/post/${postId}`;
+
+		// case if pastes url, therefore no previous url path
+		if (oldUrl === newUrl) {
+			oldUrl = `/users/${userHandle}`;
+		}
+
+		window.history.pushState(null, null, newUrl);
+		this.setState({ open: true, oldUrl, newUrl });
 		this.props.getPost(this.props.postId);
 	};
 
 	closeHandler = () => {
+		// revert back to oldUrl
+		window.history.pushState(null, null, this.state.oldUrl);
 		this.setState({ open: false });
 		this.props.clearErrors();
 	};
