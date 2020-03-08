@@ -61,6 +61,12 @@ class PostDialog extends Component {
 		this.props.clearErrors();
 	};
 
+	componentDidMount() {
+		if (this.props.openDialog) {
+			this.openHandler()
+		}
+	}
+
 	render() {
 		const {
 			classes,

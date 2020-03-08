@@ -12,11 +12,18 @@ import { getUserProfile } from '../../store/actions/userActions';
 
 class UserProfile extends Component {
 	state = {
-		profile: null
+		profile: null,
+		postIdParam: null
 	}
 
 	componentDidMount() {
 		const handle = this.props.match.params.handle;
+		const postId = this.props.match.params.postId;
+		if (postId) {
+			this.setState({
+				postIdParam: postId
+			});
+		}
 		this.props.getUserProfile(handle);
 		axios
 			.get(`/user/${handle}`)
@@ -32,24 +39,33 @@ class UserProfile extends Component {
 
 	render() {
 		const { posts, loading } = this.props.data;
+		const { postIdParam } = this.state;
+
 		const userProfile = loading ? (
       <p>Loading data...</p>
     ) : posts === null ? (
       <p>No posts from this user</p>
-    ) : (
+    ) : !postIdParam ? (
       posts.map((post) => <Post key={post.postId} post={post} />)
-    );
+		) : (
+			posts.map((post) => {
+				if (post.postId !== postIdParam)
+					return <Post key={post.postId} post={post} />;
+				else return <Post key={post.postId} post={post} openDialog />;
+			})
+		);
+
 		return (
-			<Grid container spacing={16}>
-        <Grid item sm={8} xs={12}>
-          {userProfile}
-        </Grid>
+			<Grid container spacing={2}>
         <Grid item sm={4} xs={12}>
           {this.state.profile === null ? (
             <p>Loading profile...</p>
           ) : (
             <StaticProfile profile={this.state.profile} />
           )}
+        </Grid>
+				<Grid item sm={8} xs={12}>
+          {userProfile}
         </Grid>
       </Grid>
 		);
