@@ -1,4 +1,14 @@
-import { SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_UNAUTHENTICATED, LOADING_USER, LOADING_DATA, SET_POSTS, SET_POST } from '../actions/actionTypes';
+import { 
+	SET_USER,
+	SET_ERRORS,
+	CLEAR_ERRORS,
+	LOADING_UI,
+	SET_UNAUTHENTICATED,
+	LOADING_USER,
+	LOADING_DATA,
+	SET_POSTS,
+	SET_POST,
+	MARK_NOTIFICATIONS_READ } from '../actions/actionTypes';
 import axios from 'axios';
 
 export const loginUser = (userData, history) => (dispatch) => {
@@ -106,5 +116,18 @@ export const getUserProfile = (userHandle) => (dispatch) => {
 				type: SET_POST,
 				payload: null
 			})
+		})
+}
+
+export const markNotificationsRead = (notificationIds) => (dispatch) => {
+	axios
+		.post(`/notifications`, notificationIds)
+		.then(res => {
+			dispatch({
+				type: MARK_NOTIFICATIONS_READ
+			});
+		})
+		.catch(err => {
+			console.log(err);
 		})
 }

@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import CreatePost from '../CreatePost/CreatePost';
+import Notifications from '../Notifications/Notifications';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import './NavBar.css';
@@ -13,7 +14,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 // Icons
 import IconButton from '@material-ui/core/IconButton';
 import HomeIcon from '@material-ui/icons/Home';
-import Notifications from '@material-ui/icons/Notifications';
+// import Notifications from '@material-ui/icons/Notifications';
 // Redux
 import { connect } from 'react-redux';
 
@@ -45,11 +46,7 @@ class NavBar extends Component {
 										</IconButton>
 									</Tooltip>
 								</Link>
-								<Tooltip title='Notifications' placement='top'>
-									<IconButton>
-										<Notifications className='iconColor' />
-									</IconButton>
-								</Tooltip>
+								<Notifications />
 							</Fragment>
 						) : (
 							<Fragment>
