@@ -11,10 +11,10 @@ Social media application implemented with the React library and REST interfaces 
 
 ## Features
 
-• Users can log in to view posts.  
-• Users can edit their own profile details including bio, location, and image.  
+• Users can update their profile image.  
+• Users can edit their own profile details including bio, website, and location.  
 • Users can like and comment on another user's post.  
-• User A will receive a notification when User B either likes or comments on User A's post.  
+• User_A will receive a notification when User_B either likes or comments on User_A's post.  
 • Users can create a post and delete their created post.
 
 ---
@@ -26,51 +26,10 @@ Social media application implemented with the React library and REST interfaces 
 Upon signup, users are assigned a default profile photo.  
   
   ![](https://media.giphy.com/media/KDnNpMilvSE02QkHPr/giphy.gif)  
-```
-// Upload Profile Image
-exports.uploadProfileImage = (req, res) => {
-  ...
-	busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
-		if (mimetype !== 'image/jpeg' && mimetype !== 'image/png') {
-			return res.status(400).json({ error: 'Wrong file type submitted' });
-		}
 
-		const imageExtension = filename.split('.').pop();
-		imageFileName = `${Math.round(Math.random() * 100000000000)}.${imageExtension}`;
-		const filepath = path.join(os.tmpdir(), imageFileName);
-		imageToBeUploaded = { filepath, mimetype };
-		file.pipe(fs.createWriteStream(filepath));
-	});
-
-	busboy.on('finish', () => {
-		admin
-			.storage()
-			.bucket(`${firebaseConfig.storageBucket}`)
-			.upload(imageToBeUploaded.filepath, {
-				resumable: false,
-				metadata: {
-					metadata: {
-						contentType: imageToBeUploaded.mimetype
-					}
-				}
-			})
-			.then(() => {
-				const profileImage = `https://firebasestorage.googleapis.com/v0/b/${firebaseConfig.storageBucket}/o/${imageFileName}?alt=media`;
-				return db.doc(`/users/${req.user.handle}`).update({ profileImage });
-			})
-			.then(() => {
-				return res.json({ message: 'Image uploaded successfully' });
-			})
-			.catch(err => {
-				console.error(err);
-				return res.status(500).json({ error: err.code });
-			});
-	});
-  ...
-}
-```
-
+  
 The bio, website, and location fields are empty when a user first signs up. A user will be to edit their profile details, once authenticated. The website field validates if user's input is a valid website.  
+
 ![](https://media.giphy.com/media/L0BAzmHxvWUveIncm0/giphy.gif)  
 ```
 // Add User's Details
@@ -123,7 +82,7 @@ exports.commentOnPost = (req, res) => {
 };
 ```
 
-### ⭐ UserA will receive a notification when UserB either likes or comments on UserA's post.
+### ⭐ User_A will receive a notification when User_B either likes or comments on User_A's post.
 
 When a user likes or comments on another user's post, the owner of the post will receive individual notifications for their post being liked and commented on. The notifications will be rendered descendingly from the time the action occurred.   
 When the owner of the post clicks on a notification, it will lead him to his profile page with the post dialog opened.  
