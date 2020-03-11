@@ -19,8 +19,7 @@ const styles = {
 		textAlign: 'center'
 	},
 	button: {
-		margin: 20,
-		position: 'relative'
+		margin: 20
 	}
 };
 
@@ -63,11 +62,11 @@ class Signup extends Component {
 		const { classes, ui: { loading } } = this.props;
 		const { email, password, confirmPassword, handle, errors } = this.state;
 		return (
-			<Grid container className={classes.form}>
+			<Grid container className={classes.form} >
 				<Grid item sm />
 				<Grid item sm>
-					<img src={GroupGridIcon} alt="GroupGrid Icon" className='icon' />
-					<Typography className='title' variant='h3'>GroupGrid</Typography>
+					<img src={GroupGridIcon} alt='GroupGrid Icon'/>
+					<Typography variant='h3'>GroupGrid</Typography>
 					<form noValidate onSubmit={this.submitFormHandler}>
 						<TextField
 							id='email'
@@ -118,7 +117,7 @@ class Signup extends Component {
 							fullWidth
 						/>
 						{errors.general && (
-							<Typography variant="body2" className='error'>
+							<Typography variant='body2' >
 								{errors.general}
 							</Typography>
 						)}
