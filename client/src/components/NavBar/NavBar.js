@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import './NavBar.css';
 // Material-UI
-// import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -14,28 +13,16 @@ import Tooltip from '@material-ui/core/Tooltip';
 // Icons
 import IconButton from '@material-ui/core/IconButton';
 import HomeIcon from '@material-ui/icons/Home';
-// import Notifications from '@material-ui/icons/Notifications';
 // Redux
 import { connect } from 'react-redux';
 
-// const useStyles = makeStyles(theme => ({
-//   root: {
-//     flexGrow: 1,
-//   },
-//   title: {
-//     flexGrow: 1,
-//   }
-// }));
-
 class NavBar extends Component {
   render() {
-    // const classes = useStyles();
 		const { authenticated } = this.props;
     return (
-			// <div className={classes.root}>
 			<div>
-				<AppBar position='static' className='root'>
-					<Toolbar>
+				<AppBar position='static'>
+					<Toolbar className='navContainer'>
 						{authenticated ? (
 							<Fragment>
 								<CreatePost />
@@ -50,7 +37,6 @@ class NavBar extends Component {
 							</Fragment>
 						) : (
 							<Fragment>
-								{/* <Typography variant='h6' className={classes.title}> */}
 								<Typography variant='h6'>
 									<Button color='inherit' component={Link} to='/'>GroupGrid</Button>
 								</Typography>
