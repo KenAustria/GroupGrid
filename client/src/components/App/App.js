@@ -15,6 +15,8 @@ import store from '../../store/myStore';
 import { logoutUser, getUserData } from '../../store/actions/userActions';
 import { SET_AUTHENTICATED } from '../../store/actions/actionTypes';
 
+axios.defaults.baseURL = 'https://us-central1-groupgrid-1d191.cloudfunctions.net/api';
+
 // access token from local storage
 const token = localStorage.FirebaseIdToken;
 // if token exist, decode json web token access expiry date

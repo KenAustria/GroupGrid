@@ -7,6 +7,9 @@ const { db } = require('./utilities/admin');
 const { getPosts, createPost, getPost, commentOnPost, likePost, unlikePost, deletePost } = require('./handlers/posts');
 const { signup, login, uploadProfileImage, addUserDetails, getUserDetails, getAnyUserDetails, markNotificationsRead } = require('./handlers/users');
 
+const cors = require('cors');
+app.use(cors());
+
 // Posts Routes
 app.get('/posts', getPosts);
 app.post('/post', firebaseAuth, createPost);
