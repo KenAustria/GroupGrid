@@ -1,13 +1,11 @@
 import React, { Component, Fragment } from 'react';
+import MyButton from '../MyButton/MyButton';
 import PropTypes from 'prop-types';
-import './EditProfileDetails.css';
 // Material-UI
+import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
 import EditIcon from '@material-ui/icons/Edit';
 import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
@@ -15,6 +13,14 @@ import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
 import { editUserDetails } from '../../store/actions/userActions';
 
+const styles = () => ({
+  button: {
+    float: 'right'
+	},
+	textField: {
+    margin: '10px 10px 10px 10px'
+  }
+});
 class EditProfileDetails extends Component {
 	state = {
 		bio: '',
@@ -62,52 +68,54 @@ class EditProfileDetails extends Component {
 	}
 
 	render() {
+		const { classes } = this.props;
 		return (
 			<Fragment>
-				<Tooltip title='Edit Profile Details' placement='top'>
-					<IconButton onClick={this.openDialogHandler} className='button'>
-						<EditIcon color='primary' />
-					</IconButton>
-				</Tooltip>
+				<MyButton
+          title='Edit Details'
+          onClick={this.openDialogHandler}
+          btnClassName={classes.button}
+        >
+          <EditIcon color='primary' />
+        </MyButton>
 				<Dialog open={this.state.open} onClose={this.closeDialogHandler} fullWidth maxWidth='sm'>
 					<DialogTitle>Edit Profile Details</DialogTitle>
-					<DialogContent>
-						<form>
-							<TextField
-								name='bio'
-								type='text'
-								label='Bio'
-								multiline
-								rows='3'
-								placeholder='Enter Bio..'
-								value={this.state.bio}
-								onChange={this.inputChangeHandler}
-								fullwidth
-							/>
-							<TextField
-								name='website'
-								type='text'
-								label='Website'
-								multiline
-								rows='3'
-								placeholder='Enter Website..'
-								value={this.state.website}
-								onChange={this.inputChangeHandler}
-								fullwidth
-							/>
-							<TextField
-								name='location'
-								type='text'
-								label='Location'
-								multiline
-								rows='3'
-								placeholder='Enter Location..'
-								value={this.state.location}
-								onChange={this.inputChangeHandler}
-								fullwidth
-							/>
-						</form>
-					</DialogContent>
+						<TextField
+							name='bio'
+							type='text'
+							label='Bio'
+							multiline
+							rows='3'
+							className={classes.textField}
+							placeholder='Enter Bio..'
+							value={this.state.bio}
+							onChange={this.inputChangeHandler}
+							fullwidth
+						/>
+						<TextField
+							name='website'
+							type='text'
+							label='Website'
+							multiline
+							rows='3'
+							className={classes.textField}
+							placeholder='Enter Website..'
+							value={this.state.website}
+							onChange={this.inputChangeHandler}
+							fullwidth
+						/>
+						<TextField
+							name='location'
+							type='text'
+							label='Location'
+							multiline
+							rows='3'
+							className={classes.textField}
+							placeholder='Enter Location..'
+							value={this.state.location}
+							onChange={this.inputChangeHandler}
+							fullwidth
+						/>
 					<DialogActions>
 						<Button onClick={this.closeDialogHandler} color='primary'>
 							Cancel
@@ -126,12 +134,8 @@ const mapStateToProps = (state) => ({
   credentials: state.user.credentials
 });
 
-const mapActionsToProps = {
-  editUserDetails
-};
-
 EditProfileDetails.propTypes = {
 	editUserDetails: PropTypes.func.isRequired
 };
 
-export default connect(mapStateToProps, mapActionsToProps)(EditProfileDetails);
+export default connect(mapStateToProps, { editUserDetails })(withStyles(styles)(EditProfileDetails));
