@@ -6,21 +6,33 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import DeletePost from '../DeletePost/DeletePost';
 import PostDialog from '../PostDialog/PostDialog';
 import LikeButton from '../LikeButton/LikeButton';
+import MyButton from '../MyButton/MyButton';
 // Material-UI
+import withStyles from '@material-ui/core/styles/withStyles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 // Icons
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
 import ChatIcon from '@material-ui/icons/Chat';
 // Redux
 import { connect } from 'react-redux';
 
+const styles = {
+	card: {
+    position: 'relative',
+  	display: 'flex',
+  	marginBottom: '20px'
+	},
+	content: {
+		padding: '25px',
+		objectFit: 'cover'
+	}
+};
 class Post extends Component {
 	render() {
+		const { classes } = this.props;
 		dayjs.extend(relativeTime);
 		const {
       post: {
@@ -42,7 +54,7 @@ class Post extends Component {
         <DeletePost postId={postId} />
       ) : null;
 		return (
-			<Card className='card'>
+			<Card className={classes.card}>
 				<CardHeader
 					avatar={<Avatar alt='Profile Image' src={profileImage} />}
 					title={userHandle}
@@ -50,16 +62,14 @@ class Post extends Component {
 					component={Link}
 					to={`/users/${userHandle}`}
 				/>
-				<CardContent className='content'>
+				<CardContent className={classes.content}>
 					{deleteButton}
           <Typography variant='body1'>{body}</Typography>
 						<LikeButton postId={postId} />
           <span>{likeCount} Likes</span>
-          <Tooltip title='Comments' placement='top'>
-						<IconButton>
-							<ChatIcon color='primary' />
-						</IconButton>
-					</Tooltip>
+          <MyButton title='Comments'>
+						<ChatIcon color='primary' />
+          </MyButton>
           <span>{commentCount} Comments</span>
 					<PostDialog postId={postId} userHandle={userHandle} openDialog={this.props.openDialog} />
         </CardContent>
@@ -78,4 +88,4 @@ const mapStateToProps = (state) => ({
   user: state.user
 });
 
-export default connect(mapStateToProps)(Post);
+export default connect(mapStateToProps)(withStyles(styles)(Post));
