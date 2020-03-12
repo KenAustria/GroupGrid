@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import LikeButton from '../LikeButton/LikeButton';
 import Comments from '../Comments/Comments';
 import CommentForm from '../CommentForm/CommentForm';
+import MyButton from '../MyButton/MyButton';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
@@ -13,8 +14,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 // Icons
-import Tooltip from '@material-ui/core/Tooltip';
-import IconButton from '@material-ui/core/IconButton';
 import UnfoldMore from '@material-ui/icons/UnfoldMore';
 import CloseIcon from '@material-ui/icons/Close';
 import ChatIcon from '@material-ui/icons/Chat';
@@ -22,10 +21,20 @@ import ChatIcon from '@material-ui/icons/Chat';
 import { connect } from 'react-redux';
 import { getPost, clearErrors } from '../../store/actions/dataActions';
 
-const styles = {
+const styles = () => ({
+  spinnerDiv: {
+    textAlign: 'center',
+    marginTop: 50,
+    marginBottom: 50
+  },
 	invisibleSeparator: {
     border: 'none',
     margin: 4
+	},
+	visibleSeparator: {
+    width: '100%',
+    borderBottom: '1px solid rgba(0,0,0,0.1)',
+    marginBottom: 20
   },
   profileImage: {
     maxWidth: 200,
@@ -36,15 +45,11 @@ const styles = {
   dialogContent: {
     padding: 20
   },
-  closeButton: {
-    position: 'absolute',
-    left: '90%'
-	},
 	expandButton: {
     position: 'absolute',
     left: '90%'
-  }
-};
+	}
+});
 
 class PostDialog extends Component {
 	state = {
@@ -99,7 +104,9 @@ class PostDialog extends Component {
 			}
 		} = this.props;
 		const postDialog = loading ? (
-      <CircularProgress size={200} />
+      <div className={classes.spinnerDiv}>
+        <CircularProgress size={200} thickness={2} />
+      </div>
     ) : (
       <Grid container spacing={16}>
         <Grid item sm={5}>
@@ -117,32 +124,25 @@ class PostDialog extends Component {
           <Typography variant='body1'>{body}</Typography>
 					<LikeButton postId={postId} />
 					<span>{likeCount} Likes</span>
-					<Tooltip title='Comments'>
-						<IconButton onClick={this.openHandler} className={classes.expandButton}>
-							<ChatIcon color='primary' />
-						</IconButton>
-					</Tooltip>
+					<MyButton title='Comments' onClick={this.openHandler} className={classes.expandButton}>
+						<ChatIcon color='primary' />
+          </MyButton>
 					<span>{commentCount} Comments</span>
         </Grid>
-				<hr className={classes.visibleSeparator} />
 				<CommentForm postId={postId} />
         <Comments comments={comments} />
       </Grid>
     );
 		return (
 			<Fragment>
-				<Tooltip title='Expand Post'>
-					<IconButton onClick={this.openHandler} className={classes.expandButton}>
-						<UnfoldMore color='primary' />
-					</IconButton>
-				</Tooltip>
+				<MyButton title='Expand Post' onClick={this.openHandler} className={classes.expandButton}>
+					<UnfoldMore color='primary' />
+        </MyButton>
 				<Dialog open={this.state.open} onClose={this.closeHandler} fullWidth maxWidth='sm'>
-					<Tooltip title='Close'>
-						<IconButton onClick={this.closeHandler} className={classes.closeButton}>
-							<CloseIcon />
-						</IconButton>
-					</Tooltip>
 					<DialogContent className={classes.dialogContent}>
+						<MyButton title='Close' onClick={this.closeHandler}>
+							<CloseIcon />
+        		</MyButton>
 						{postDialog}
 					</DialogContent>
 				</Dialog>

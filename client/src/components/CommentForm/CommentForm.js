@@ -9,6 +9,15 @@ import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
 import { submitComment } from '../../store/actions/dataActions';
 
+const styles = {
+	textField: {
+    margin: '10px auto 10px auto'
+	},
+	button: {
+    marginTop: 20,
+    float: 'right'
+	}
+};
 
 class CommentForm extends Component {
 	state = {
@@ -62,7 +71,6 @@ class CommentForm extends Component {
             Submit
           </Button>
         </form>
-        <hr className={classes.visibleSeparator} />
       </Grid>
     ) : null;
     return commentForm;
@@ -82,4 +90,4 @@ CommentForm.propTypes = {
   authenticated: PropTypes.bool.isRequired
 };
 
-export default connect(mapStateToProps, { submitComment })(withStyles()(CommentForm));
+export default connect(mapStateToProps, { submitComment })(withStyles(styles)(CommentForm));
