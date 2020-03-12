@@ -117,10 +117,10 @@ class EditProfileDetails extends Component {
 							fullwidth
 						/>
 					<DialogActions>
-						<Button onClick={this.closeDialogHandler} color='primary'>
+						<Button onClick={this.closeDialogHandler} color='primary' variant='contained'>
 							Cancel
 						</Button>
-						<Button onClick={this.submitUserDetailsHandler} color='primary'>
+						<Button onClick={this.submitUserDetailsHandler} color='primary' variant='contained'>
 							Save
 						</Button>
 					</DialogActions>
