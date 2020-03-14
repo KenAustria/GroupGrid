@@ -21,7 +21,7 @@ app.delete('/post/:postId', firebaseAuth, deletePost);
 
 // User Routes
 app.post('/signup', signup);
-app.get('/login', login);
+app.post('/login', login);
 app.post('/user/profileImage', firebaseAuth, uploadProfileImage);
 app.post('/user', firebaseAuth, addUserDetails);
 app.get('/user', firebaseAuth, getUserDetails);

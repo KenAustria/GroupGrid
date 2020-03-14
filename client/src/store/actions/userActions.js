@@ -16,10 +16,6 @@ export const loginUser = (userData, history) => (dispatch) => {
   axios
     .post('/login', userData)
     .then((res) => {
-      const FirebaseIdToken = `Bearer ${res.data.token}`;
-      localStorage.setItem('FirebaseIdToken', FirebaseIdToken);
-			// specify config defaults that will be applied to every request
-			axios.defaults.headers.common['Authorization'] = FirebaseIdToken;
 			setAuthorizationHeader(res.data.token);
       dispatch(getUserData());
       dispatch({ type: CLEAR_ERRORS });

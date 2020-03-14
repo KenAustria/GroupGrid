@@ -21,7 +21,10 @@ const styles = {
 	button: {
 		margin: 20,
 		position: 'relative'
-	}
+	},
+	textField: {
+    margin: '10px auto 10px auto'
+  }
 };
 
 class Login extends Component {
@@ -61,7 +64,7 @@ class Login extends Component {
 			<Grid container className={classes.form}>
 				<Grid item sm />
 				<Grid item sm>
-					<img src={GroupGridIcon} alt="GroupGrid Icon" className='icon' />
+					<img src={GroupGridIcon} alt='GroupGrid Icon' className='icon' />
 					<Typography className='title' variant='h3'>GroupGrid</Typography>
 					<form noValidate onSubmit={this.submitFormHandler}>
 						<TextField
@@ -69,7 +72,7 @@ class Login extends Component {
 							name='email'
 							type='email'
 							label='Email'
-							className='textField'
+							className={classes.textField}
 							helperText={errors.email}
 							error={errors.email ? true : false}
 							value={email}
@@ -81,7 +84,7 @@ class Login extends Component {
 							name='password'
 							type='password'
 							label='Password'
-							className='textField'
+							className={classes.textField}
 							helperText={errors.password}
 							error={errors.password ? true : false}
 							value={password}

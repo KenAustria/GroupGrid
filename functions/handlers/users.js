@@ -88,11 +88,10 @@ exports.login = (req, res) => {
 			return res.json({ token })
 		})
 		.catch(err => {
-			console.error(err)
-			// conditional if email is used
-			if(err.code === 'auth/wrong-password') {
-				return res.status(403).json({ general: 'Wrong credentials, please try again.'});
-			} else return res.status(500).json({ general: 'Something went wrong, please try again' }); // show server error on client side
+			console.error(err);
+			return res
+				.status(403)
+				.json({ general: 'Wrong credentials, please try again.'});
 		});
 }
 
