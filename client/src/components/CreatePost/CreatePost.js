@@ -6,7 +6,6 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogActions from '@material-ui/core/DialogActions';
 import TextField from '@material-ui/core/TextField';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Button from '@material-ui/core/Button';
@@ -19,7 +18,8 @@ import { createPost, clearErrors } from '../../store/actions/dataActions';
 
 const styles = {
 	submitButton: {
-    marginRight: 16,
+		marginTop: 20,
+    float: 'right'
   },
   progressSpinner: {
     position: 'absolute'
@@ -101,19 +101,17 @@ class CreatePost extends Component {
                 onChange={this.inputChangeHandler}
                 fullWidth
 							/>
+							<Button type='submit' variant='contained' color='primary' className={classes.submitButton} disabled={loading} >
+								Submit
+								{loading && (
+									<CircularProgress
+										size={30}
+										className={classes.progressSpinner}
+									/>
+								)}
+							</Button>
 						</form>
 					</DialogContent>
-					<DialogActions>
-						<Button type='submit' variant='contained' color='primary' className={classes.submitButton} disabled={loading} >
-							Submit
-							{loading && (
-								<CircularProgress
-									size={30}
-									className={classes.progressSpinner}
-								/>
-							)}
-						</Button>
-					</DialogActions>
 				</Dialog>
 			</Fragment>
 		);

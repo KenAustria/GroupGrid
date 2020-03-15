@@ -63,15 +63,15 @@ class Post extends Component {
 					to={`/users/${userHandle}`}
 				/>
 				<CardContent className={classes.content}>
-					{deleteButton}
           <Typography variant='body1'>{body}</Typography>
-						<LikeButton postId={postId} />
+					<LikeButton postId={postId} />
           <span>{likeCount} Likes</span>
           <MyButton title='Comments'>
 						<ChatIcon color='primary' />
           </MyButton>
           <span>{commentCount} Comments</span>
 					<PostDialog postId={postId} userHandle={userHandle} openDialog={this.props.openDialog} />
+					{deleteButton}
         </CardContent>
     	</Card>
 		)
