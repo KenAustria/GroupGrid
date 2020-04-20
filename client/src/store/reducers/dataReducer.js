@@ -40,13 +40,9 @@ export default function(state = initialState, action) {
         ...state
 			};
 		case DELETE_POST:
-			let deletedIndex = state.posts.findIndex(
-				(post) => post.postId === action.payload
-			);
-			state.posts.splice(deletedIndex, 1);
-			return {
-				...state
-			};
+			return { 
+				...state,
+				posts: state.posts.filter(post => post.postId !== action.payload ) };
 		case CREATE_POST:
 			return {
 				...state,
