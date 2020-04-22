@@ -34,11 +34,11 @@ class Login extends Component {
 		errors: {}
 	}
 
-	UNSAFE_componentWillReceiveProps(nextProps) {
+	componentDidUpdate(prevProps) {
 		// if we receive errors, set errors to local errors state object
-		if (nextProps.ui.errors) {
-      this.setState({ errors: nextProps.ui.errors });
-    }
+		if (prevProps.ui.errors !== this.props.ui.errors) {
+			this.setState({ errors: this.props.ui.errors });
+		}
   }
 
 	inputChangeHandler = (event) => {

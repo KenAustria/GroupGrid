@@ -38,7 +38,7 @@ class CreatePost extends Component {
 		body: ''
 	};
 
-	componentDidUpdate(prevProps, prevState) {
+	componentDidUpdate(prevProps) {
 		// check for errors
 		if (prevProps.ui.errors !== this.props.ui.errors) {
 			this.setState({

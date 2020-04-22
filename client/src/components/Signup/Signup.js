@@ -32,10 +32,11 @@ class Signup extends Component {
 		errors: {}
 	}
 
-	UNSAFE_componentWillReceiveProps(nextProps) {
-    if (nextProps.ui.errors) {
-      this.setState({ errors: nextProps.ui.errors });
-    }
+	componentDidUpdate(prevProps) {
+		// if we receive errors, set errors to local errors state object
+		if (prevProps.ui.errors !== this.props.ui.errors) {
+			this.setState({ errors: this.props.ui.errors });
+		}
   }
 
 	inputChangeHandler = (event) => {
