@@ -38,17 +38,21 @@ class CreatePost extends Component {
 		body: ''
 	};
 
-	UNSAFE_componentWillReceiveProps(nextProps) {
+	componentDidUpdate(prevProps, prevState) {
 		// check for errors
-		if (nextProps.ui.errors) {
-      this.setState({
-        errors: nextProps.ui.errors
-      });
+		if (prevProps.ui.errors !== this.props.ui.errors) {
+			this.setState({
+				errors: this.props.ui.errors
+			});
 		}
 		// if there aren't any errors and loading has completed
-    if (!nextProps.ui.errors && !nextProps.ui.loading) {
-      this.setState({ body: '', open: false, errors: {} });
-    }
+    if ((prevProps.ui.errors !== this.props.ui.errors) && (prevProps.ui.loading !== this.props.ui.loading)) {
+			this.setState({ 
+				open: false,
+				errors: {},
+				body: ''
+			});
+		}
   }
 
 	openHandler = () => {
