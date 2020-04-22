@@ -72,8 +72,9 @@ export const createPost = (newPost) => (dispatch) => {
       dispatch({
         type: CREATE_POST,
         payload: res.data
-      });
-      dispatch(clearErrors());
+			});
+			dispatch(clearErrors());
+			window.location.reload();
     })
     .catch(err => {
       dispatch({

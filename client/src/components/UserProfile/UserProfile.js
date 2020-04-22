@@ -35,7 +35,7 @@ class UserProfile extends Component {
 			.catch(err => {
 				console.log(err);
 			})
-  }
+	}
 
 	render() {
 		const { posts, loading } = this.props.data;
