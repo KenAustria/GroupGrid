@@ -15,6 +15,7 @@ exports.getPosts = (req, res) => {
 					body: doc.data().body,
 					createdAt: doc.data().createdAt,
 					likeCount: doc.data().likeCount,
+					commentCount: doc.data().commentCount,
 					profileImage: doc.data().profileImage
 				});
 			});
