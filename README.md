@@ -14,6 +14,9 @@ Social media application implemented with the React library and REST interfaces 
 • Firebase Cloud Functions  
 • Material-UI  
 
+## Bundle Size
+<img src="client/src/images/webpackbundleanalyzer.png">
+
 ## Features
 
 • Users can update their profile image.  
@@ -35,17 +38,18 @@ Upon signup, users are assigned a default profile photo. To define the uploadPro
 // Upload Profile Image
 exports.uploadProfileImage = (req, res) => {
   ...
-
 	busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
-		if (mimetype !== 'image/jpeg' && mimetype !== 'image/png') {
-			return res.status(400).json({ error: 'Wrong file type submitted' });
-		}
-		const imageExtension = filename.split('.').pop();
-		imageFileName = `${Math.round(Math.random() * 100000000000)}.${imageExtension}`;
-		const filepath = path.join(os.tmpdir(), imageFileName);
-		imageToBeUploaded = { filepath, mimetype };
-		file.pipe(fs.createWriteStream(filepath));
-	});
+      if (mimetype !== 'image/jpeg' && mimetype !== 'image/png') {
+        return res.status(400).json({ error: 'Wrong file type submitted' });
+      }
+
+      const imageExtension = filename.split('.').pop();
+      imageFileName = `${Math.round(Math.random() * 100000000)}.${imageExtension}`;
+      const filepath = path.join(os.tmpdir(), imageFileName);
+      imageToBeUploaded = { filepath, mimetype };
+      file.pipe(fs.createWriteStream(filepath));
+    });
+}
 ```
   
 The bio, website, and location fields are empty when a user registers to the application. A user will be able to edit their profile details, once authenticated. Inside the addUserDetails cloud function, we access the values from our user's object that is returned from our validator function, reduceUserDetails. That object is what we update the user's details with.  
