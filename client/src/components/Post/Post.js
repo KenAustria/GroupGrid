@@ -28,6 +28,10 @@ const styles = {
 	content: {
 		padding: '25px',
 		objectFit: 'cover'
+	},
+	avatar: {
+		width: 70,
+		height: 70
 	}
 };
 class Post extends Component {
@@ -55,14 +59,14 @@ class Post extends Component {
       ) : null;
 		return (
 			<Card className={classes.card}>
-				<CardHeader
-					avatar={<Avatar alt='Profile Image' src={profileImage} />}
-					title={userHandle}
-					subheader={dayjs(createdAt).fromNow()}
-					component={Link}
-					to={`/users/${userHandle}`}
-				/>
 				<CardContent className={classes.content}>
+					<CardHeader
+						avatar={<Avatar alt='Profile Image' src={profileImage} className={classes.avatar} />}
+						title={userHandle}
+						subheader={dayjs(createdAt).fromNow()}
+						component={Link}
+						to={`/users/${userHandle}`}
+					/>
           <Typography variant='body1'>{body}</Typography>
 					<LikeButton postId={postId} />
           <span>{likeCount} Likes</span>
