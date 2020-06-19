@@ -86,6 +86,12 @@ class PostDialog extends Component {
 		}
 	}
 
+	componentDidUpdate(prevProps) {
+		if ((this.props.openDialog) && (this.props.user.notificationId !== prevProps.user.notificationId)) {
+			this.openHandler();
+		}
+	}
+
 	render() {
 		const {
 			classes,
@@ -157,12 +163,14 @@ PostDialog.propTypes = {
   userHandle: PropTypes.string.isRequired,
   post: PropTypes.object.isRequired,
 	ui: PropTypes.object.isRequired,
+	user: PropTypes.object.isRequired,
 	clearErrors: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
 	post: state.data.post,
-	ui: state.ui
+	ui: state.ui,
+	user: state.user.notifications
 });
 
 const mapActionsToProps = {
