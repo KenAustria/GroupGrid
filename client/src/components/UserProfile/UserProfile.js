@@ -13,7 +13,8 @@ import { getUserProfile } from '../../store/actions/userActions';
 class UserProfile extends Component {
 	state = {
 		profile: null,
-		postIdParam: null
+		postIdParam: null,
+		dialogOpened: true
 	}
 
 	componentDidMount() {
@@ -37,21 +38,27 @@ class UserProfile extends Component {
 			})
 	}
 
+	openDialogHandler = () => {
+		this.setState(prevState => ({
+			dialogOpened: !prevState.dialogOpened
+		}));
+	}
+
 	render() {
 		const { posts, loading } = this.props.data;
 		const { postIdParam } = this.state;
 
 		const userProfile = loading ? (
       <p>Loading data...</p>
-    ) : posts === null ? (
+    ) : posts === null ? ( // if not loading, but user does not have any posts
       <p>No posts from this user</p>
     ) : !postIdParam ? (
-      posts.map((post) => <Post key={post.postId} post={post} />)
+      posts.map((post) => <Post key={post.postId} post={post} />) // if not loading && posts aren't empty && postIdParam IS null, do nothing
 		) : (
-			posts.map((post) => {
-				if (post.postId !== postIdParam)
+			posts.map((post) => { // if not loading && posts aren't empty && postIdParam IS NOT null
+				if (post.postId !== postIdParam) // if the post isn't the one we're looking for, do nothing
 					return <Post key={post.postId} post={post} />;
-				else return <Post key={post.postId} post={post} openDialog />;
+				else return <Post key={post.postId} post={post} openDialog={this.openDialogHandler} />; // we find the post we want opened so we pass it the `openDialog` prop
 			})
 		);
 
@@ -73,12 +80,13 @@ class UserProfile extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  data: state.data
+	data: state.data
 });
 
 UserProfile.propTypes = {
 	data: PropTypes.object.isRequired,
-	getUserProfile: PropTypes.func.isRequired
+	getUserProfile: PropTypes.func.isRequired,
+	user: PropTypes.object.isRequired
 };
 
 export default connect(mapStateToProps, { getUserProfile })(UserProfile);
