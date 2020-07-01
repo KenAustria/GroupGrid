@@ -15,13 +15,25 @@ const rootReducer = combineReducers({
 	data: dataReducer
 });
 
-const myStore = createStore(
-  rootReducer,
-	initialState,
-	compose(
-    applyMiddleware(...middleware),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  )
-);
+// Safari not able to handle Redux Dev Tool.
+let myStore;
+if (window.navigator.userAgent.includes('Chrome')) {
+	myStore = createStore(
+		rootReducer,
+		initialState,
+		compose(
+			applyMiddleware(...middleware),
+			window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+		)
+	);
+} else {
+	myStore = createStore(
+		rootReducer,
+		initialState,
+		compose(
+			applyMiddleware(...middleware)
+		)
+	);
+}
 
 export default myStore;
