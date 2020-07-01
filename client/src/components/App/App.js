@@ -35,20 +35,20 @@ if (token) {
 
 function App() {
 	return (
-		<div>
-			<Router>
-				<NavBar />
-				<div className="container">
-					<Switch>
-						<Route exact path='/' component={Home}/>
-						<AuthRoute exact path='/login' component={Login} />
-						<AuthRoute exact path='/signup' component={Signup} />
-						<Route exact path='/users/:handle' component={UserProfile} />
-						<Route exact path='/users/:handle/post/:postId' component={UserProfile} />
-					</Switch>
-				</div>
-			</Router>
-		</div>
+			<>
+				<Router>
+					<NavBar />
+					<div className="container">
+						<Switch>
+							<Route exact path='/' component={Home}/>
+							<AuthRoute exact path='/login' component={Login} />
+							<AuthRoute exact path='/signup' component={Signup} />
+							<Route exact path='/users/:handle' component={UserProfile} />
+							<Route exact path='/users/:handle/post/:postId' component={UserProfile} />
+						</Switch>
+					</div>
+				</Router>
+			</>
 	);
 }
 
