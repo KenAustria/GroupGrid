@@ -25,14 +25,11 @@ class CommentForm extends Component {
 		errors: {}
 	}
 
-	componentWillReceiveProps(nextProps) {
-    if (nextProps.ui.errors) {
-      this.setState({ errors: nextProps.ui.errors });
+	static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.ui.errors && prevState.ui.errors) {
+      return { errors: nextProps.ui.errors };
     }
-    if (!nextProps.ui.errors && !nextProps.ui.loading) {
-      this.setState({ body: '' });
-    }
-  }
+	}
 
 	inputChangeHandler = (event) => {
 		this.setState({
@@ -43,6 +40,7 @@ class CommentForm extends Component {
 	submitHandler = (event) => {
 		event.preventDefault();
 		this.props.submitComment( this.props.postId, { body: this.state.body });
+		this.setState({ body: '' })
 	};
 
 	render() {
