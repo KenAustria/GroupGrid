@@ -55,8 +55,29 @@ class PostDialog extends Component {
 	state = {
 		open: false,
 		oldUrl: '',
-		newUrl: ''
+		newUrl: '',
+		getPostData: false
 	}
+
+	componentDidMount() {
+		if (this.props.openDialog && !this.state.getPostData) {
+			this.setState({ getPostData: true });
+			this.openHandler();
+		}
+	}
+
+	componentDidUpdate(prevProps) {
+		if ((this.props.openDialog) && (this.props.user.notificationId !== prevProps.user.notificationId)) {
+			this.openHandler();
+		}
+	}
+
+	UNSAFE_componentWillReceiveProps(nextProps) {
+    if (nextProps.openDialog && !this.state.getPostData) {
+      this.setState({ getPostData: true });
+      this.openHandler();
+    }
+  }
 
 	openHandler = () => {
 		let oldUrl = window.location.pathname;
@@ -76,21 +97,12 @@ class PostDialog extends Component {
 	closeHandler = () => {
 		// revert back to oldUrl
 		window.history.pushState(null, null, this.state.oldUrl);
-		this.setState({ open: false });
+		this.setState({ 
+			open: false,
+			getPostData: false
+		 });
 		this.props.clearErrors();
 	};
-
-	componentDidMount() {
-		if (this.props.openDialog) {
-			this.openHandler()
-		}
-	}
-
-	componentDidUpdate(prevProps) {
-		if ((this.props.openDialog) && (this.props.user.notificationId !== prevProps.user.notificationId)) {
-			this.openHandler();
-		}
-	}
 
 	render() {
 		const {

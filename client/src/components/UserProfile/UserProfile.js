@@ -38,6 +38,14 @@ class UserProfile extends Component {
 			})
 	}
 
+	UNSAFE_componentWillReceiveProps(nextProps) {
+    if (nextProps.match !== this.props.match) {
+      const postId = nextProps.match.params.postId;
+      if (postId)
+        this.setState({ postIdParam: postId, openDialog: true });
+    }
+  }
+
 	openDialogHandler = () => {
 		this.setState(prevState => ({
 			dialogOpened: !prevState.dialogOpened
