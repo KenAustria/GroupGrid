@@ -9,6 +9,8 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "dayjs": "^1.8.21",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
     "jwt-decode": "^2.2.0",
     "live-server": "^1.2.1",
     "progress-bar-webpack-plugin": "^2.1.0",
@@ -18,6 +20,7 @@
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
+    "react-test-renderer": "^16.13.1",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0"
   },
@@ -43,5 +46,8 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://us-central1-groupgrid-1d191.cloudfunctions.net/api"
+  "proxy": "https://us-central1-groupgrid-1d191.cloudfunctions.net/api",
+  "devDependencies": {
+    "jest": "^24.9.0"
+  }
 }
