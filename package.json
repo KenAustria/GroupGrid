@@ -1,0 +1,32 @@
+{
+  "name": "GroupGrid",
+  "version": "1.0.0",
+  "description": "<img src=\"client/src/images/groupgridicon.png\">",
+  "main": "index.js",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "express": "^4.17.1",
+    "firebase-functions": "^3.3.0",
+    "firebase": "^7.8.2",
+    "prettier": "^1.19.1",
+    "react-router-dom": "^5.1.2",
+    "webpack-bundle-analyzer": "^3.7.0"
+  },
+  "devDependencies": {
+    "redux-mock-store": "^1.5.4"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KenAustria/GroupGrid.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KenAustria/GroupGrid/issues"
+  },
+  "homepage": "https://github.com/KenAustria/GroupGrid#readme"
+}
