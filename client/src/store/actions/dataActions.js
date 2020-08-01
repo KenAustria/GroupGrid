@@ -44,7 +44,7 @@ export const likePost = (postId) => (dispatch) => {
 };
 
 export const unlikePost = (postId) => (dispatch) => {
-  axios
+  return axios
     .get(`/post/${postId}/unlike`)
     .then(res => {
       dispatch({

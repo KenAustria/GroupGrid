@@ -75,6 +75,26 @@ describe('dataActions', () => {
 		});
 	})
 
+	// unlikePost - we dispatch UNLIKE_POST with expected payload
+	it('should dispatch an action to unlike a post', () => {
+		moxios.wait(() => {
+			const request = moxios.requests.mostRecent();
+			request.respondWith({
+				status: 200
+			});
+		});
+
+		const expectedActions = [
+			{ type: UNLIKE_POST }
+		]
+
+		const store = mockStore({ posts: [] })
+
+		return store.dispatch(unlikePost()).then(() => {
+			expect(store.getActions()).toEqual(expectedActions);
+		});
+	})
+
 	// SYNC ACTION
 	it('should dispatch an action to clear errors', () => {
 		const initialState = {}
