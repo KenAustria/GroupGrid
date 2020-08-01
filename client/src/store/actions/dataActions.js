@@ -15,8 +15,8 @@ import axios from 'axios';
 
 export const getPosts = () => (dispatch) => {
   dispatch({ type: LOADING_DATA });
-  axios
-    .get('/posts')
+  return axios
+    .get(`/posts`)
     .then(res => {
       dispatch({
         type: SET_POSTS,

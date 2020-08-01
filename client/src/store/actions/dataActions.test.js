@@ -1,5 +1,5 @@
-import axios from 'axios';
 import moxios from 'moxios';
+import expect from 'expect';
 import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
 import {
@@ -24,10 +24,38 @@ import {
 	SET_POST,
 	MARK_NOTIFICATIONS_READ } from '../actions/actionTypes';
 
-const middlewares = [thunk]
-const mockStore = configureMockStore(middlewares)
-
+// SYNC ACTION
 describe('dataActions', () => {
+	const middlewares = [thunk];
+	const mockStore = configureMockStore(middlewares);
+
+	beforeEach(() => {
+		moxios.install();
+	});
+
+	// ASYNC ACTION
+	// getPosts - when calling LOADING_DATA, we dispatch SET_POSTS with expected payload
+	it('should dispatch an action to get posts', () => {
+		moxios.wait(() => {
+			const request = moxios.requests.mostRecent();
+			request.respondWith({
+				status: 200
+			});
+		});
+
+		const expectedActions = [
+			{ type: LOADING_DATA},
+			{ type: SET_POSTS}
+		]
+
+		const store = mockStore({ posts: [] })
+
+		return store.dispatch(getPosts()).then(() => {
+			expect(store.getActions()).toEqual(expectedActions);
+		});
+	})
+
+	// SYNC ACTION
 	it('should dispatch an action to clear errors', () => {
 		const initialState = {}
 		const store = mockStore(initialState)
@@ -37,5 +65,9 @@ describe('dataActions', () => {
 		const actions = store.getActions()
 		const expectedPayload = { type: CLEAR_ERRORS }
 		expect(actions).toEqual([expectedPayload])
+	})
+
+	afterEach(() => {
+		moxios.uninstall();
 	})
 })
