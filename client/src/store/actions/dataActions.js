@@ -32,7 +32,7 @@ export const getPosts = () => (dispatch) => {
 };
 
 export const likePost = (postId) => (dispatch) => {
-  axios
+  return axios
     .get(`/post/${postId}/like`)
     .then(res => {
       dispatch({

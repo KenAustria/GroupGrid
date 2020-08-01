@@ -12,19 +12,19 @@ import {
 	submitComment,
 	clearErrors
 } from '../actions/dataActions';
-import {
-	SET_USER,
-	SET_ERRORS,
-	CLEAR_ERRORS,
-	LOADING_UI,
-	SET_UNAUTHENTICATED,
-	LOADING_USER,
-	LOADING_DATA,
+import { 
 	SET_POSTS,
+	LOADING_DATA,
+	LOADING_UI,
+	LIKE_POST,
+	UNLIKE_POST,
+	DELETE_POST,
+	CREATE_POST,
+	CLEAR_ERRORS,
+	STOP_LOADING_UI,
 	SET_POST,
-	MARK_NOTIFICATIONS_READ } from '../actions/actionTypes';
+	SUBMIT_COMMENT } from '../actions/actionTypes';
 
-// SYNC ACTION
 describe('dataActions', () => {
 	const middlewares = [thunk];
 	const mockStore = configureMockStore(middlewares);
@@ -51,6 +51,26 @@ describe('dataActions', () => {
 		const store = mockStore({ posts: [] })
 
 		return store.dispatch(getPosts()).then(() => {
+			expect(store.getActions()).toEqual(expectedActions);
+		});
+	})
+
+	// likePost - we dispatch LIKE_POST with expected payload
+	it('should dispatch an action to like a post', () => {
+		moxios.wait(() => {
+			const request = moxios.requests.mostRecent();
+			request.respondWith({
+				status: 200
+			});
+		});
+
+		const expectedActions = [
+			{ type: LIKE_POST }
+		]
+
+		const store = mockStore({ posts: [] })
+
+		return store.dispatch(likePost()).then(() => {
 			expect(store.getActions()).toEqual(expectedActions);
 		});
 	})
