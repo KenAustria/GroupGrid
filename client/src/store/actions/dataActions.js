@@ -56,7 +56,7 @@ export const unlikePost = (postId) => (dispatch) => {
 };
 
 export const deletePost = (postId) => (dispatch) => {
-  axios
+  return axios
     .delete(`/post/${postId}`)
     .then(() => {
       dispatch({ type: DELETE_POST, payload: postId });

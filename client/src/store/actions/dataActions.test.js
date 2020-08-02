@@ -55,7 +55,7 @@ describe('dataActions', () => {
 		});
 	})
 
-	// likePost - we dispatch LIKE_POST with expected payload
+	// likePost
 	it('should dispatch an action to like a post', () => {
 		moxios.wait(() => {
 			const request = moxios.requests.mostRecent();
@@ -75,7 +75,7 @@ describe('dataActions', () => {
 		});
 	})
 
-	// unlikePost - we dispatch UNLIKE_POST with expected payload
+	// unlikePost
 	it('should dispatch an action to unlike a post', () => {
 		moxios.wait(() => {
 			const request = moxios.requests.mostRecent();
@@ -91,6 +91,26 @@ describe('dataActions', () => {
 		const store = mockStore({ posts: [] })
 
 		return store.dispatch(unlikePost()).then(() => {
+			expect(store.getActions()).toEqual(expectedActions);
+		});
+	})
+
+	// deletePost
+	it('should dispatch an action to delete a post', () => {
+		moxios.wait(() => {
+			const request = moxios.requests.mostRecent();
+			request.respondWith({
+				status: 200
+			});
+		});
+
+		const expectedActions = [
+			{ type: DELETE_POST }
+		]
+
+		const store = mockStore({ posts: [] })
+
+		return store.dispatch(deletePost()).then(() => {
 			expect(store.getActions()).toEqual(expectedActions);
 		});
 	})
