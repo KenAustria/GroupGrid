@@ -66,7 +66,7 @@ export const deletePost = (postId) => (dispatch) => {
 
 export const createPost = (newPost) => (dispatch) => {
   dispatch({ type: LOADING_UI });
-  axios
+  return axios
     .post('/post', newPost)
     .then(res => {
       dispatch({

@@ -115,6 +115,28 @@ describe('dataActions', () => {
 		});
 	})
 
+	// createPost
+	it('should dispatch an action to create a post', () => {
+		moxios.wait(() => {
+			const request = moxios.requests.mostRecent();
+			request.respondWith({
+				status: 200
+			});
+		});
+
+		const expectedActions = [
+			{ type: LOADING_UI },
+			{ type: CREATE_POST },
+			{ type: CLEAR_ERRORS }
+		]
+
+		const store = mockStore({ posts: [] })
+
+		return store.dispatch(createPost()).then(() => {
+			expect(store.getActions()).toEqual(expectedActions);
+		});
+	})
+
 	// SYNC ACTION
 	it('should dispatch an action to clear errors', () => {
 		const initialState = {}
