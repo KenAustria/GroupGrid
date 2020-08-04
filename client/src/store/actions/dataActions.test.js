@@ -138,26 +138,47 @@ describe('dataActions', () => {
 	})
 
 	// getPost
-it('should dispatch an action to get a post', () => {
-	moxios.wait(() => {
-		const request = moxios.requests.mostRecent();
-		request.respondWith({
-			status: 200
+	it('should dispatch an action to get a post', () => {
+		moxios.wait(() => {
+			const request = moxios.requests.mostRecent();
+			request.respondWith({
+				status: 200
+			});
 		});
-	});
 
-	const expectedActions = [
-		{ type: LOADING_UI },
-		{ type: SET_POST },
-		{ type: STOP_LOADING_UI}
-	]
+		const expectedActions = [
+			{ type: LOADING_UI },
+			{ type: SET_POST },
+			{ type: STOP_LOADING_UI}
+		]
 
-	const store = mockStore({ posts: [] })
+		const store = mockStore({ posts: [] })
 
-	return store.dispatch(getPost()).then(() => {
-		expect(store.getActions()).toEqual(expectedActions);
-	});
-})
+		return store.dispatch(getPost()).then(() => {
+			expect(store.getActions()).toEqual(expectedActions);
+		});
+	})
+
+	// submitComment
+	it('should dispatch an action to submit a comment', () => {
+		moxios.wait(() => {
+			const request = moxios.requests.mostRecent();
+			request.respondWith({
+				status: 200
+			});
+		});
+
+		const expectedActions = [
+			{ type: SUBMIT_COMMENT },
+			{ type: CLEAR_ERRORS }
+		]
+
+		const store = mockStore({ posts: [] })
+
+		return store.dispatch(submitComment()).then(() => {
+			expect(store.getActions()).toEqual(expectedActions);
+		});
+	})
 
 	// SYNC ACTION
 	it('should dispatch an action to clear errors', () => {

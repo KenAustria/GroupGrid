@@ -101,7 +101,7 @@ export const getPost = (postId) => (dispatch) => {
 };
 
 export const submitComment = (postId, commentData) => (dispatch) => {
-  axios
+  return axios
     .post(`/post/${postId}/comment`, commentData)
     .then((res) => {
       dispatch({
