@@ -86,7 +86,7 @@ export const createPost = (newPost) => (dispatch) => {
 
 export const getPost = (postId) => (dispatch) => {
 	dispatch({ type: LOADING_UI });
-	axios
+	return axios
 		.get(`/post/${postId}`)
 		.then(res => {
 			dispatch({
