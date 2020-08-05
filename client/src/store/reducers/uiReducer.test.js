@@ -1,21 +1,18 @@
 import reducer from './uiReducer';
 import { SET_ERRORS, CLEAR_ERRORS, LOADING_UI, STOP_LOADING_UI } from '../actions/actionTypes';
 
+const initialState = {
+	loading: false,
+  errors: null
+}
+
 describe('uiReducer', () => {
 	it('should return the initial state', () => {
-		expect(reducer(undefined, {})).toEqual({
-			loading: false,
-  		errors: null
-		})
+		expect(reducer(undefined, {})).toEqual(initialState)
 	})
 
-	// SET_ERRORS
-
 	it('should clear errors', () => {
-		expect(reducer({
-			loading: false,
-  		errors: null
-		}, {
+		expect(reducer(initialState, {
 			type: CLEAR_ERRORS,
 			loading: false,
   		errors: null
@@ -26,10 +23,7 @@ describe('uiReducer', () => {
 	})
 
 	it('should set ui', () => {
-		expect(reducer({
-			loading: false,
-  		errors: null
-		}, {
+		expect(reducer(initialState, {
 			type: LOADING_UI,
 			loading: true,
   		errors: null
@@ -40,10 +34,7 @@ describe('uiReducer', () => {
 	})
 
 	it('should set ui', () => {
-		expect(reducer({
-			loading: false,
-  		errors: null
-		}, {
+		expect(reducer(initialState, {
 			type: STOP_LOADING_UI,
 			loading: false,
   		errors: null
