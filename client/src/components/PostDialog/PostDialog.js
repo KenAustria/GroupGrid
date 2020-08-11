@@ -77,7 +77,7 @@ class PostDialog extends Component {
       this.setState({ getPostData: true });
       this.openHandler();
     }
-  }
+	}
 
 	openHandler = () => {
 		let oldUrl = window.location.pathname;
@@ -188,11 +188,6 @@ const mapStateToProps = (state) => ({
 const mapActionsToProps = {
 	getPost,
 	clearErrors
-};
-
-PostDialog.propTypes = {
-	getPost: PropTypes.func.isRequired,
-	clearErrors: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(PostDialog));
