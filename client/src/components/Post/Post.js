@@ -36,9 +36,9 @@ const styles = {
 };
 class Post extends Component {
 	render() {
-		const { classes } = this.props;
 		dayjs.extend(relativeTime);
 		const {
+			classes,
       post: {
         body,
         createdAt,
@@ -53,10 +53,12 @@ class Post extends Component {
 				credentials: {handle}
 			}
 		} = this.props;
+
 		const deleteButton =
       (authenticated && (userHandle === handle)) ? (
         <DeletePost postId={postId} />
-      ) : null;
+			) : null;
+
 		return (
 			<Card className={classes.card}>
 				<CardContent className={classes.content}>
@@ -85,7 +87,8 @@ class Post extends Component {
 Post.propTypes = {
   user: PropTypes.object.isRequired,
 	post: PropTypes.object.isRequired,
-	openDialog: PropTypes.bool
+	openDialog: PropTypes.bool,
+	classes: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
