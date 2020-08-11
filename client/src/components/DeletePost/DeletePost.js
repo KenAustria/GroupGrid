@@ -45,7 +45,7 @@ class DeletePost extends Component {
 			<Fragment>
 				<Tooltip title='Delete a Post'>
 					<IconButton onClick={this.openHandler} className={classes.deleteButton}>
-						<DeleteOutline color='secondary' />
+						<DeleteOutline color='secondary' data-testid='delete-icon' />
 					</IconButton>
 				</Tooltip>
         <Dialog open={this.state.open} onClose={this.closeHandler} fullWidth maxWidth='sm'>

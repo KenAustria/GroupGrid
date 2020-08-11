@@ -15,4 +15,9 @@ it('renders with Redux', () => {
 	const {} = renderWithRedux(<DeletePost />);
 });
 
+it('can render a delete icon', () => {
+	const { getByTestId } = renderWithRedux(<DeletePost />);
+	expect(getByTestId('delete-icon')).toHaveTextContent('');
+});
+
 afterEach(cleanup);
