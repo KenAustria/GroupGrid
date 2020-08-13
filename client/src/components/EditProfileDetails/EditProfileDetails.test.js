@@ -15,4 +15,9 @@ it('renders with Redux', () => {
 	const {} = renderWithRedux(<EditProfileDetails />);
 });
 
+it('can render an edit icon', () => {
+	const { getByTestId } = renderWithRedux(<EditProfileDetails />);
+	expect(getByTestId('edit-icon')).toHaveTextContent('');
+});
+
 afterEach(cleanup);

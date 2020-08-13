@@ -76,7 +76,7 @@ class EditProfileDetails extends Component {
           onClick={this.openDialogHandler}
           btnClassName={classes.button}
         >
-          <EditIcon color='primary' />
+          <EditIcon color='primary' data-testid='edit-icon' />
         </MyButton>
 				<Dialog open={this.state.open} onClose={this.closeDialogHandler} fullWidth maxWidth='sm'>
 					<DialogTitle>Edit Profile Details</DialogTitle>
