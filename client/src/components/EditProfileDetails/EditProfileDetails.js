@@ -29,6 +29,11 @@ class EditProfileDetails extends Component {
 		open: false
 	};
 
+	componentDidMount() {
+		const { credentials } = this.props;
+		this.mapUserDetailsToState(credentials);
+	}
+
 	mapUserDetailsToState = (credentials) => {
     this.setState({
       bio: credentials.bio ? credentials.bio : '',
@@ -44,11 +49,6 @@ class EditProfileDetails extends Component {
 
 	closeDialogHandler = () => {
 		this.setState({ open: false });
-	}
-
-	componentDidMount() {
-		const { credentials } = this.props;
-		this.mapUserDetailsToState(credentials);
 	}
 
 	inputChangeHandler = (event) => {
