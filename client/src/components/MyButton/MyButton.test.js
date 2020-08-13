@@ -15,4 +15,9 @@ it('renders with Redux', () => {
 	const {} = renderWithRedux(<MyButton />);
 });
 
+it('can render a button', () => {
+	const { getByTestId } = renderWithRedux(<MyButton />);
+	expect(getByTestId('icon')).toHaveTextContent('');
+});
+
 afterEach(cleanup);
