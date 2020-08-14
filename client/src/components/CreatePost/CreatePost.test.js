@@ -20,4 +20,9 @@ it('can render a create icon', () => {
 	expect(getByTestId('create-post-icon')).toHaveTextContent('');
 });
 
+it('can render a title', () => {
+	const { getByTitle } = renderWithRedux(<CreatePost />);
+	expect(getByTitle('Create a Post')).toBeInTheDocument();
+});
+
 afterEach(cleanup);
