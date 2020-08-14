@@ -84,11 +84,11 @@ class CreatePost extends Component {
 		return (
 			<Fragment>
 				<MyButton title='Create a Post' onClick={this.openHandler}>
-					<AddIcon color='secondary' />
+					<AddIcon color='secondary'/>
         </MyButton>
 				<Dialog open={this.state.open} onClose={this.closeHandler} fullWidth maxWidth='sm'>
 					<MyButton title='Cancel' onClose={this.closeHandler} tipClassName={classes.closeButton}>
-						<CloseIcon color='secondary' />
+						<CloseIcon color='secondary'/>
         	</MyButton>
 					<DialogTitle>Create a Post</DialogTitle>
 					<DialogContent>
