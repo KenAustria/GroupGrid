@@ -15,4 +15,9 @@ it('renders with Redux', () => {
 	const {} = renderWithRedux(<CreatePost />);
 });
 
+it('can render a create icon', () => {
+	const { getByTestId } = renderWithRedux(<CreatePost />);
+	expect(getByTestId('create-post-icon')).toHaveTextContent('');
+});
+
 afterEach(cleanup);
