@@ -15,4 +15,9 @@ it('renders with Redux', () => {
 	const {} = renderWithRedux(<Notifications />);
 });
 
+it('can render an icon button', () => {
+	const { getByTestId } = renderWithRedux(<Notifications />);
+	expect(getByTestId('icon-button')).toHaveTextContent('');
+});
+
 afterEach(cleanup);

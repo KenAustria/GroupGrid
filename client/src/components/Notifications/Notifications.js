@@ -54,7 +54,7 @@ class Notifications extends Component {
 					<NotificationsIcon />
 				</Badge>
 			))
-		: (notificationsIcon = <NotificationsIcon />) // no unread notifications	
+		: (notificationsIcon = <NotificationsIcon />) // no unread notifications
 		} else {
 			notificationsIcon = <NotificationsIcon />; // no notifications
 		}
@@ -93,7 +93,8 @@ class Notifications extends Component {
           <IconButton
             aria-owns={anchorEl ? 'simple-menu' : undefined}
             aria-haspopup='true'
-            onClick={this.openHandler}
+						onClick={this.openHandler}
+						data-testid='icon-button'
           >
             {notificationsIcon}
           </IconButton>
@@ -115,7 +116,7 @@ const mapStateToProps = (state) => ({
   notifications: state.user.notifications
 });
 
-Notification.propTypes = {
+Notifications.propTypes = {
 	markNotificationsRead: PropTypes.func.isRequired,
 	notification: PropTypes.object.isRequired
 };
