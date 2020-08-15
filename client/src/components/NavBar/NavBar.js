@@ -4,6 +4,8 @@ import Notifications from '../Notifications/Notifications';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import './NavBar.css';
+// Libraries
+import { BrowserRouter as Router } from 'react-router-dom';
 // Material-UI
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -21,31 +23,33 @@ class NavBar extends Component {
 		const { authenticated } = this.props;
     return (
 			<div>
-				<AppBar position='static'>
-					<Toolbar className='navContainer'>
-						{authenticated ? (
-							<Fragment>
-								<CreatePost />
-								<Link to='/'>
-									<Tooltip title='Home' placement='top'>
-										<IconButton>
-											<HomeIcon className='iconColor' />
-										</IconButton>
-									</Tooltip>
-								</Link>
-								<Notifications />
-							</Fragment>
-						) : (
-							<Fragment>
-								<Typography variant='h6'>
-									<Button color='inherit' component={Link} to='/'>GroupGrid</Button>
-								</Typography>
-								<Button color='inherit' component={Link} to='/login'>Login</Button>
-								<Button color='inherit' component={Link} to='/signup'>Signup</Button>
-							</Fragment>
-						)}
-					</Toolbar>
-				</AppBar>
+				<Router>
+					<AppBar position='static'>
+						<Toolbar className='navContainer'>
+							{authenticated ? (
+								<Fragment>
+									<CreatePost />
+									<Link to='/'>
+										<Tooltip title='Home' placement='top'>
+											<IconButton>
+												<HomeIcon className='iconColor' />
+											</IconButton>
+										</Tooltip>
+									</Link>
+									<Notifications/>
+								</Fragment>
+							) : (
+								<Fragment>
+									<Typography variant='h6'>
+										<Button color='inherit' component={Link} to='/'>GroupGrid</Button>
+									</Typography>
+									<Button color='inherit' component={Link} to='/login'>Login</Button>
+									<Button color='inherit' component={Link} to='/signup'>Signup</Button>
+								</Fragment>
+							)}
+						</Toolbar>
+					</AppBar>
+				</Router>
 			</div>
     );
   }
