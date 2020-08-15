@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './Signup.css';
+// Libraries
+import { BrowserRouter as Router } from 'react-router-dom';
 // Redux
 import { signupUser } from '../../store/actions/userActions';
 import { connect } from 'react-redux';
@@ -136,7 +138,7 @@ class Signup extends Component {
 						</Button>
 						<br />
 						<small>
-							Already have an account? Log in <Link to="/login">here</Link>
+							Already have an account? Log in <Router><Link to="/login">here</Link></Router>
 						</small>
 					</form>
 				</Grid>
