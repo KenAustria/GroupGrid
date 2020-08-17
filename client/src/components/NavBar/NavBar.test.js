@@ -21,8 +21,13 @@ it('renders `GroupGrid` text', () => {
 });
 
 it('renders `Login` text', () => {
-	const {getByText} = renderWithRedux(<Login />);
+	const {getByText} = renderWithRedux(<NavBar />);
 	expect(screen.getByText(/Login/)).toBeInTheDocument();
+});
+
+it('renders `Signup` text', () => {
+	const {getByText} = renderWithRedux(<NavBar />);
+	expect(screen.getByText(/Signup/)).toBeInTheDocument();
 });
 
 afterEach(cleanup);
