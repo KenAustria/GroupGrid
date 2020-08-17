@@ -20,4 +20,9 @@ it('renders `GroupGrid` text', () => {
 	expect(screen.getByText(/GroupGrid/)).toBeInTheDocument();
 });
 
+it('renders `Login` text', () => {
+	const {getByText} = renderWithRedux(<Login />);
+	expect(screen.getByText(/Login/)).toBeInTheDocument();
+});
+
 afterEach(cleanup);
