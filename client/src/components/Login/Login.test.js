@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import Login from './Login';
-import { cleanup, render } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import myStore from '../../store/myStore';
 
@@ -13,6 +13,11 @@ const renderWithRedux = () => render(
 
 it('renders with Redux', () => {
 	const {} = renderWithRedux(<Login />);
+});
+
+it('renders `GroupGrid` text', () => {
+	const {getByText} = renderWithRedux(<Login />);
+	expect(screen.getByText(/GroupGrid/)).toBeInTheDocument();
 });
 
 afterEach(cleanup);
