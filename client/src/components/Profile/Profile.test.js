@@ -25,4 +25,9 @@ it('renders `Login` text', () => {
 	expect(screen.getByText(/Login/)).toBeInTheDocument();
 });
 
+it('renders `Signup` text', () => {
+	const {getByText} = renderWithRedux(<Profile />);
+	expect(screen.getByText(/Signup/)).toBeInTheDocument();
+});
+
 afterEach(cleanup);
