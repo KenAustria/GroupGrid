@@ -20,4 +20,9 @@ it('renders `No profile found, please login again` text', () => {
 	expect(screen.getByText(/No profile found, please login again/)).toBeInTheDocument();
 });
 
+it('renders `Login` text', () => {
+	const {getByText} = renderWithRedux(<Profile />);
+	expect(screen.getByText(/Login/)).toBeInTheDocument();
+});
+
 afterEach(cleanup);
