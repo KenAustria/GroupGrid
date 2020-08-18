@@ -13,14 +13,12 @@ import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import { deletePost } from '../../store/actions/dataActions';
 
-
 const styles = {
   deleteButton: {
     position: 'absolute',
     left: '80%'
   }
 };
-
 class DeletePost extends Component {
 	state = {
     open: false
@@ -45,12 +43,12 @@ class DeletePost extends Component {
 			<Fragment>
 				<Tooltip title='Delete a Post'>
 					<IconButton onClick={this.openHandler} className={classes.deleteButton}>
-						<DeleteOutline color='secondary' data-testid='delete-icon' />
+						<DeleteOutline color='secondary' data-testid='delete-icon'/>
 					</IconButton>
 				</Tooltip>
         <Dialog open={this.state.open} onClose={this.closeHandler} fullWidth maxWidth='sm'>
           <DialogTitle>
-            Are you sure you want to delete this post ?
+            Are you sure you want to delete this post?
           </DialogTitle>
           <DialogActions>
             <Button onClick={this.closeHandler} color='primary'>
