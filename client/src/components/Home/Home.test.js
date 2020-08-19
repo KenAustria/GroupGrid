@@ -15,4 +15,9 @@ it('renders with Redux', () => {
 	const {} = renderWithRedux(<Home />);
 });
 
+it('can render a loading text', () => {
+	const { getByText } = renderWithRedux(<Home />);
+	expect(getByText(/Loading/)).toHaveTextContent('Loading');
+});
+
 afterEach(cleanup);
