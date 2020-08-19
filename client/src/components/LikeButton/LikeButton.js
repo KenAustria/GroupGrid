@@ -32,7 +32,7 @@ export class LikeButton extends Component {
       <Router>
 				<Link to='/login'>
 					<MyButton title='Like'>
-						<FavoriteBorder color='primary' />
+						<FavoriteBorder color='primary' data-testid='favorite-icon' />
 					</MyButton>
 				</Link>
 			</Router>
