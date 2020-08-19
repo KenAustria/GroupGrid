@@ -15,4 +15,9 @@ it('renders with Redux', () => {
 	const {} = renderWithRedux(<PostDialog />);
 });
 
+it('can render an unfold icon', () => {
+	const { getByTestId } = renderWithRedux(<PostDialog />);
+	expect(getByTestId('unfold-icon')).toHaveTextContent('');
+});
+
 afterEach(cleanup);

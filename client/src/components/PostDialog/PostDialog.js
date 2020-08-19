@@ -150,16 +150,17 @@ class PostDialog extends Component {
 				<CommentForm postId={postId} />
         <Comments comments={comments} />
       </Grid>
-    );
+		);
+
 		return (
 			<Fragment>
 				<MyButton title='Expand Post' onClick={this.openHandler} className={classes.expandButton}>
-					<UnfoldMore color='primary' />
+					<UnfoldMore color='primary' data-testid='unfold-icon'/>
         </MyButton>
 				<Dialog open={this.state.open} onClose={this.closeHandler} fullWidth maxWidth='sm'>
 					<DialogContent className={classes.dialogContent}>
-						<MyButton title='Close' onClick={this.closeHandler}>
-							<CloseIcon />
+						<MyButton title='Close' onClick={this.closeHandler} >
+							<CloseIcon/>
         		</MyButton>
 						{postDialog}
 					</DialogContent>
