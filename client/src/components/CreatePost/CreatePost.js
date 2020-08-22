@@ -88,7 +88,7 @@ class CreatePost extends Component {
         </MyButton>
 				<Dialog open={this.state.open} onClose={this.closeHandler} fullWidth maxWidth='sm'>
 					<MyButton title='Cancel' onClose={this.closeHandler} tipClassName={classes.closeButton}>
-						<CloseIcon color='secondary'/>
+						<CloseIcon color='secondary' data-testid='close-icon'/>
         	</MyButton>
 					<DialogTitle>Create a Post</DialogTitle>
 					<DialogContent>
@@ -103,7 +103,7 @@ class CreatePost extends Component {
                 helperText={errors.body}
                 className={classes.textField}
                 onChange={this.inputChangeHandler}
-                fullWidth
+								fullWidth
 							/>
 							<Button type='submit' variant='contained' color='primary' className={classes.submitButton} disabled={loading} >
 								Submit
