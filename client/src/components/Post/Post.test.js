@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import Post from './Post';
-import { cleanup, render } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import myStore from '../../store/myStore';
 import { MemoryRouter } from 'react-router-dom';
@@ -19,5 +19,15 @@ it('renders with Redux', () => {
 		</MemoryRouter>
 	);
 });
+
+// it('renders `Likes` text', () => {
+// 	const {getByText} = renderWithRedux(<Post />);
+// 	expect(screen.getByText(/GroupGrid/)).toBeInTheDocument();
+// });
+
+// it('renders `Comments` text', () => {
+// 	const {getByText} = renderWithRedux(<Post />);
+// 	expect(screen.getByText(/GroupGrid/)).toBeInTheDocument();
+// });
 
 afterEach(cleanup);

@@ -79,7 +79,7 @@ class EditProfileDetails extends Component {
           <EditIcon color='primary' data-testid='edit-icon' />
         </MyButton>
 				<Dialog open={this.state.open} onClose={this.closeDialogHandler} fullWidth maxWidth='sm'>
-					<DialogTitle>Edit Profile Details</DialogTitle>
+					<DialogTitle alt='Edit Profile Details'>Edit Profile Details</DialogTitle>
 						<TextField
 							name='bio'
 							type='text'
@@ -117,7 +117,7 @@ class EditProfileDetails extends Component {
 							fullwidth
 						/>
 					<DialogActions>
-						<Button onClick={this.closeDialogHandler} color='primary' variant='contained'>
+						<Button onClick={this.closeDialogHandler} color='primary' variant='contained' data-testid='cancel-button'>
 							Cancel
 						</Button>
 						<Button onClick={this.submitUserDetailsHandler} color='primary' variant='contained'>

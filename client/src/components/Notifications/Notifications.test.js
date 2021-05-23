@@ -20,4 +20,9 @@ it('can render an icon button', () => {
 	expect(getByTestId('icon-button')).toHaveTextContent('');
 });
 
+it('can render a menu', () => {
+	const { getByTestId } = renderWithRedux(<Notifications />);
+	expect(getByTestId('menu')).toHaveTextContent('');
+});
+
 afterEach(cleanup);

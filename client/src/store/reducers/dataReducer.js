@@ -8,13 +8,13 @@ import {
 	SET_POST,
 	SUBMIT_COMMENT } from '../actions/actionTypes';
 
-const initialState = {
+export const initialDataState = {
   posts: [],
   post: {},
   loading: false
 };
 
-export default function(state = initialState, action) {
+export default function(state = initialDataState, action) {
   switch (action.type) {
     case LOADING_DATA:
       return {

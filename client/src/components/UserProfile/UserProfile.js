@@ -44,12 +44,6 @@ class UserProfile extends Component {
       if (postId)
         this.setState({ postIdParam: postId, openDialog: true });
     }
-  }
-
-	openDialogHandler = () => {
-		this.setState(prevState => ({
-			dialogOpened: !prevState.dialogOpened
-		}));
 	}
 
 	render() {

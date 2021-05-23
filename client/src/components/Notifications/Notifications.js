@@ -73,7 +73,7 @@ class Notifications extends Component {
             );
 
           return (
-            <MenuItem key={notification.createdAt} onClick={this.closeHandler}>
+            <MenuItem key={notification.createdAt} onClick={this.closeHandler} >
               {icon}
               <Typography component={Link} color='default' variant='body1' to={`/users/${notification.recipient}/post/${notification.postId}`}>
                 {notification.sender} {verb} your post {time}
@@ -103,7 +103,7 @@ class Notifications extends Component {
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
           onClose={this.closeHandler}
-          onEntered={this.onMenuOpened}
+					onEntered={this.onMenuOpened}
         >
           {notificationsMarkup}
         </Menu>

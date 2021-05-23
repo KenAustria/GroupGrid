@@ -38,7 +38,7 @@ export class LikeButton extends Component {
 			</Router>
 			) : this.likeCheckerHandler() ? (
 				<Router>
-					<MyButton title='Unlike' onClick={this.unlikePostHandler}>
+					<MyButton alt='Unlike' title='Unlike' onClick={this.unlikePostHandler}>
 						<FavoriteIcon color='primary' />
 					</MyButton>
 				</Router>

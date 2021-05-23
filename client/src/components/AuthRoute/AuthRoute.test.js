@@ -1,7 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import AuthRoute from './AuthRoute';
-// import App from './App';
 import { MemoryRouter } from 'react-router-dom';
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';

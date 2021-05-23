@@ -159,8 +159,8 @@ class PostDialog extends Component {
         </MyButton>
 				<Dialog open={this.state.open} onClose={this.closeHandler} fullWidth maxWidth='sm'>
 					<DialogContent className={classes.dialogContent}>
-						<MyButton title='Close' onClick={this.closeHandler} >
-							<CloseIcon/>
+						<MyButton title='Close' onClick={this.closeHandler}>
+							<CloseIcon />
         		</MyButton>
 						{postDialog}
 					</DialogContent>

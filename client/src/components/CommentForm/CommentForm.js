@@ -58,13 +58,14 @@ class CommentForm extends Component {
             value={this.state.body}
             onChange={this.inputChangeHandler}
             fullWidth
-            className={classes.textField}
+						className={classes.textField}
           />
           <Button
             type='submit'
             variant='contained'
             color='primary'
-            className={classes.button}
+						className={classes.button}
+						alt='submit'
           >
             Submit
           </Button>

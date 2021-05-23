@@ -20,14 +20,22 @@ it('can render a create icon', () => {
 	expect(getByTestId('create-post-icon')).toHaveTextContent('');
 });
 
-it('can render a close icon', () => {
-	const { queryByTestId } = renderWithRedux(<CreatePost />);
-	expect(queryByTestId('close-icon')).toBeNull();
-});
+// it('can render a close icon', () => {
+// 	const { queryByTestId } = renderWithRedux(<CreatePost />);
+// 	expect(queryByTestId('close-icon')).toBeNull();
+// });
 
 it('can render a title', () => {
 	const { getByTitle } = renderWithRedux(<CreatePost />);
 	expect(getByTitle(/Create a Post/)).toBeInTheDocument();
 });
+
+// TextField
+// it('can render a share you thoughts label', () => {
+// 	const { queryByTitle } = renderWithRedux(<CreatePost />);
+// 	expect(queryByTitle(/Hi/)).toBeNull();
+// });
+
+// Submit Button
 
 afterEach(cleanup);

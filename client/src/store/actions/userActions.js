@@ -1,4 +1,4 @@
-import { 
+import {
 	SET_USER,
 	SET_ERRORS,
 	CLEAR_ERRORS,
@@ -13,7 +13,7 @@ import axios from 'axios';
 
 export const loginUser = (userData, history) => (dispatch) => {
   dispatch({ type: LOADING_UI });
-  axios
+  return axios
     .post('/login', userData)
     .then((res) => {
 			setAuthorizationHeader(res.data.token);
@@ -50,7 +50,7 @@ export const signupUser = (newUserData, history) => (dispatch) => {
 export const getUserData = () => (dispatch) => {
 	dispatch({ type: LOADING_USER });
 	// send get request, if response exist, then dispatch SET_USER action
-	axios
+	return axios
     .get('/user')
     .then((res) => {
       dispatch({
