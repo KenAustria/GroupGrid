@@ -1,5 +1,6 @@
 import React from "react";
 import MyButton from "../MyButton";
+import EditProfileDetails from "../EditProfileDetails";
 // Redux Toolkit
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -159,7 +160,7 @@ const Profile = ({ classes }) => {
             <MyButton tip='Logout' onClick={handleLogout}>
               <KeyboardReturn color='primary' />
             </MyButton>
-            {/* <EditProfileDetails /> */}
+            <EditProfileDetails />
           </div>
         </Paper>
       </Router>
