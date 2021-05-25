@@ -3,7 +3,10 @@ import MyButton from "../MyButton";
 // Redux Toolkit
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { logoutUser } from "../../features/users/usersSlice";
+import {
+  logoutUser,
+  uploadProfileImage,
+} from "../../features/users/usersSlice";
 // Libraries
 import { BrowserRouter as Router } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -74,6 +77,18 @@ const Profile = ({ classes }) => {
   const credentials = useSelector((state) => state.users.credentials);
   const dispatch = useDispatch();
 
+  handleProfileImageChange = (event) => {
+    const image = event.target.files[0];
+    const formData = new FormData();
+    formData.append("image", image, image.name);
+    dispatch(uploadProfileImage(formData));
+  };
+
+  handlePreProfileImageChange = () => {
+    const fileInput = document.getElementById("imageInput");
+    fileInput.click();
+  };
+
   const handleLogout = () => {
     dispatch(logoutUser());
   };
@@ -93,11 +108,11 @@ const Profile = ({ classes }) => {
                 type='file'
                 id='imageInput'
                 hidden='hidden'
-                onChange={this.profileImageChangeHandler}
+                onChange={handleProfileImageChange}
               />
               <MyButton
                 title='Update Profile Photo'
-                onClick={this.preProfileImageChangeHandler}
+                onClick={handlePreProfileImageChange}
                 btnClassName='button'>
                 <EditIcon color='primary' />
               </MyButton>

@@ -60,8 +60,18 @@ export const logoutUser = () => (dispatch) => {
 	localStorage.removeItem('FirebaseIdToken');
 	// remove Authorization header from axios defaults
 	delete axios.defaults.headers.common['Authorization'];
-	dispatch(setAuthenticated)
+	dispatch(setAuthenticated())
 };
+
+export const uploadProfileImage = (formData) => (dispatch) => {
+	dispatch(loadingUser())
+	axios
+    .post('/user/profileImage', formData)
+    .then(() => {
+      dispatch(getUserData());
+    })
+    .catch((err) => console.log(err));
+}
 
 const usersSlice = createSlice({
   name: 'users',
@@ -77,10 +87,13 @@ const usersSlice = createSlice({
 			state.authenticated = true
 			state.loading = false
 			return action.payload
+		},
+		loadingUser(state, action) {
+			state.loading = true
 		}
   },
 })
 
-export const { setAuthenticated, setUnauthenticated, setUser } = usersSlice.actions
+export const { setAuthenticated, setUnauthenticated, setUser, loadingUser } = usersSlice.actions
 
 export default usersSlice.reducer
