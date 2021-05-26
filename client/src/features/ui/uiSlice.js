@@ -13,14 +13,14 @@ const uiSlice = createSlice({
 			state.loading = false
 			state.errors = action.payload
 		},
-		clearErrors(state) {
+		clearErrors(state, action) {
 			state.loading = false
 			state.errors = null
 		},
-		loadingUi(state) {
+		loadingUi(state, action) {
 			state.loading = true
 		},
-		stopLoadingUi(state) {
+		stopLoadingUi(state, action) {
 			state.loading = false
 		}
   },

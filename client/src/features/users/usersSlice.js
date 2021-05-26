@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { setErrors, clearErrors, loadingUi } from "../ui/uiSlice"
-import axios from "axios"
+import { setErrors, clearErrors, loadingUi } from '../ui/uiSlice'
+import axios from 'axios'
 
 const initialState = {
   authenticated: false,
@@ -10,78 +10,86 @@ const initialState = {
 	loading: false
 };
 
-const setAuthorizationHeader = (token) => {
+const setAuthorizationHeader = token => {
   const FirebaseIdToken = `Bearer ${token}`;
 	localStorage.setItem('FirebaseIdToken', FirebaseIdToken);
   axios.defaults.headers.common['Authorization'] = FirebaseIdToken;
 };
 
-export const signupUser = (newUserData, history) => (dispatch) => {
-  dispatch(loadingUi());
-  axios
-    .post('/signup', newUserData)
-    .then((res) => {
-      setAuthorizationHeader(res.data.token);
-      dispatch(getUserData());
-      dispatch(clearErrors);
-      history.push('/');
-    })
-    .catch((err) => {
-      dispatch(setErrors(err.response.data));
-    });
-};
-
-export const getUserData = () => (dispatch) => {
-	dispatch(loadingUi());
-	return axios
-    .get('/user')
-    .then((res) => {
-			dispatch(setUser(res.data))
-    })
-    .catch((err) => console.log(err));
-};
-
-export const loginUser = (userData, history) => (dispatch) => {
+export const loginUser = (userData, history) => dispatch => {
   dispatch(loadingUi());
   return axios
     .post('/login', userData)
-    .then((res) => {
+    .then(res => {
 			setAuthorizationHeader(res.data.token);
       dispatch(getUserData());
-      dispatch(clearErrors);
+      dispatch(clearErrors());
       history.push('/');
     })
-    .catch((err) => {
-      dispatch(setErrors(err.response.data));
-    });
+    .catch(err => dispatch(setErrors(err.response.data)));
 };
 
-export const logoutUser = () => (dispatch) => {
+export const signupUser = (newUserData, history) => dispatch => {
+  dispatch(loadingUi());
+  axios
+    .post('/signup', newUserData)
+    .then(res => {
+      setAuthorizationHeader(res.data.token);
+      dispatch(getUserData());
+      dispatch(clearErrors());
+      history.push('/');
+    })
+    .catch(err => dispatch(setErrors(err.response.data)))
+};
+
+export const getUserData = () => dispatch => {
+	dispatch(loadingUi());
+	return axios
+    .get('/user')
+    .then(res => dispatch(setUser(res.data)))
+    .catch(err => console.log(err))
+};
+
+export const logoutUser = () => dispatch => {
 	localStorage.removeItem('FirebaseIdToken');
-	// remove Authorization header from axios defaults
 	delete axios.defaults.headers.common['Authorization'];
 	dispatch(setAuthenticated())
 };
 
-export const uploadProfileImage = (formData) => (dispatch) => {
+export const uploadProfileImage = formData => dispatch => {
 	dispatch(loadingUser())
 	axios
     .post('/user/profileImage', formData)
     .then(() => {
       dispatch(getUserData());
     })
-    .catch((err) => console.log(err));
+    .catch(err => console.log(err));
 }
 
-export const editUserDetails = (userDetails) => (dispatch) => {
+export const editUserDetails = userDetails => dispatch => {
   dispatch(loadingUser())
   axios
     .post('/user', userDetails)
     .then(() => {
       dispatch(getUserData());
     })
-    .catch((err) => console.log(err));
+    .catch(err => console.log(err));
 };
+
+export const getUserProfile = userHandle => dispatch => {
+	dispatch(loadingData())
+	axios
+		.get(`/user/${userHandle}`)
+		.then(res => dispatch(setPosts(res.data.posts)))
+		.catch(err => dispatch(setPost(null)))
+}
+
+export const markNotificationsRead = notificationIds => dispatch => {
+	axios
+		.post(`/notifications`, notificationIds)
+		.then(res => dispatch(markNotificationsRead()))
+		.catch(err => console.log(err))
+}
 
 const usersSlice = createSlice({
   name: 'users',
@@ -100,10 +108,19 @@ const usersSlice = createSlice({
 		},
 		loadingUser(state, action) {
 			state.loading = true
+		},
+		likePost(state, action) {
+		
+		},
+		unlikePost(state, action) {
+
+		},
+		markNotificationsRead(state, action) {
+
 		}
   },
 })
 
-export const { setAuthenticated, setUnauthenticated, setUser, loadingUser } = usersSlice.actions
+export const { setAuthenticated, setUnauthenticated, setUser, loadingUser, likePost, unlikePost, markNotificationsRead  } = usersSlice.actions
 
 export default usersSlice.reducer
