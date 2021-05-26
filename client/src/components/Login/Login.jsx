@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import GroupGridIcon from "../../images/groupgridicon.png";
-import { loginUser } from "../features/users/usersSlice";
-import { loadingUi } from "../features/ui/uiSlice";
 import "./Login.css";
-// Libraries
-import { BrowserRouter as Router } from "react-router-dom";
-import { Link } from "react-router-dom";
+// Redux Toolkit
+import { loginUser } from "../../features/users/usersSlice";
+import { loadingUi } from "../../features/ui/uiSlice";
 import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+// Libraries
+import { BrowserRouter as Router } from "react-router-dom";
+import { Link } from "react-router-dom";
 // Material-UI
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { withStyles } from "@material-ui/core/styles";
@@ -34,10 +35,10 @@ const Login = ({ classes }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
-  const history = useHistory();
-  const dispatch = useDispatch();
   const loading = useSelector((state) => state.ui.loading);
   const uiErrors = useSelector((state) => state.ui.errors);
+  const dispatch = useDispatch();
+  const history = useHistory();
   const prevProps = useRef();
 
   useEffect(() => {
@@ -71,8 +72,8 @@ const Login = ({ classes }) => {
             type='email'
             label='Email'
             className={classes.textField}
-            // helperText={errors.email} // helperText is not working
-            // error={errors.email ? true : false}
+            helperText={errors.email}
+            error={errors.email ? true : false}
             value={email}
             onChange={(event) => setEmail(event.target.value)}
             fullWidth
@@ -83,17 +84,17 @@ const Login = ({ classes }) => {
             type='password'
             label='Password'
             className={classes.textField}
-            // helperText={errors.password} // helperText is not working
-            // error={errors.password ? true : false}
+            helperText={errors.password}
+            error={errors.password ? true : false}
             value={password}
             onChange={(event) => setPassword(event.target.value)}
             fullWidth
           />
-          {/* {errors.general && (
+          {errors.general && (
             <Typography variant='body2' className='error'>
               {errors.general}
             </Typography>
-          )} */}
+          )}
           <Button
             type='submit'
             variant='contained'

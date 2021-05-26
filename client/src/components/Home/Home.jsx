@@ -1,37 +1,39 @@
 import React, { useState, useEffect } from "react";
+import Profile from "../Profile/";
 import Post from "../Post";
-// Material-UI
-import Grid from "@material-ui/core/Grid";
+// Redux Toolkit
+import { getPosts } from "../../features/data/dataSlice";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 // Libraries
 import { BrowserRouter as Router } from "react-router-dom";
 import axios from "axios";
+// Material-UI
+import Grid from "@material-ui/core/Grid";
 
 const Home = () => {
-  const [posts, setPosts] = useState([]);
+  const posts = useSelector((state) => state.data.posts);
+  const loading = useSelector((state) => state.data.loading);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios("/posts");
-      setPosts(result.data);
-    };
-
-    fetchData();
+    dispatch(getPosts());
   });
 
-  let recentPostsMarkup = posts ? (
-    posts.map((post) => <Post key={post.postId} post={post} />)
-  ) : (
+  let currentPosts = loading ? (
     <p>Loading..</p>
+  ) : (
+    posts.map((post) => <Post key={post.postId} post={post} />)
   );
 
   return (
     <Router>
       <Grid container spacing={2}>
         <Grid item sm={4} xl={12}>
-          <p>Profile</p>
+          <Profile />
         </Grid>
         <Grid item sm={8} xl={12}>
-          {recentPostsMarkup}
+          {currentPosts}
         </Grid>
       </Grid>
     </Router>

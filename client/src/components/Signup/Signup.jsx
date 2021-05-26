@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import "./Signup.css";
+// Redux Toolkit
+import { signupUser } from "../../features/users/usersSlice";
+import { useDispatch } from "react-redux";
 // Libraries
 import { BrowserRouter as Router } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
-import axios from "axios";
 // Material-UI
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { withStyles } from "@material-ui/core/styles";
@@ -28,8 +30,9 @@ const Signup = ({ classes }) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [handle, setHandle] = useState("");
-  const [errors, setErrors] = useState({});
+  const [errors] = useState({});
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
   const history = useHistory();
 
   const handleFormSubmit = (event) => {
@@ -41,18 +44,7 @@ const Signup = ({ classes }) => {
       confirmPassword: confirmPassword,
       handle: handle,
     };
-    axios
-      .post("/signup", newUserData)
-      .then((res) => {
-        console.log(res.data);
-        localStorage.setItem("FirebaseIdToken", `Bearer ${res.data.token}`);
-        setLoading(false);
-        history.push("/");
-      })
-      .catch((err) => {
-        setErrors(err.response.data);
-        setLoading(false);
-      });
+    dispatch(signupUser(newUserData, history));
   };
 
   return (
@@ -68,8 +60,8 @@ const Signup = ({ classes }) => {
             type='email'
             label='Email'
             className='textField'
-            helperText={errors.email}
-            error={errors.email ? true : false}
+            // helperText={errors.email}
+            // error={errors.email ? true : false}
             value={email}
             onChange={(event) => setEmail(event.target.value)}
             fullWidth
@@ -80,8 +72,8 @@ const Signup = ({ classes }) => {
             type='password'
             label='Password'
             className='textField'
-            helperText={errors.password}
-            error={errors.password ? true : false}
+            // helperText={errors.password}
+            // error={errors.password ? true : false}
             value={password}
             onChange={(event) => setPassword(event.target.value)}
             fullWidth
@@ -92,8 +84,8 @@ const Signup = ({ classes }) => {
             type='password'
             label='Confirm Password'
             className='textField'
-            helperText={errors.confirmPassword}
-            error={errors.confirmPassword ? true : false}
+            // helperText={errors.confirmPassword}
+            // error={errors.confirmPassword ? true : false}
             value={confirmPassword}
             onChange={(event) => setConfirmPassword(event.target.value)}
             fullWidth
@@ -104,8 +96,8 @@ const Signup = ({ classes }) => {
             type='handle'
             label='Handle'
             className='textField'
-            helperText={errors.handle}
-            error={errors.handle ? true : false}
+            // helperText={errors.handle}
+            // error={errors.handle ? true : false}
             value={handle}
             onChange={(event) => setHandle(event.target.value)}
             fullWidth

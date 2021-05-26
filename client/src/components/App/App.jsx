@@ -7,7 +7,6 @@ import Signup from "../Signup";
 import "./App.css";
 // Libraries
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import axios from "axios";
 import jwtDecode from "jwt-decode";
 
 let authenticated;
