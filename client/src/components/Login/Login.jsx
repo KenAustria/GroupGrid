@@ -1,53 +1,52 @@
-import React, { useState, useEffect, useRef } from "react";
-import GroupGridIcon from "../../images/groupgridicon.png";
-import "./Login.css";
+import React, { useState, useEffect } from 'react';
+import GroupGridIcon from '../../images/groupgridicon.png';
+import './Login.css';
 // Redux Toolkit
-import { loginUser } from "../../features/users/usersSlice";
-import { loadingUi } from "../../features/ui/uiSlice";
-import { useHistory } from "react-router";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router';
+import { loginUser } from '../../features/users/usersSlice';
+import { loadingUi } from '../../features/ui/uiSlice';
 // Libraries
-import { BrowserRouter as Router } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 // Material-UI
-import CircularProgress from "@material-ui/core/CircularProgress";
-import { withStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import Grid from "@material-ui/core/Grid";
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import { withStyles } from '@material-ui/core/styles';
 
 const styles = {
   form: {
-    textAlign: "center",
+    textAlign: 'center',
   },
   button: {
     margin: 20,
-    position: "relative",
+    position: 'relative',
   },
   textField: {
-    margin: "10px auto 10px auto",
+    margin: '10px auto 10px auto',
   },
 };
 
 const Login = ({ classes }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
-  const loading = useSelector((state) => state.ui.loading);
-  const uiErrors = useSelector((state) => state.ui.errors);
+  const [prevUiErrors] = useState(null);
+  const loading = useSelector(state => state.ui.loading);
+  const uiErrors = useSelector(state => state.ui.errors);
   const dispatch = useDispatch();
   const history = useHistory();
-  const prevProps = useRef();
+  const { form, textField, button } = classes;
 
   useEffect(() => {
-    if (prevProps.uiErrors !== uiErrors) {
-      setErrors(uiErrors);
-    }
-  }, [uiErrors]);
+    if (prevUiErrors !== uiErrors) setErrors(uiErrors);
+  }, [prevUiErrors]);
 
-  const handleFormSubmit = (event) => {
+  const handleFormSubmit = event => {
     event.preventDefault();
     dispatch(loadingUi(true));
     const userData = {
@@ -58,7 +57,7 @@ const Login = ({ classes }) => {
   };
 
   return (
-    <Grid container className={classes.form}>
+    <Grid container className={form}>
       <Grid item sm />
       <Grid item sm>
         <img src={GroupGridIcon} alt='GroupGrid Icon' className='icon' />
@@ -71,11 +70,11 @@ const Login = ({ classes }) => {
             name='email'
             type='email'
             label='Email'
-            className={classes.textField}
+            className={textField}
             helperText={errors.email}
             error={errors.email ? true : false}
             value={email}
-            onChange={(event) => setEmail(event.target.value)}
+            onChange={event => setEmail(event.target.value)}
             fullWidth
           />
           <TextField
@@ -83,11 +82,11 @@ const Login = ({ classes }) => {
             name='password'
             type='password'
             label='Password'
-            className={classes.textField}
+            className={textField}
             helperText={errors.password}
             error={errors.password ? true : false}
             value={password}
-            onChange={(event) => setPassword(event.target.value)}
+            onChange={event => setPassword(event.target.value)}
             fullWidth
           />
           {errors.general && (
@@ -99,14 +98,14 @@ const Login = ({ classes }) => {
             type='submit'
             variant='contained'
             color='primary'
-            className={classes.button}
+            className={button}
             disabled={loading}>
             Login
             {loading && <CircularProgress size={30} className='spinner' />}
           </Button>
           <br />
           <small>
-            Don't have an account? Sign up{" "}
+            Don't have an account? Sign up{' '}
             <Router>
               <Link to='/signup'>here</Link>
             </Router>

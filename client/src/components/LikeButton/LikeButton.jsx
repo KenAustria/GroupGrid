@@ -1,32 +1,27 @@
-import React from "react";
-import MyButton from "../MyButton";
+import React from 'react';
+import MyButton from '../../utils/MyButton';
 // Redux Toolkit
-import { likePost, unlikePost } from "../../features/data/dataSlice";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { likePost, unlikePost } from '../../features/data/dataSlice';
 // Libraries
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router } from 'react-router-dom';
 // Material-UI
-import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
-import FavoriteIcon from "@material-ui/icons/Favorite";
+import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 
 const LikeButton = () => {
-  const authenticated = useSelector((state) => state.users.authenticated);
+  const authenticated = useSelector(state => state.users.authenticated);
   const dispatch = useDispatch();
 
   const handleLikeCheck = () => {
-    if (user.likes && user.likes.find((like) => like.postId === postId)) {
+    if (user.likes && user.likes.find(like => like.postId === postId)) {
       return true;
     } else return false;
   };
 
-  const handleLikePost = () => {
-    dispatch(likePost(postId));
-  };
-
-  const handleUnlikePost = () => {
-    dispatch(unlikePost(postId));
-  };
+  const handleLikePost = () => dispatch(likePost(postId));
+  const handleUnlikePost = () => dispatch(unlikePost(postId));
 
   const likeButton = !authenticated ? (
     <Router>

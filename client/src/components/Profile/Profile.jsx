@@ -1,107 +1,107 @@
-import React from "react";
-import MyButton from "../MyButton";
-import EditProfileDetails from "../EditProfileDetails";
+import React from 'react';
+import MyButton from '../MyButton';
+import EditProfileDetails from '../EditProfileDetails';
 // Redux Toolkit
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {
   logoutUser,
   uploadProfileImage,
-} from "../../features/users/usersSlice";
+} from '../../features/users/usersSlice';
 // Libraries
-import { BrowserRouter as Router } from "react-router-dom";
-import { Link } from "react-router-dom";
-import dayjs from "dayjs";
+import dayjs from 'dayjs';
+import { Link } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 // Material-UI
-import withStyles from "@material-ui/core/styles/withStyles";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import MuiLink from "@material-ui/core/Link";
-import Paper from "@material-ui/core/Paper";
-import KeyboardReturn from "@material-ui/icons/KeyboardReturn";
-import CalendarToday from "@material-ui/icons/CalendarToday";
-import LocationOn from "@material-ui/icons/LocationOn";
-import LinkIcon from "@material-ui/icons/Link";
-import EditIcon from "@material-ui/icons/Edit";
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import MuiLink from '@material-ui/core/Link';
+import Paper from '@material-ui/core/Paper';
+import KeyboardReturn from '@material-ui/icons/KeyboardReturn';
+import CalendarToday from '@material-ui/icons/CalendarToday';
+import LocationOn from '@material-ui/icons/LocationOn';
+import LinkIcon from '@material-ui/icons/Link';
+import EditIcon from '@material-ui/icons/Edit';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 const styles = (theme) => ({
   paper: {
     padding: 20,
   },
   profile: {
-    "& .image-wrapper": {
-      textAlign: "center",
-      position: "relative",
-      "& button": {
-        position: "absolute",
-        top: "80%",
-        left: "70%",
+    '& .image-wrapper': {
+      textAlign: 'center',
+      position: 'relative',
+      '& button': {
+        position: 'absolute',
+        top: '80%',
+        left: '70%',
       },
     },
-    "& .profile-image": {
+    '& .profile-image': {
       width: 200,
       height: 200,
-      objectFit: "cover",
-      maxWidth: "100%",
-      borderRadius: "50%",
+      objectFit: 'cover',
+      maxWidth: '100%',
+      borderRadius: '50%',
     },
-    "& .profile-details": {
-      textAlign: "center",
-      "& span, svg": {
-        verticalAlign: "middle",
+    '& .profile-details': {
+      textAlign: 'center',
+      '& span, svg': {
+        verticalAlign: 'middle',
       },
-      "& a": {
+      '& a': {
         color: theme.palette.primary.main,
       },
     },
-    "& hr": {
-      border: "none",
-      margin: "0 0 10px 0",
+    '& hr': {
+      border: 'none',
+      margin: '0 0 10px 0',
     },
-    "& svg.button": {
-      "&:hover": {
-        cursor: "pointer",
+    '& svg.button': {
+      '&:hover': {
+        cursor: 'pointer',
       },
     },
   },
   buttons: {
-    textAlign: "center",
-    "& a": {
-      margin: "20px 10px",
+    textAlign: 'center',
+    '& a': {
+      margin: '20px 10px',
     },
   },
 });
 
 const Profile = ({ classes }) => {
-  const loading = useSelector((state) => state.ui.loading);
-  const authenticated = useSelector((state) => state.users.authenticated);
   const credentials = useSelector((state) => state.users.credentials);
+  const loading = useSelector((state) => state.users.loading);
+  const authenticated = useSelector((state) => state.users.authenticated);
   const dispatch = useDispatch();
+  const { handle, createdAt, profileImage, bio, website, location } = credentials
+  const { paper, profile, buttons } = classes
 
-  handleProfileImageChange = (event) => {
+  const handleProfileImageChange = event => {
     const image = event.target.files[0];
     const formData = new FormData();
-    formData.append("image", image, image.name);
+    formData.append('image', image, image.name);
     dispatch(uploadProfileImage(formData));
   };
 
-  handlePreProfileImageChange = () => {
-    const fileInput = document.getElementById("imageInput");
+  const handlePreProfileImageChange = () => {
+    const fileInput = document.getElementById('imageInput');
     fileInput.click();
   };
 
-  const handleLogout = () => {
-    dispatch(logoutUser());
-  };
+  const handleLogout = () => dispatch(logoutUser());
 
   let profile = !loading ? (
     authenticated ? (
       <Router>
-        <Paper className={classes.paper}>
-          <div className={classes.profile}>
+        <Paper className={paper}>
+          <div className={profile}>
             <div className='image-wrapper'>
               <img
-                src={credentials.profileImage}
+                src={profileImage}
                 alt='profile'
                 className='profile-image'
               />
@@ -122,39 +122,39 @@ const Profile = ({ classes }) => {
             <div className='profile-details'>
               <MuiLink
                 component={Link}
-                to={`/users/${credentials.handle}`}
+                to={`/users/${handle}`}
                 color='primary'
                 variant='h5'>
-                @{credentials.handle}
+                @{handle}
               </MuiLink>
               <hr />
-              {credentials.bio && (
-                <Typography variant='body2'>{credentials.bio}</Typography>
+              {bio && (
+                <Typography variant='body2'>{bio}</Typography>
               )}
               <hr />
-              {credentials.location && (
+              {location && (
                 <>
-                  <LocationOn color='primary' />{" "}
-                  <span>{credentials.location}</span>
+                  <LocationOn color='primary' />{' '}
+                  <span>{location}</span>
                   <hr />
                 </>
               )}
-              {credentials.website && (
+              {website && (
                 <>
                   <LinkIcon color='primary' />
                   <a
-                    href={credentials.website}
+                    href={website}
                     target='_blank'
                     rel='noopener noreferrer'>
-                    {" "}
-                    {credentials.website}
+                    {' '}
+                    {website}
                   </a>
                   <hr />
                 </>
               )}
-              <CalendarToday color='primary' />{" "}
+              <CalendarToday color='primary' />{' '}
               <span>
-                Joined {dayjs(credentials.createdAt).format("MMM YYYY")}
+                Joined {dayjs(createdAt).format('MMM YYYY')}
               </span>
             </div>
             <MyButton tip='Logout' onClick={handleLogout}>
@@ -166,11 +166,11 @@ const Profile = ({ classes }) => {
       </Router>
     ) : (
       <Router>
-        <Paper className={classes.paper}>
+        <Paper className={paper}>
           <Typography variant='body2' align='center'>
             No profile found, please login again
           </Typography>
-          <div className={classes.buttons}>
+          <div className={buttons}>
             <Button
               variant='contained'
               color='primary'

@@ -1,23 +1,23 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import Home from '../../_components/Home/Home';
+import MyButton from './MyButton';
 import { cleanup, render } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import myStore from '../../store/myStore';
 
 const renderWithRedux = () => render(
 	<Provider store={myStore}>
-		<Home />
+		<MyButton />
 	</Provider>
 );
 
 it('renders with Redux', () => {
-	const {} = renderWithRedux(<Home />);
+	const {} = renderWithRedux(<MyButton />);
 });
 
-it('can render a loading text', () => {
-	const { getByText } = renderWithRedux(<Home />);
-	expect(getByText(/Loading/)).toHaveTextContent('Loading');
+it('can render a button', () => {
+	const { getByTestId } = renderWithRedux(<MyButton />);
+	expect(getByTestId('icon')).toHaveTextContent('');
 });
 
 afterEach(cleanup);

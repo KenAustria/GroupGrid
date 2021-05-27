@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import EditProfileDetails from './EditProfileDetails';
+import EditProfileDetails from '../../_components/EditProfileDetails/EditProfileDetails';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import myStore from '../../store/myStore';

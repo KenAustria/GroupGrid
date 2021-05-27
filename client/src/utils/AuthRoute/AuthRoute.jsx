@@ -1,5 +1,10 @@
-import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import React from 'react';
+// Redux Toolkit
+import { useSelector } from 'react-redux';
+// Libraries
+import { Route, Redirect } from 'react-router-dom';
+
+// const authenticated = useSelector((state) => state.user.authenticated);
 
 const AuthRoute = ({ component: Component, authenticated, ...rest }) => (
   <Route

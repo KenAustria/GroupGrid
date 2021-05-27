@@ -1,29 +1,32 @@
-import React from "react";
-import LikeButton from "../LikeButton";
+import React from 'react';
+import DeletePost from '../DeletePost';
+import PostDialog from '../PostDialog';
+import LikeButton from '../LikeButton';
+import MyButton from '../MyButton';
 // Redux Toolkit
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
 // Libraries
-import { Link } from "react-router-dom";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
+import dayjs from 'dayjs';
+import { Link } from 'react-router-dom';
+import relativeTime from 'dayjs/plugin/relativeTime';
 // Material-UI
-import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
-import Avatar from "@material-ui/core/Avatar";
-import { withStyles } from "@material-ui/core/styles";
-import ChatIcon from "@material-ui/icons/Chat";
+import { withStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+import Avatar from '@material-ui/core/Avatar';
+import ChatIcon from '@material-ui/icons/Chat';
 
 const styles = {
   card: {
-    position: "relative",
-    display: "flex",
-    marginBottom: "20px",
+    position: 'relative',
+    display: 'flex',
+    marginBottom: '20px',
   },
   content: {
-    padding: "25px",
-    objectFit: "cover",
+    padding: '25px',
+    objectFit: 'cover',
   },
   avatar: {
     width: 70,
@@ -31,11 +34,19 @@ const styles = {
   },
 };
 
-const Post = ({ classes }) => {
+const Post = ({ classes, post }) => {
+  const {
+    body,
+    createdAt,
+    profileImage,
+    userHandle,
+    postId,
+    likeCount,
+    commentCount,
+  } = post;
+  const authenticated = useSelector(state => state.user.authenticated);
+  const credentials = useSelector(state => state.user.credentials);
   dayjs.extend(relativeTime);
-  const post = useSelector((state) => state.data.post);
-  const authenticated = useSelector((state) => state.user.authenticated);
-  const credentials = useSelector((state) => state.user.credentials);
 
   const deleteButton =
     authenticated && userHandle === credentials.handle ? (
@@ -49,23 +60,27 @@ const Post = ({ classes }) => {
           avatar={
             <Avatar
               alt='Profile Image'
-              src={post.profileImage}
+              src={profileImage}
               className={classes.avatar}
             />
           }
-          title={post.userHandle}
-          subheader={dayjs(post.createdAt).fromNow()}
+          title={userHandle}
+          subheader={dayjs(createdAt).fromNow()}
           component={Link}
-          to={`/users/${post.userHandle}`}
+          to={`/users/${userHandle}`}
         />
-        <Typography variant='body1'>{post.body}</Typography>
-        <LikeButton postId={post.postId} />
-        <span>{post.likeCount} Likes</span>
+        <Typography variant='body1'>{body}</Typography>
+        <LikeButton postId={postId} />
+        <span>{likeCount} Likes</span>
         <MyButton title='Comments'>
           <ChatIcon color='primary' />
         </MyButton>
-        <span>{post.commentCount} Comments</span>
-        {/* <PostDialog postId={post.postId} userHandle={post.userHandle} openDialog={openDialog} /> */}
+        <span>{commentCount} Comments</span>
+        <PostDialog
+          postId={postId}
+          userHandle={userHandle}
+          openDialog={openDialog}
+        />
         {deleteButton}
       </CardContent>
     </Card>

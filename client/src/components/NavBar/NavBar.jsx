@@ -1,22 +1,24 @@
-import React from "react";
-// import CreatePost from "../CreatePost"
-// import Notifications from "../Notifications"
-import "./NavBar.css";
-// Redux
-import { useSelector } from "react-redux";
+import React from 'react';
+import CreatePost from '../CreatePost';
+import Notifications from '../Notifications';
+import './NavBar.css';
+// Redux Toolkit
+import { useSelector } from 'react-redux';
 // Libraries
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 // Material-UI
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import Tooltip from "@material-ui/core/Tooltip";
-import IconButton from "@material-ui/core/IconButton";
-import HomeIcon from "@material-ui/icons/Home";
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import Tooltip from '@material-ui/core/Tooltip';
+import IconButton from '@material-ui/core/IconButton';
+import HomeIcon from '@material-ui/icons/Home';
 
 const NavBar = () => {
-  const authenticated = useSelector((state) => state.users.authenticated);
+  const authenticated = useSelector(state => state.users.authenticated);
+
   return (
     <div>
       <Router>
@@ -24,7 +26,7 @@ const NavBar = () => {
           <Toolbar className='navContainer'>
             {authenticated ? (
               <>
-                {/* <CreatePost /> */}
+                <CreatePost />
                 <Link to='/'>
                   <Tooltip title='Home' placement='top'>
                     <IconButton>
@@ -32,7 +34,7 @@ const NavBar = () => {
                     </IconButton>
                   </Tooltip>
                 </Link>
-                {/* <Notifications/> */}
+                <Notifications />
               </>
             ) : (
               <>

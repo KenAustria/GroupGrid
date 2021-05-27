@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import NavBar from './NavBar';
+import NavBar from '../../_components/NavBar/NavBar';
 import { cleanup, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import myStore from '../../store/myStore';

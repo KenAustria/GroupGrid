@@ -1,24 +1,24 @@
-import React, { useState } from "react";
-import "./Signup.css";
+import React, { useState, useEffect } from 'react';
+import './Signup.css';
 // Redux Toolkit
-import { signupUser } from "../../features/users/usersSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch } from 'react-redux';
+import { signupUser } from '../../features/users/usersSlice';
 // Libraries
-import { BrowserRouter as Router } from "react-router-dom";
-import { Link } from "react-router-dom";
-import { useHistory } from "react-router";
+import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router';
+import { BrowserRouter as Router } from 'react-router-dom';
 // Material-UI
-import CircularProgress from "@material-ui/core/CircularProgress";
-import { withStyles } from "@material-ui/core/styles";
-import GroupGridIcon from "../../images/groupgridicon.png";
-import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import Grid from "@material-ui/core/Grid";
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { withStyles } from '@material-ui/core/styles';
+import GroupGridIcon from '../../images/groupgridicon.png';
+import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 
 const styles = {
   form: {
-    textAlign: "center",
+    textAlign: 'center',
   },
   button: {
     margin: 20,
@@ -26,16 +26,21 @@ const styles = {
 };
 
 const Signup = ({ classes }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [handle, setHandle] = useState("");
-  const [errors] = useState({});
-  const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [handle, setHandle] = useState('');
+  const [errors, setErrors] = useState({});
+  const loading = useSelector(state => state.ui.loading);
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const handleFormSubmit = (event) => {
+  useEffect(() => {
+    // if we receive errors, set errors to local errors state object
+    if (prevProps.ui.errors !== ui.errors) setErrors(ui.errors);
+  });
+
+  const handleFormSubmit = event => {
     event.preventDefault();
     setLoading(true);
     const newUserData = {
@@ -60,10 +65,10 @@ const Signup = ({ classes }) => {
             type='email'
             label='Email'
             className='textField'
-            // helperText={errors.email}
-            // error={errors.email ? true : false}
+            helperText={errors.email}
+            error={errors.email ? true : false}
             value={email}
-            onChange={(event) => setEmail(event.target.value)}
+            onChange={event => setEmail(event.target.value)}
             fullWidth
           />
           <TextField
@@ -72,10 +77,10 @@ const Signup = ({ classes }) => {
             type='password'
             label='Password'
             className='textField'
-            // helperText={errors.password}
-            // error={errors.password ? true : false}
+            helperText={errors.password}
+            error={errors.password ? true : false}
             value={password}
-            onChange={(event) => setPassword(event.target.value)}
+            onChange={event => setPassword(event.target.value)}
             fullWidth
           />
           <TextField
@@ -84,10 +89,10 @@ const Signup = ({ classes }) => {
             type='password'
             label='Confirm Password'
             className='textField'
-            // helperText={errors.confirmPassword}
-            // error={errors.confirmPassword ? true : false}
+            helperText={errors.confirmPassword}
+            error={errors.confirmPassword ? true : false}
             value={confirmPassword}
-            onChange={(event) => setConfirmPassword(event.target.value)}
+            onChange={event => setConfirmPassword(event.target.value)}
             fullWidth
           />
           <TextField
@@ -96,10 +101,10 @@ const Signup = ({ classes }) => {
             type='handle'
             label='Handle'
             className='textField'
-            // helperText={errors.handle}
-            // error={errors.handle ? true : false}
+            helperText={errors.handle}
+            error={errors.handle ? true : false}
             value={handle}
-            onChange={(event) => setHandle(event.target.value)}
+            onChange={event => setHandle(event.target.value)}
             fullWidth
           />
           {errors.general && (
@@ -116,7 +121,7 @@ const Signup = ({ classes }) => {
           </Button>
           <br />
           <small>
-            Already have an account? Log in{" "}
+            Already have an account? Log in{' '}
             <Router>
               <Link to='/login'>here</Link>
             </Router>

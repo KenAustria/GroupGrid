@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import PostDialog from './PostDialog';
+import PostDialog from '../../_components/PostDialog/PostDialog';
 import { cleanup, render } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import myStore from '../../store/myStore';

@@ -1,29 +1,26 @@
-import React, { useState, useEffect } from "react";
-import Profile from "../Profile/";
-import Post from "../Post";
+import React, { useEffect } from 'react';
+import Profile from '../Profile/';
+import Post from '../Post';
 // Redux Toolkit
-import { getPosts } from "../../features/data/dataSlice";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { getPosts } from '../../features/data/dataSlice';
 // Libraries
-import { BrowserRouter as Router } from "react-router-dom";
-import axios from "axios";
+import { BrowserRouter as Router } from 'react-router-dom';
 // Material-UI
-import Grid from "@material-ui/core/Grid";
+import Grid from '@material-ui/core/Grid';
 
 const Home = () => {
-  const posts = useSelector((state) => state.data.posts);
-  const loading = useSelector((state) => state.data.loading);
+  const posts = useSelector(state => state.data.posts);
+  const loading = useSelector(state => state.data.loading);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getPosts());
-  });
+  useEffect(() => dispatch(getPosts()));
 
   let currentPosts = loading ? (
     <p>Loading..</p>
   ) : (
-    posts.map((post) => <Post key={post.postId} post={post} />)
+    posts.map(post => <Post key={post.postId} post={post} />)
   );
 
   return (

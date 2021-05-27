@@ -1,41 +1,41 @@
-import React, { useState, useEffect } from "react";
-import MyButton from "../MyButton";
+import React, { useState, useEffect } from 'react';
+import MyButton from '../MyButton';
 // Redux Toolkit
-import { editUserDetails } from "../../features/users/usersSlice";
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { editUserDetails } from '../../features/users/usersSlice';
 // Material-UI
-import withStyles from "@material-ui/core/styles/withStyles";
-import Button from "@material-ui/core/Button";
-import EditIcon from "@material-ui/icons/Edit";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import TextField from "@material-ui/core/TextField";
+import Button from '@material-ui/core/Button';
+import EditIcon from '@material-ui/icons/Edit';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import TextField from '@material-ui/core/TextField';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 const styles = () => ({
   button: {
-    float: "right",
+    float: 'right',
   },
   textField: {
-    margin: "10px 10px 10px 10px",
+    margin: '10px 10px 10px 10px',
   },
 });
 
 const EditProfileDetails = () => {
-  const [bio, setBio] = useState("");
-  const [website, setWebsite] = useState("");
-  const [location, setLocation] = useState("");
+  const [bio, setBio] = useState('');
+  const [website, setWebsite] = useState('');
+  const [location, setLocation] = useState('');
   const [open, setOpen] = useStatea(false);
-  const credentials = useSelector((state) => state.users.credentials);
+  const credentials = useSelector(state => state.users.credentials);
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    handleMapUserDetailsToState(credentials);
-  });
+  useEffect(() => handleMapUserDetailsToState(credentials));
 
-  const handleMapUserDetailsToState = (credentials) => {
-    setBio(credentials.bio ? credentials.bio : "");
-    setWebsite(credentials.website ? credentials.website : "");
-    setLocation(credentials.location ? credentials.location : "");
+  const handleMapUserDetailsToState = credentials => {
+    setBio(credentials.bio ? credentials.bio : '');
+    setWebsite(credentials.website ? credentials.website : '');
+    setLocation(credentials.location ? credentials.location : '');
   };
 
   const handleOpenDialog = ({ classes }) => {
@@ -51,7 +51,7 @@ const EditProfileDetails = () => {
       website: website,
       location: location,
     };
-    editUserDetails(userDetails);
+    dispatch(editUserDetails(userDetails));
     handleCloseDialog();
   };
 
@@ -76,7 +76,7 @@ const EditProfileDetails = () => {
           className={classes.textField}
           placeholder='Enter Bio..'
           value={bio}
-          onChange={(event) => setBio(event.target.value)}
+          onChange={event => setBio(event.target.value)}
           fullwidth
         />
         <TextField
@@ -88,7 +88,7 @@ const EditProfileDetails = () => {
           className={classes.textField}
           placeholder='Enter Website..'
           value={website}
-          onChange={(event) => setWebsite(event.target.value)}
+          onChange={event => setWebsite(event.target.value)}
           fullwidth
         />
         <TextField
@@ -100,7 +100,7 @@ const EditProfileDetails = () => {
           className={classes.textField}
           placeholder='Enter Location..'
           value={location}
-          onChange={(event) => setLocation(event.target.value)}
+          onChange={event => setLocation(event.target.value)}
           fullwidth
         />
         <DialogActions>
