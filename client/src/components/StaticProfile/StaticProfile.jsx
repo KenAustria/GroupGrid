@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 // Libraries
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
@@ -43,11 +44,16 @@ const styles = theme => ({
   },
 });
 
-const StaticProfile = props => {
+const StaticProfile = ({ classes, userProfile }) => {
+  const { paper, profile } = classes;
   const {
-    classes: { paper, profile },
-    profile: { handle, createdAt, profileImage, bio, website, location },
-  } = props;
+    handle,
+    createdAt,
+    profileImage,
+    bio,
+    website,
+    location,
+  } = userProfile;
 
   return (
     <Paper className={paper}>
@@ -68,20 +74,20 @@ const StaticProfile = props => {
           {bio && <Typography variant='body2'>{bio}</Typography>}
           <hr />
           {location && (
-            <Fragment>
+            <>
               <LocationOn color='primary' /> <span>{location}</span>
               <hr />
-            </Fragment>
+            </>
           )}
           {website && (
-            <Fragment>
+            <>
               <LinkIcon color='primary' />
               <a href={website} target='_blank' rel='noopener noreferrer'>
                 {' '}
                 {website}
               </a>
               <hr />
-            </Fragment>
+            </>
           )}
           <CalendarToday color='primary' />
           {''}
@@ -90,6 +96,11 @@ const StaticProfile = props => {
       </div>
     </Paper>
   );
+};
+
+StaticProfile.propTypes = {
+  profile: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(StaticProfile);

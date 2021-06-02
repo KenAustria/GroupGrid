@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import LikeButton from '../LikeButton';
 import Comments from '../Comments';
 import CommentForm from '../CommentForm';
-import MyButton from '../MyButton';
+import MyButton from '../../utils/MyButton';
+import PropTypes from 'prop-types';
 // Redux Toolkit
-import { useSelector } from 'react-redux';
-import { getPost, clearErrors } from '../../features/data/dataSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import { getPost } from '../../features/data/dataSlice';
+import { clearErrors } from '../../features/ui/uiSlice';
 // Libraries
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
@@ -50,32 +52,26 @@ const styles = () => ({
   },
 });
 
-const PostDialog = ({ postId, userHandle, openDialog }) => {
+const PostDialog = ({ classes, postId, userHandle }) => {
   const [open, setOpen] = useState(false);
   const [oldUrl, setOldUrl] = useState('');
   const [newUrl, setNewUrl] = useState('');
   const [getPostData, setGetPostData] = useState(false);
   const [prevUserNotificationId] = useState(null);
-  const dispatch = useDispatch();
+  const loading = useSelector(state => state.ui.loading);
   const post = useSelector(state => state.data.post);
-  const ui = useSelector(state => state.ui);
-  const user = useSelector(state => state.user.notifications);
+  const dispatch = useDispatch();
+  const notifications = useSelector(state => state.users.notifications);
+  const {
+    profileImage,
+    createdAt,
+    body,
+    likeCount,
+    commentCount,
+    comments,
+  } = post;
 
-  useEffect(() => {
-    if (openDialog && !getPostData) {
-      setGetPostData(true);
-      handleOpen();
-    } else if (openDialog && user.notificationId !== prevUserNotificationId) {
-      handleOpen();
-    }
-
-    if (openDialog && !getPostData) {
-      setGetPostData(true);
-      handleOpen();
-    }
-  }, [openDialog, getPostData, prevUserNotificationId]);
-
-  const handleOpen = () => {
+  const handleOpen = useCallback(() => {
     setOldUrl(window.location.pathname);
     setNewUrl(`/users/${userHandle}/post/${postId}`);
 
@@ -86,7 +82,29 @@ const PostDialog = ({ postId, userHandle, openDialog }) => {
     // this.setState({ open: true, oldUrl, newUrl });
     setOpen(true);
     dispatch(getPost(postId));
-  };
+  }, [dispatch, newUrl, oldUrl, postId, userHandle]);
+
+  // useEffect(
+  //   () => {
+  //     // if (!getPostData) {
+  //     //   setGetPostData(true);
+  //     //   handleOpen();
+  //     // }
+  //     // if (prevUserNotificationId !== notifications.notificationId) {
+  //     //   handleOpen();
+  //     // }
+  //     // if (!getPostData) {
+  //     //   setGetPostData(true);
+  //     //   handleOpen();
+  //     // }
+  //   },
+  //   [
+  //     // getPostData,
+  //     // prevUserNotificationId,
+  //     // handleOpen,
+  //     // notifications.notificationId,
+  //   ]
+  // );
 
   const handleClose = () => {
     // revert back to oldUrl
@@ -156,6 +174,14 @@ const PostDialog = ({ postId, userHandle, openDialog }) => {
       </Dialog>
     </>
   );
+};
+
+PostDialog.propTypes = {
+  postId: PropTypes.string.isRequired,
+  userHandle: PropTypes.string.isRequired,
+  getPost: PropTypes.func.isRequired,
+  clearErrors: PropTypes.func.isRequired,
+  notifications: PropTypes.array.isRequired,
 };
 
 export default withStyles(styles)(PostDialog);

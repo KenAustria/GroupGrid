@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 // Redux Toolkit
 import { useDispatch } from 'react-redux';
 import { deletePost } from '../../features/data/dataSlice';
@@ -19,7 +20,7 @@ const styles = {
   },
 };
 
-const DeletePost = ({ classes }) => {
+const DeletePost = ({ classes, postId }) => {
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
 
@@ -51,6 +52,12 @@ const DeletePost = ({ classes }) => {
       </Dialog>
     </>
   );
+};
+
+DeletePost.propTypes = {
+  classes: PropTypes.object.isRequired,
+  deletePost: PropTypes.func.isRequired,
+  postId: PropTypes.string.isRequired,
 };
 
 export default withStyles(styles)(DeletePost);

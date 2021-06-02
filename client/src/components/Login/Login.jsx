@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import GroupGridIcon from '../../images/groupgridicon.png';
+import PropTypes from 'prop-types';
 import './Login.css';
 // Redux Toolkit
 import { useSelector } from 'react-redux';
@@ -44,7 +45,7 @@ const Login = ({ classes }) => {
 
   useEffect(() => {
     if (prevUiErrors !== uiErrors) setErrors(uiErrors);
-  }, [prevUiErrors]);
+  }, [prevUiErrors, uiErrors]);
 
   const handleFormSubmit = event => {
     event.preventDefault();
@@ -115,6 +116,14 @@ const Login = ({ classes }) => {
       <Grid item sm />
     </Grid>
   );
+};
+
+Login.propTypes = {
+  classes: PropTypes.object.isRequired,
+  loginUser: PropTypes.func.isRequired,
+  loadingUi: PropTypes.bool.isRequired,
+  loading: PropTypes.bool.isRequired,
+  uiErrors: PropTypes.bool.isRequired,
 };
 
 export default withStyles(styles)(Login);

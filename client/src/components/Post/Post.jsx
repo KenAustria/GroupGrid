@@ -2,7 +2,8 @@ import React from 'react';
 import DeletePost from '../DeletePost';
 import PostDialog from '../PostDialog';
 import LikeButton from '../LikeButton';
-import MyButton from '../MyButton';
+import MyButton from '../../utils/MyButton';
+import PropTypes from 'prop-types';
 // Redux Toolkit
 import { useSelector } from 'react-redux';
 // Libraries
@@ -44,8 +45,8 @@ const Post = ({ classes, post }) => {
     likeCount,
     commentCount,
   } = post;
-  const authenticated = useSelector(state => state.user.authenticated);
-  const credentials = useSelector(state => state.user.credentials);
+  const authenticated = useSelector(state => state.users.authenticated);
+  const credentials = useSelector(state => state.users.credentials);
   dayjs.extend(relativeTime);
 
   const deleteButton =
@@ -76,15 +77,18 @@ const Post = ({ classes, post }) => {
           <ChatIcon color='primary' />
         </MyButton>
         <span>{commentCount} Comments</span>
-        <PostDialog
-          postId={postId}
-          userHandle={userHandle}
-          openDialog={openDialog}
-        />
+        <PostDialog postId={postId} userHandle={userHandle} />
         {deleteButton}
       </CardContent>
     </Card>
   );
+};
+
+Post.propTypes = {
+  classes: PropTypes.object.isRequired,
+  post: PropTypes.object.isRequired,
+  authenticated: PropTypes.bool.isRequired,
+  credentials: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(Post);

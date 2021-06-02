@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import MyButton from '../MyButton';
+import MyButton from '../../utils/MyButton';
+import PropTypes from 'prop-types';
 // Redux Toolkit
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
@@ -22,11 +23,11 @@ const styles = () => ({
   },
 });
 
-const EditProfileDetails = () => {
+const EditProfileDetails = ({ classes }) => {
   const [bio, setBio] = useState('');
   const [website, setWebsite] = useState('');
   const [location, setLocation] = useState('');
-  const [open, setOpen] = useStatea(false);
+  const [open, setOpen] = useState(false);
   const credentials = useSelector(state => state.users.credentials);
   const dispatch = useDispatch();
 
@@ -38,7 +39,7 @@ const EditProfileDetails = () => {
     setLocation(credentials.location ? credentials.location : '');
   };
 
-  const handleOpenDialog = ({ classes }) => {
+  const handleOpenDialog = () => {
     setOpen(true);
     handleMapUserDetailsToState(credentials);
   };
@@ -121,6 +122,12 @@ const EditProfileDetails = () => {
       </Dialog>
     </>
   );
+};
+
+EditProfileDetails.propTypes = {
+  classes: PropTypes.object.isRequired,
+  editUserDetails: PropTypes.func.isRequired,
+  credentials: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(EditProfileDetails);

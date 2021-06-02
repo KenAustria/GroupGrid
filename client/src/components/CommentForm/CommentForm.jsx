@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 // Redux Toolkit
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
@@ -19,21 +20,20 @@ const styles = {
   },
 };
 
-const CommentForm = ({ classes }) => {
+const CommentForm = ({ classes, postId }) => {
   const [body, setBody] = useState('');
   const [errors, setErrors] = useState({});
-  const [prevUiErrors, setPrevUiErrors] = useState(null);
+  const [prevUiErrors] = useState(null);
   const uiErrors = useSelector(state => state.ui.errors);
-  const authenticated = useSelector(state => state.user.authenticated);
+  const authenticated = useSelector(state => state.users.authenticated);
   const dispatch = useDispatch();
+  const { textField, button } = classes;
 
-  if (uiErrors !== prevUiErrors) {
-    setPrevUiErrors(uiErrors);
-  }
+  if (prevUiErrors !== uiErrors) setErrors(uiErrors);
 
   const handleSubmit = event => {
     event.preventDefault();
-    dispatch(submitComment(postId, { body }));
+    dispatch(submitComment(postId, body));
     setBody('');
   };
 
@@ -49,13 +49,13 @@ const CommentForm = ({ classes }) => {
           value={body}
           onChange={event => setBody(event.target.value)}
           fullWidth
-          className={classes.textField}
+          className={textField}
         />
         <Button
           type='submit'
           variant='contained'
           color='primary'
-          className={classes.button}
+          className={button}
           alt='submit'>
           Submit
         </Button>
@@ -64,6 +64,14 @@ const CommentForm = ({ classes }) => {
   ) : null;
 
   return commentForm;
+};
+
+CommentForm.propTypes = {
+  classes: PropTypes.object.isRequired,
+  uiErrors: PropTypes.object.isRequired,
+  authenticated: PropTypes.bool.isRequired,
+  submitComment: PropTypes.func.isRequired,
+  postId: PropTypes.string.isRequired,
 };
 
 export default withStyles(styles)(CommentForm);

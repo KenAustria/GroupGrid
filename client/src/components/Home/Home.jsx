@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import Profile from '../Profile/';
 import Post from '../Post';
+import PropTypes from 'prop-types';
 // Redux Toolkit
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
@@ -15,7 +16,14 @@ const Home = () => {
   const loading = useSelector(state => state.data.loading);
   const dispatch = useDispatch();
 
-  useEffect(() => dispatch(getPosts()));
+  useEffect(() => {
+    dispatch(getPosts());
+    // const asyncFetchData = async () => {
+    //   await dispatch(getPosts());
+    // };
+
+    // asyncFetchData();
+  }, []);
 
   let currentPosts = loading ? (
     <p>Loading..</p>
@@ -35,6 +43,12 @@ const Home = () => {
       </Grid>
     </Router>
   );
+};
+
+Home.propTypes = {
+  getPosts: PropTypes.func.isRequired,
+  posts: PropTypes.array.isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
 export default Home;

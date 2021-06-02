@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import MyButton from '../MyButton';
+import MyButton from '../../utils/MyButton';
+import PropTypes from 'prop-types';
 // Redux Toolkit
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
@@ -39,17 +40,17 @@ const CreatePost = ({ classes }) => {
   const uiErrors = useSelector(state => state.ui.errors);
   const uiLoading = useSelector(state => state.ui.loading);
   const dispatch = useDispatch();
-  const prevUiErrors = useRef();
 
   useEffect(() => {
+    // check for errors
     if (prevUiErrors !== uiErrors) setErrors(uiErrors);
-
+    // if there aren't any errors and loading has completed
     if (prevUiErrors !== uiErrors && prevUiLoading !== uiLoading) {
       setOpen(false);
       setErrors({});
       setBody('');
     }
-  }, [prevUiErrors, prevUiLoading]);
+  }, [prevUiErrors, prevUiLoading, uiErrors, uiLoading]);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
@@ -71,7 +72,7 @@ const CreatePost = ({ classes }) => {
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth='sm'>
         <MyButton
           title='Cancel'
-          onClose={closeHandler}
+          onClose={handleClose}
           tipClassName={classes.closeButton}>
           <CloseIcon color='secondary' data-testid='close-icon' />
         </MyButton>
@@ -109,6 +110,14 @@ const CreatePost = ({ classes }) => {
       </Dialog>
     </>
   );
+};
+
+CreatePost.propTypes = {
+  classes: PropTypes.object.isRequired,
+  createPost: PropTypes.func.isRequired,
+  clearErrors: PropTypes.func.isRequired,
+  uiErrors: PropTypes.object.isRequired,
+  uiLoading: PropTypes.bool.isRequired,
 };
 
 export default withStyles(styles)(CreatePost);

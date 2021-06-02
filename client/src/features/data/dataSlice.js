@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { loadingUi, setErrors, stopLoadingUi } from '../ui/uiSlice'
 import axios from 'axios'
 
 const initialState = {
@@ -53,7 +54,7 @@ export const getPost = postId => dispatch => {
 	return axios
 		.get(`/post/${postId}`)
 		.then(res => {
-			dispatch(setPost(res.data))
+			dispatch(setThePost(res.data))
 			dispatch(stopLoadingUi())
 		})
 		.catch(err => console.log(err))

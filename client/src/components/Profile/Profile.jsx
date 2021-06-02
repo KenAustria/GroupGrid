@@ -1,6 +1,7 @@
 import React from 'react';
-import MyButton from '../MyButton';
+import MyButton from '../../utils/MyButton';
 import EditProfileDetails from '../EditProfileDetails';
+import PropTypes from 'prop-types';
 // Redux Toolkit
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
@@ -24,7 +25,7 @@ import LinkIcon from '@material-ui/icons/Link';
 import EditIcon from '@material-ui/icons/Edit';
 import withStyles from '@material-ui/core/styles/withStyles';
 
-const styles = (theme) => ({
+const styles = theme => ({
   paper: {
     padding: 20,
   },
@@ -73,12 +74,19 @@ const styles = (theme) => ({
 });
 
 const Profile = ({ classes }) => {
-  const credentials = useSelector((state) => state.users.credentials);
-  const loading = useSelector((state) => state.users.loading);
-  const authenticated = useSelector((state) => state.users.authenticated);
+  const credentials = useSelector(state => state.users.credentials);
+  const loading = useSelector(state => state.users.loading);
+  const authenticated = useSelector(state => state.users.authenticated);
   const dispatch = useDispatch();
-  const { handle, createdAt, profileImage, bio, website, location } = credentials
-  const { paper, profile, buttons } = classes
+  const {
+    handle,
+    createdAt,
+    profileImage,
+    bio,
+    website,
+    location,
+  } = credentials;
+  const { paper, profile, buttons } = classes;
 
   const handleProfileImageChange = event => {
     const image = event.target.files[0];
@@ -94,17 +102,13 @@ const Profile = ({ classes }) => {
 
   const handleLogout = () => dispatch(logoutUser());
 
-  let profile = !loading ? (
+  let userProfile = !loading ? (
     authenticated ? (
       <Router>
         <Paper className={paper}>
           <div className={profile}>
             <div className='image-wrapper'>
-              <img
-                src={profileImage}
-                alt='profile'
-                className='profile-image'
-              />
+              <img src={profileImage} alt='profile' className='profile-image' />
               <input
                 type='file'
                 id='imageInput'
@@ -128,24 +132,18 @@ const Profile = ({ classes }) => {
                 @{handle}
               </MuiLink>
               <hr />
-              {bio && (
-                <Typography variant='body2'>{bio}</Typography>
-              )}
+              {bio && <Typography variant='body2'>{bio}</Typography>}
               <hr />
               {location && (
                 <>
-                  <LocationOn color='primary' />{' '}
-                  <span>{location}</span>
+                  <LocationOn color='primary' /> <span>{location}</span>
                   <hr />
                 </>
               )}
               {website && (
                 <>
                   <LinkIcon color='primary' />
-                  <a
-                    href={website}
-                    target='_blank'
-                    rel='noopener noreferrer'>
+                  <a href={website} target='_blank' rel='noopener noreferrer'>
                     {' '}
                     {website}
                   </a>
@@ -153,9 +151,7 @@ const Profile = ({ classes }) => {
                 </>
               )}
               <CalendarToday color='primary' />{' '}
-              <span>
-                Joined {dayjs(createdAt).format('MMM YYYY')}
-              </span>
+              <span>Joined {dayjs(createdAt).format('MMM YYYY')}</span>
             </div>
             <MyButton tip='Logout' onClick={handleLogout}>
               <KeyboardReturn color='primary' />
@@ -193,7 +189,16 @@ const Profile = ({ classes }) => {
     <p>Loading...</p>
   );
 
-  return profile;
+  return userProfile;
+};
+
+Profile.propTypes = {
+  classes: PropTypes.object.isRequired,
+  logoutUser: PropTypes.func.isRequired,
+  uploadProfileImage: PropTypes.func.isRequired,
+  credentials: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired,
+  authenticated: PropTypes.bool.isRequired,
 };
 
 export default withStyles(styles)(Profile);

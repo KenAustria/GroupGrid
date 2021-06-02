@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
 // Libraries
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
@@ -71,6 +72,11 @@ const Comments = ({ classes, comments }) => {
       })}
     </Grid>
   );
+};
+
+Comments.propTypes = {
+  classes: PropTypes.object.isRequired,
+  comments: PropTypes.array.isRequired,
 };
 
 export default withStyles(styles)(Comments);

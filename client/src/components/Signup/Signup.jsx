@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './Signup.css';
+import PropTypes from 'prop-types';
 // Redux Toolkit
+import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { signupUser } from '../../features/users/usersSlice';
 // Libraries
@@ -31,14 +33,17 @@ const Signup = ({ classes }) => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [handle, setHandle] = useState('');
   const [errors, setErrors] = useState({});
-  const loading = useSelector(state => state.ui.loading);
+  const [setLoading] = useState(false);
+  const [prevUiErrors] = useState(null);
+  const uiLoading = useSelector(state => state.ui.loading);
+  const uiErrors = useSelector(state => state.ui.errors);
   const dispatch = useDispatch();
   const history = useHistory();
 
   useEffect(() => {
-    // if we receive errors, set errors to local errors state object
-    if (prevProps.ui.errors !== ui.errors) setErrors(ui.errors);
-  });
+    // if we receive errors, set errors to local errors state object1
+    if (prevUiErrors !== uiErrors) setErrors(uiErrors);
+  }, [prevUiErrors, uiErrors]);
 
   const handleFormSubmit = event => {
     event.preventDefault();
@@ -115,9 +120,9 @@ const Signup = ({ classes }) => {
             variant='contained'
             color='primary'
             className={classes.button}
-            disabled={loading}>
+            disabled={uiLoading}>
             Signup
-            {loading && <CircularProgress size={30} className='spinner' />}
+            {uiLoading && <CircularProgress size={30} className='spinner' />}
           </Button>
           <br />
           <small>
@@ -131,6 +136,12 @@ const Signup = ({ classes }) => {
       <Grid item sm />
     </Grid>
   );
+};
+
+Signup.propTypes = {
+  classes: PropTypes.object.isRequired,
+  signupUser: PropTypes.func.isRequired,
+  uiLoading: PropTypes.bool.isRequired,
 };
 
 export default withStyles(styles)(Signup);

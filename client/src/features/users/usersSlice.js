@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { setErrors, clearErrors, loadingUi } from '../ui/uiSlice'
+import { loadingData, setPosts, setThePost } from '../data/dataSlice'
 import axios from 'axios'
 
 const initialState = {
@@ -81,7 +82,7 @@ export const getUserProfile = userHandle => dispatch => {
 	axios
 		.get(`/user/${userHandle}`)
 		.then(res => dispatch(setPosts(res.data.posts)))
-		.catch(err => dispatch(setPost(null)))
+		.catch(err => dispatch(setThePost(null)))
 }
 
 export const markNotificationsRead = notificationIds => dispatch => {
@@ -110,17 +111,19 @@ const usersSlice = createSlice({
 			state.loading = true
 		},
 		likePost(state, action) {
-		
+			state.likes.userHandle = state.credentials.handle
+			state.likes.postId = action.payload.postId
 		},
 		unlikePost(state, action) {
-
+			state.likes = state.likes.filter(like => like.postId !== action.payload.postId)
 		},
-		markNotificationsRead(state, action) {
-
+		markTheNotificationsRead(state, action) {
+			state.notifications.forEach(notification => (notification.read = true));
+			return state
 		}
   },
 })
 
-export const { setAuthenticated, setUnauthenticated, setUser, loadingUser, likePost, unlikePost, markNotificationsRead  } = usersSlice.actions
+export const { setAuthenticated, setUnauthenticated, setUser, loadingUser, likePost, unlikePost, markTheNotificationsRead } = usersSlice.actions
 
 export default usersSlice.reducer

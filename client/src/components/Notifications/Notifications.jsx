@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 // Redux Toolkit
+import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { markNotificationsRead } from '../../features/user/userSlice';
+import { markTheNotificationsRead } from '../../features/users/usersSlice';
 // Libraries
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
@@ -18,6 +20,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ChatIcon from '@material-ui/icons/Chat';
 
 const Notifications = () => {
+  const notifications = useSelector(state => state.users.notifications);
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -28,7 +31,7 @@ const Notifications = () => {
     let unreadNotificationsIds = notifications
       .filter(notification => !notification.read)
       .map(notification => notification.notificationId);
-    dispatch(markNotificationsRead(unreadNotificationsIds));
+    dispatch(markTheNotificationsRead(unreadNotificationsIds));
   };
 
   dayjs.extend(relativeTime);
@@ -101,6 +104,11 @@ const Notifications = () => {
       </Menu>
     </>
   );
+};
+
+Notifications.propTypes = {
+  markTheNotificationsRead: PropTypes.func.isRequired,
+  notifications: PropTypes.array.isRequired,
 };
 
 export default Notifications;
