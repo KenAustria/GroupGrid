@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import MyButton from '../../utils/MyButton';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 // Redux Toolkit
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
@@ -112,12 +112,12 @@ const CreatePost = ({ classes }) => {
   );
 };
 
-CreatePost.propTypes = {
-  classes: PropTypes.object.isRequired,
-  createPost: PropTypes.func.isRequired,
-  clearErrors: PropTypes.func.isRequired,
-  uiErrors: PropTypes.object.isRequired,
-  uiLoading: PropTypes.bool.isRequired,
-};
+// CreatePost.propTypes = {
+//   classes: PropTypes.object.isRequired,
+//   createPost: PropTypes.func.isRequired,
+//   clearErrors: PropTypes.func.isRequired,
+//   uiErrors: PropTypes.object.isRequired,
+//   uiLoading: PropTypes.bool.isRequired,
+// };
 
 export default withStyles(styles)(CreatePost);

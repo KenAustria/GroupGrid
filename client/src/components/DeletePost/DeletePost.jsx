@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 // Redux Toolkit
 import { useDispatch } from 'react-redux';
 import { deletePost } from '../../features/data/dataSlice';
@@ -54,10 +54,10 @@ const DeletePost = ({ classes, postId }) => {
   );
 };
 
-DeletePost.propTypes = {
-  classes: PropTypes.object.isRequired,
-  deletePost: PropTypes.func.isRequired,
-  postId: PropTypes.string.isRequired,
-};
+// DeletePost.propTypes = {
+//   classes: PropTypes.object.isRequired,
+//   deletePost: PropTypes.func.isRequired,
+//   postId: PropTypes.string.isRequired,
+// };
 
 export default withStyles(styles)(DeletePost);

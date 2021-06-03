@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import LikeButton from '../LikeButton';
 import Comments from '../Comments';
 import CommentForm from '../CommentForm';
 import MyButton from '../../utils/MyButton';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 // Redux Toolkit
 import { useSelector, useDispatch } from 'react-redux';
 import { getPost } from '../../features/data/dataSlice';
@@ -56,12 +56,10 @@ const PostDialog = ({ classes, postId, userHandle }) => {
   const [open, setOpen] = useState(false);
   const [oldUrl, setOldUrl] = useState('');
   const [newUrl, setNewUrl] = useState('');
-  const [getPostData, setGetPostData] = useState(false);
-  const [prevUserNotificationId] = useState(null);
+  const [setGetPostData] = useState(false);
   const loading = useSelector(state => state.ui.loading);
   const post = useSelector(state => state.data.post);
   const dispatch = useDispatch();
-  const notifications = useSelector(state => state.users.notifications);
   const {
     profileImage,
     createdAt,
@@ -83,28 +81,6 @@ const PostDialog = ({ classes, postId, userHandle }) => {
     setOpen(true);
     dispatch(getPost(postId));
   }, [dispatch, newUrl, oldUrl, postId, userHandle]);
-
-  // useEffect(
-  //   () => {
-  //     // if (!getPostData) {
-  //     //   setGetPostData(true);
-  //     //   handleOpen();
-  //     // }
-  //     // if (prevUserNotificationId !== notifications.notificationId) {
-  //     //   handleOpen();
-  //     // }
-  //     // if (!getPostData) {
-  //     //   setGetPostData(true);
-  //     //   handleOpen();
-  //     // }
-  //   },
-  //   [
-  //     // getPostData,
-  //     // prevUserNotificationId,
-  //     // handleOpen,
-  //     // notifications.notificationId,
-  //   ]
-  // );
 
   const handleClose = () => {
     // revert back to oldUrl
@@ -176,12 +152,11 @@ const PostDialog = ({ classes, postId, userHandle }) => {
   );
 };
 
-PostDialog.propTypes = {
-  postId: PropTypes.string.isRequired,
-  userHandle: PropTypes.string.isRequired,
-  getPost: PropTypes.func.isRequired,
-  clearErrors: PropTypes.func.isRequired,
-  notifications: PropTypes.array.isRequired,
-};
+// PostDialog.propTypes = {
+//   postId: PropTypes.string.isRequired,
+//   userHandle: PropTypes.string.isRequired,
+//   getPost: PropTypes.func.isRequired,
+//   clearErrors: PropTypes.func.isRequired,
+// };
 
 export default withStyles(styles)(PostDialog);

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 // Redux Toolkit
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
@@ -106,9 +106,9 @@ const Notifications = () => {
   );
 };
 
-Notifications.propTypes = {
-  markTheNotificationsRead: PropTypes.func.isRequired,
-  notifications: PropTypes.array.isRequired,
-};
+// Notifications.propTypes = {
+//   markTheNotificationsRead: PropTypes.func.isRequired,
+//   notifications: PropTypes.array.isRequired,
+// };
 
 export default Notifications;

@@ -3,7 +3,7 @@ import DeletePost from '../DeletePost';
 import PostDialog from '../PostDialog';
 import LikeButton from '../LikeButton';
 import MyButton from '../../utils/MyButton';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 // Redux Toolkit
 import { useSelector } from 'react-redux';
 // Libraries
@@ -84,11 +84,11 @@ const Post = ({ classes, post }) => {
   );
 };
 
-Post.propTypes = {
-  classes: PropTypes.object.isRequired,
-  post: PropTypes.object.isRequired,
-  authenticated: PropTypes.bool.isRequired,
-  credentials: PropTypes.object.isRequired,
-};
+// Post.propTypes = {
+//   classes: PropTypes.object.isRequired,
+//   post: PropTypes.object.isRequired,
+//   authenticated: PropTypes.bool.isRequired,
+//   credentials: PropTypes.object.isRequired,
+// };
 
 export default withStyles(styles)(Post);

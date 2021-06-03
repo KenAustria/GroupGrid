@@ -1,7 +1,7 @@
 import React from 'react';
 import MyButton from '../../utils/MyButton';
 import EditProfileDetails from '../EditProfileDetails';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 // Redux Toolkit
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
@@ -75,7 +75,6 @@ const styles = theme => ({
 
 const Profile = ({ classes }) => {
   const credentials = useSelector(state => state.users.credentials);
-  const loading = useSelector(state => state.users.loading);
   const authenticated = useSelector(state => state.users.authenticated);
   const dispatch = useDispatch();
   const {
@@ -102,103 +101,99 @@ const Profile = ({ classes }) => {
 
   const handleLogout = () => dispatch(logoutUser());
 
-  let userProfile = !loading ? (
-    authenticated ? (
-      <Router>
-        <Paper className={paper}>
-          <div className={profile}>
-            <div className='image-wrapper'>
-              <img src={profileImage} alt='profile' className='profile-image' />
-              <input
-                type='file'
-                id='imageInput'
-                hidden='hidden'
-                onChange={handleProfileImageChange}
-              />
-              <MyButton
-                title='Update Profile Photo'
-                onClick={handlePreProfileImageChange}
-                btnClassName='button'>
-                <EditIcon color='primary' />
-              </MyButton>
-            </div>
-            <hr />
-            <div className='profile-details'>
-              <MuiLink
-                component={Link}
-                to={`/users/${handle}`}
-                color='primary'
-                variant='h5'>
-                @{handle}
-              </MuiLink>
-              <hr />
-              {bio && <Typography variant='body2'>{bio}</Typography>}
-              <hr />
-              {location && (
-                <>
-                  <LocationOn color='primary' /> <span>{location}</span>
-                  <hr />
-                </>
-              )}
-              {website && (
-                <>
-                  <LinkIcon color='primary' />
-                  <a href={website} target='_blank' rel='noopener noreferrer'>
-                    {' '}
-                    {website}
-                  </a>
-                  <hr />
-                </>
-              )}
-              <CalendarToday color='primary' />{' '}
-              <span>Joined {dayjs(createdAt).format('MMM YYYY')}</span>
-            </div>
-            <MyButton tip='Logout' onClick={handleLogout}>
-              <KeyboardReturn color='primary' />
+  let userProfile = authenticated ? (
+    <Router>
+      <Paper className={paper}>
+        <div className={profile}>
+          <div className='image-wrapper'>
+            <img src={profileImage} alt='profile' className='profile-image' />
+            <input
+              type='file'
+              id='imageInput'
+              hidden='hidden'
+              onChange={handleProfileImageChange}
+            />
+            <MyButton
+              title='Update Profile Photo'
+              onClick={handlePreProfileImageChange}
+              btnClassName='button'>
+              <EditIcon color='primary' />
             </MyButton>
-            <EditProfileDetails />
           </div>
-        </Paper>
-      </Router>
-    ) : (
-      <Router>
-        <Paper className={paper}>
-          <Typography variant='body2' align='center'>
-            No profile found, please login again
-          </Typography>
-          <div className={buttons}>
-            <Button
-              variant='contained'
+          <hr />
+          <div className='profile-details'>
+            <MuiLink
+              component={Link}
+              to={`/users/${handle}`}
               color='primary'
-              component={Link}
-              to='/login'>
-              Login
-            </Button>
-            <Button
-              variant='contained'
-              color='secondary'
-              component={Link}
-              to='/signup'>
-              Signup
-            </Button>
+              variant='h5'>
+              @{handle}
+            </MuiLink>
+            <hr />
+            {bio && <Typography variant='body2'>{bio}</Typography>}
+            <hr />
+            {location && (
+              <>
+                <LocationOn color='primary' /> <span>{location}</span>
+                <hr />
+              </>
+            )}
+            {website && (
+              <>
+                <LinkIcon color='primary' />
+                <a href={website} target='_blank' rel='noopener noreferrer'>
+                  {' '}
+                  {website}
+                </a>
+                <hr />
+              </>
+            )}
+            <CalendarToday color='primary' />{' '}
+            <span>Joined {dayjs(createdAt).format('MMM YYYY')}</span>
           </div>
-        </Paper>
-      </Router>
-    )
+          <MyButton tip='Logout' onClick={handleLogout}>
+            <KeyboardReturn color='primary' />
+          </MyButton>
+          <EditProfileDetails />
+        </div>
+      </Paper>
+    </Router>
   ) : (
-    <p>Loading...</p>
+    <Router>
+      <Paper className={paper}>
+        <Typography variant='body2' align='center'>
+          No profile found, please login again
+        </Typography>
+        <div className={buttons}>
+          <Button
+            variant='contained'
+            color='primary'
+            component={Link}
+            to='/login'>
+            Login
+          </Button>
+          <Button
+            variant='contained'
+            color='secondary'
+            component={Link}
+            to='/signup'>
+            Signup
+          </Button>
+        </div>
+      </Paper>
+    </Router>
   );
 
   return userProfile;
 };
 
-Profile.propTypes = {
-  classes: PropTypes.object.isRequired,
-  logoutUser: PropTypes.func.isRequired,
-  uploadProfileImage: PropTypes.func.isRequired,
-  credentials: PropTypes.object.isRequired,
-  loading: PropTypes.bool.isRequired,
-  authenticated: PropTypes.bool.isRequired,
-};
+// Profile.propTypes = {
+//   classes: PropTypes.object.isRequired,
+//   logoutUser: PropTypes.func.isRequired,
+//   uploadProfileImage: PropTypes.func.isRequired,
+//   credentials: PropTypes.object.isRequired,
+//   loading: PropTypes.bool.isRequired,
+//   authenticated: PropTypes.bool.isRequired,
+// };
 
 export default withStyles(styles)(Profile);

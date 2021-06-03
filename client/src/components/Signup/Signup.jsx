@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './Signup.css';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 // Redux Toolkit
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { signupUser } from '../../features/users/usersSlice';
+import { signupUser, loadingUser } from '../../features/users/usersSlice';
 // Libraries
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router';
@@ -33,7 +33,6 @@ const Signup = ({ classes }) => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [handle, setHandle] = useState('');
   const [errors, setErrors] = useState({});
-  const [setLoading] = useState(false);
   const [prevUiErrors] = useState(null);
   const uiLoading = useSelector(state => state.ui.loading);
   const uiErrors = useSelector(state => state.ui.errors);
@@ -47,7 +46,7 @@ const Signup = ({ classes }) => {
 
   const handleFormSubmit = event => {
     event.preventDefault();
-    setLoading(true);
+    dispatch(loadingUser());
     const newUserData = {
       email: email,
       password: password,
@@ -120,7 +119,8 @@ const Signup = ({ classes }) => {
             variant='contained'
             color='primary'
             className={classes.button}
-            disabled={uiLoading}>
+            // disabled={uiLoading}
+          >
             Signup
             {uiLoading && <CircularProgress size={30} className='spinner' />}
           </Button>
@@ -138,10 +138,10 @@ const Signup = ({ classes }) => {
   );
 };
 
-Signup.propTypes = {
-  classes: PropTypes.object.isRequired,
-  signupUser: PropTypes.func.isRequired,
-  uiLoading: PropTypes.bool.isRequired,
-};
+// Signup.propTypes = {
+//   classes: PropTypes.object.isRequired,
+//   signupUser: PropTypes.func.isRequired,
+//   uiLoading: PropTypes.bool.isRequired,
+// };
 
 export default withStyles(styles)(Signup);

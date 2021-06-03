@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import GroupGridIcon from '../../images/groupgridicon.png';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import './Login.css';
 // Redux Toolkit
 import { useSelector } from 'react-redux';
@@ -100,7 +100,8 @@ const Login = ({ classes }) => {
             variant='contained'
             color='primary'
             className={button}
-            disabled={loading}>
+            // disabled={loading}
+          >
             Login
             {loading && <CircularProgress size={30} className='spinner' />}
           </Button>
@@ -118,12 +119,12 @@ const Login = ({ classes }) => {
   );
 };
 
-Login.propTypes = {
-  classes: PropTypes.object.isRequired,
-  loginUser: PropTypes.func.isRequired,
-  loadingUi: PropTypes.bool.isRequired,
-  loading: PropTypes.bool.isRequired,
-  uiErrors: PropTypes.bool.isRequired,
-};
+// Login.propTypes = {
+//   classes: PropTypes.object.isRequired,
+//   loginUser: PropTypes.func.isRequired,
+//   loadingUi: PropTypes.bool.isRequired,
+//   loading: PropTypes.bool.isRequired,
+//   uiErrors: PropTypes.bool.isRequired,
+// };
 
 export default withStyles(styles)(Login);

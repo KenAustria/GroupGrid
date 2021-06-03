@@ -2,7 +2,7 @@ import React from 'react';
 import CreatePost from '../CreatePost';
 import Notifications from '../Notifications';
 import './NavBar.css';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 // Redux Toolkit
 import { useSelector } from 'react-redux';
 // Libraries
@@ -16,24 +16,22 @@ import Button from '@material-ui/core/Button';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import HomeIcon from '@material-ui/icons/Home';
-import { useHistory } from 'react-router-dom';
 
 const NavBar = () => {
   const authenticated = useSelector(state => state.users.authenticated);
-  const history = useHistory();
 
   return (
     <div>
       <Router>
         <AppBar position='static'>
-          <Toolbar className='navContainer'>
+          <Toolbar className='nav-container'>
             {authenticated ? (
               <>
                 <CreatePost />
                 <Link to='/'>
                   <Tooltip title='Home' placement='top'>
                     <IconButton>
-                      <HomeIcon className='iconColor' />
+                      <HomeIcon className='icon-color' />
                     </IconButton>
                   </Tooltip>
                 </Link>
@@ -61,8 +59,8 @@ const NavBar = () => {
   );
 };
 
-NavBar.propTypes = {
-  authenticated: PropTypes.bool.isRequired,
-};
+// NavBar.propTypes = {
+//   authenticated: PropTypes.bool.isRequired,
+// };
 
 export default NavBar;

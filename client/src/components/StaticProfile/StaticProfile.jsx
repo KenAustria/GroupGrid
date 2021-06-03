@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 // Libraries
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
@@ -98,9 +98,9 @@ const StaticProfile = ({ classes, userProfile }) => {
   );
 };
 
-StaticProfile.propTypes = {
-  profile: PropTypes.object.isRequired,
-  classes: PropTypes.object.isRequired,
-};
+// StaticProfile.propTypes = {
+//   profile: PropTypes.object.isRequired,
+//   classes: PropTypes.object.isRequired,
+// };
 
 export default withStyles(styles)(StaticProfile);

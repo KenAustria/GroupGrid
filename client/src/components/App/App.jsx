@@ -18,37 +18,28 @@ import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
+axios.defaults.baseURL =
+  'https://shielded-journey-88539.herokuapp.com/https://us-central1-groupgrid-1d191.cloudfunctions.net/api';
+
+// access token from local storage
+const token = localStorage.FirebaseIdToken;
+
 const App = () => {
   const dispatch = useDispatch();
 
-  axios.defaults.baseURL =
-    'https://shielded-journey-88539.herokuapp.com/https://us-central1-groupgrid-1d191.cloudfunctions.net/api';
-
-  // access token from local storage
-  const token = localStorage.FirebaseIdToken;
-
   // if token exist, decode json web token access expiry date
   if (token) {
+    console.log(token);
     const decodedToken = jwtDecode(token);
+    console.log(decodedToken);
     // if expired, delete token then redirect logged out user to the login page
     if (decodedToken.exp * 1000 < Date.now()) {
       dispatch(logoutUser());
       window.location.href = '/login';
     } else {
-      // otherwise, authorize user
-      dispatch(setAuthenticated());
+      dispatch(setAuthenticated()); // otherwise, authorize user
       axios.defaults.headers.common['Authorization'] = token;
       dispatch(getUserData());
-    }
-  }
-
-  let authenticated;
-  if (token) {
-    const decodedToken = jwtDecode(token);
-    if (decodedToken.exp * 1000 < Date.now()) {
-      window.location.href = '/login';
-    } else {
-      authenticated = true;
     }
   }
 

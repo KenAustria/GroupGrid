@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Post from '../Post';
 import StaticProfile from '../StaticProfile';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 // Redux Toolkit
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
@@ -15,8 +15,6 @@ import Grid from '@material-ui/core/Grid';
 const UserProfile = () => {
   const [profile, setProfile] = useState(null);
   const [postIdParam, setPostIdParam] = useState(null);
-  // const [nextProps] = useState(null);
-  // const match = useSelector(state => state.data.match);
   const { handle, postId } = useParams();
   const posts = useSelector(state => state.data.posts);
   const loading = useSelector(state => state.data.loading);
@@ -29,7 +27,7 @@ const UserProfile = () => {
     axios(`/user/${handle}`)
       .then(res => setProfile(res.data.user))
       .catch(err => console.log(err));
-  }, [dispatch]);
+  }, [dispatch, handle, postId]);
 
   const userProfile = loading ? (
     <p>Loading data...</p>
@@ -63,10 +61,10 @@ const UserProfile = () => {
   );
 };
 
-UserProfile.propTypes = {
-  posts: PropTypes.array.isRequired,
-  loading: PropTypes.bool.isRequired,
-  getUserProfile: PropTypes.func.isRequired,
-};
+// UserProfile.propTypes = {
+//   posts: PropTypes.array.isRequired,
+//   loading: PropTypes.bool.isRequired,
+//   getUserProfile: PropTypes.func.isRequired,
+// };
 
 export default UserProfile;

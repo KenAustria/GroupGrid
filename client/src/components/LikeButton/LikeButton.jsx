@@ -1,6 +1,6 @@
 import React from 'react';
 import MyButton from '../../utils/MyButton';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 // Redux Toolkit
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
@@ -50,12 +50,12 @@ const LikeButton = ({ postId }) => {
   return likeButton;
 };
 
-LikeButton.propTypes = {
-  likePost: PropTypes.func.isRequired,
-  unlikePost: PropTypes.func.isRequired,
-  authenticated: PropTypes.bool.isRequired,
-  likes: PropTypes.array.isRequired,
-  postId: PropTypes,
-};
+// LikeButton.propTypes = {
+//   likePost: PropTypes.func.isRequired,
+//   unlikePost: PropTypes.func.isRequired,
+//   authenticated: PropTypes.bool.isRequired,
+//   likes: PropTypes.array.isRequired,
+//   postId: PropTypes,
+// };
 
 export default LikeButton;

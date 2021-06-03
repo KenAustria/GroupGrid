@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 // Redux Toolkit
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
@@ -66,12 +66,12 @@ const CommentForm = ({ classes, postId }) => {
   return commentForm;
 };
 
-CommentForm.propTypes = {
-  classes: PropTypes.object.isRequired,
-  uiErrors: PropTypes.object.isRequired,
-  authenticated: PropTypes.bool.isRequired,
-  submitComment: PropTypes.func.isRequired,
-  postId: PropTypes.string.isRequired,
-};
+// CommentForm.propTypes = {
+//   classes: PropTypes.object.isRequired,
+//   uiErrors: PropTypes.object.isRequired,
+//   authenticated: PropTypes.bool.isRequired,
+//   submitComment: PropTypes.func.isRequired,
+//   postId: PropTypes.string.isRequired,
+// };
 
 export default withStyles(styles)(CommentForm);
