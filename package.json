@@ -4,15 +4,20 @@
   "description": "<img src=\"client/src/images/groupgridicon.png\">",
   "main": "index.js",
   "dependencies": {
-    "axios": "^0.19.2",
+    "@reduxjs/toolkit": "^1.5.1",
+    "axios": "^0.21.1",
     "express": "^4.17.1",
-    "firebase-functions": "^3.3.0",
     "firebase": "^7.8.2",
+    "firebase-functions": "^3.3.0",
     "prettier": "^1.19.1",
+    "react-redux": "^7.2.4",
     "react-router-dom": "^5.1.2",
+    "redux": "^4.1.0",
+    "redux-devtools-extension": "^2.13.9",
     "webpack-bundle-analyzer": "^3.7.0"
   },
   "devDependencies": {
+    "redux-devtools": "^3.7.0",
     "redux-mock-store": "^1.5.4"
   },
   "scripts": {

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import Login from './Login';
+import Login from '../../_components/Login/Login';
 import { cleanup, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import myStore from '../../store/myStore';
+import myStore from '../../store/_myStore';
 
 const renderWithRedux = () => render(
 	<Provider store={myStore}>

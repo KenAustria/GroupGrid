@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import Notifications from './Notifications';
+import Notifications from '../../_components/Notifications/Notifications';
 import { cleanup, render } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import myStore from '../../store/myStore';
@@ -18,6 +18,11 @@ it('renders with Redux', () => {
 it('can render an icon button', () => {
 	const { getByTestId } = renderWithRedux(<Notifications />);
 	expect(getByTestId('icon-button')).toHaveTextContent('');
+});
+
+it('can render a menu', () => {
+	const { getByTestId } = renderWithRedux(<Notifications />);
+	expect(getByTestId('menu')).toHaveTextContent('');
 });
 
 afterEach(cleanup);
