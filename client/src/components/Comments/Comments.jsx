@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 // Libraries
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
@@ -74,9 +74,9 @@ const Comments = ({ classes, comments }) => {
   );
 };
 
-Comments.propTypes = {
-  classes: PropTypes.object.isRequired,
-  comments: PropTypes.array.isRequired,
-};
+// Comments.propTypes = {
+//   classes: PropTypes.object.isRequired,
+//   comments: PropTypes.array.isRequired,
+// };
 
 export default withStyles(styles)(Comments);

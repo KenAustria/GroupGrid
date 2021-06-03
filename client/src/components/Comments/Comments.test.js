@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import Comments from './Comments';
+import Comments from '../../_components/Comments/Comments';
 import { cleanup, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import myStore from '../../store/myStore';

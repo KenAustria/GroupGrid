@@ -11,9 +11,11 @@ const initialState = {
 	loading: false
 };
 
+// helper method for signupUser and loginUser
 const setAuthorizationHeader = token => {
   const FirebaseIdToken = `Bearer ${token}`;
 	localStorage.setItem('FirebaseIdToken', FirebaseIdToken);
+	// specify config defaults that will be applied to every request
   axios.defaults.headers.common['Authorization'] = FirebaseIdToken;
 };
 
@@ -44,7 +46,7 @@ export const signupUser = (newUserData, history) => dispatch => {
 };
 
 export const getUserData = () => dispatch => {
-	dispatch(loadingUi());
+	dispatch(loadingUser());
 	return axios
     .get('/user')
     .then(res => dispatch(setUser(res.data)))

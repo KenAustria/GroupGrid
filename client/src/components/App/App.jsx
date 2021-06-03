@@ -29,9 +29,7 @@ const App = () => {
 
   // if token exist, decode json web token access expiry date
   if (token) {
-    console.log(token);
     const decodedToken = jwtDecode(token);
-    console.log(decodedToken);
     // if expired, delete token then redirect logged out user to the login page
     if (decodedToken.exp * 1000 < Date.now()) {
       dispatch(logoutUser());

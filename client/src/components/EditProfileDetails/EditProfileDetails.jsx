@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import MyButton from '../../utils/MyButton';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 // Redux Toolkit
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
@@ -76,7 +76,6 @@ const EditProfileDetails = ({ classes }) => {
           rows='3'
           className={classes.textField}
           placeholder='Enter Bio..'
-          value={bio}
           onChange={event => setBio(event.target.value)}
           fullwidth
         />
@@ -88,7 +87,6 @@ const EditProfileDetails = ({ classes }) => {
           rows='3'
           className={classes.textField}
           placeholder='Enter Website..'
-          value={website}
           onChange={event => setWebsite(event.target.value)}
           fullwidth
         />
@@ -100,7 +98,6 @@ const EditProfileDetails = ({ classes }) => {
           rows='3'
           className={classes.textField}
           placeholder='Enter Location..'
-          value={location}
           onChange={event => setLocation(event.target.value)}
           fullwidth
         />
@@ -124,10 +121,10 @@ const EditProfileDetails = ({ classes }) => {
   );
 };
 
-EditProfileDetails.propTypes = {
-  classes: PropTypes.object.isRequired,
-  editUserDetails: PropTypes.func.isRequired,
-  credentials: PropTypes.object.isRequired,
-};
+// EditProfileDetails.propTypes = {
+//   classes: PropTypes.object.isRequired,
+//   editUserDetails: PropTypes.func.isRequired,
+//   credentials: PropTypes.object.isRequired,
+// };
 
 export default withStyles(styles)(EditProfileDetails);

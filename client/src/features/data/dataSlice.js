@@ -80,8 +80,8 @@ const dataSlice = createSlice({
 			state.loading = true
 		},
 		setPosts(state, action) {
-			state.posts = action.payload
 			state.loading = false
+			state.posts = action.payload
 		},
     likeThePost(state, action) {
 			let index = state.posts.findIndex(

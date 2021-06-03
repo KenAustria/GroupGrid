@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import CommentForm from './CommentForm';
+import CommentForm from '../../_components/CommentForm/CommentForm';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import myStore from '../../store/myStore';
