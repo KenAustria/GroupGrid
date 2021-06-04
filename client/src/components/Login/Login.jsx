@@ -10,7 +10,6 @@ import { loginUser } from '../../features/users/usersSlice';
 import { loadingUi } from '../../features/ui/uiSlice';
 // Libraries
 import { Link } from 'react-router-dom';
-import { BrowserRouter as Router } from 'react-router-dom';
 // Material-UI
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
@@ -107,10 +106,7 @@ const Login = ({ classes }) => {
           </Button>
           <br />
           <small>
-            Don't have an account? Sign up{' '}
-            <Router>
-              <Link to='/signup'>here</Link>
-            </Router>
+            Don't have an account? Sign up <Link to='/signup'>here</Link>
           </small>
         </form>
       </Grid>
