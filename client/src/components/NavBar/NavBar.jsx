@@ -6,7 +6,7 @@ import './NavBar.css';
 // Redux Toolkit
 import { useSelector } from 'react-redux';
 // Libraries
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 // Material-UI
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -18,7 +18,6 @@ import HomeIcon from '@material-ui/icons/Home';
 
 const NavBar = () => {
   const authenticated = useSelector(state => state.users.authenticated);
-  const history = useHistory();
 
   return (
     <div>

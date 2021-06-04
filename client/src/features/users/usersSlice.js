@@ -26,6 +26,7 @@ export const loginUser = (userData, history) => dispatch => {
     .then(res => {
 			setAuthorizationHeader(res.data.token);
       dispatch(getUserData());
+			dispatch(setAuthenticated())
       dispatch(clearErrors());
       history.push('/');
     })
@@ -39,6 +40,7 @@ export const signupUser = (newUserData, history) => dispatch => {
     .then(res => {
       setAuthorizationHeader(res.data.token);
       dispatch(getUserData());
+			dispatch(setAuthenticated())
       dispatch(clearErrors());
       history.push('/');
     })
