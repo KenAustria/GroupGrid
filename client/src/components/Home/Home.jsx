@@ -6,8 +6,6 @@ import Post from '../Post';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { getPosts } from '../../features/data/dataSlice';
-// Libraries
-import { BrowserRouter as Router } from 'react-router-dom';
 // Material-UI
 import Grid from '@material-ui/core/Grid';
 
@@ -27,16 +25,14 @@ const Home = () => {
   );
 
   return (
-    <Router>
-      <Grid container spacing={2}>
-        <Grid item sm={4} xl={12}>
-          <Profile />
-        </Grid>
-        <Grid item sm={8} xl={12}>
-          {currentPosts}
-        </Grid>
+    <Grid container spacing={2}>
+      <Grid item sm={4} xl={12}>
+        <Profile />
       </Grid>
-    </Router>
+      <Grid item sm={8} xl={12}>
+        {currentPosts}
+      </Grid>
+    </Grid>
   );
 };
 
