@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { loadingUi, setErrors, stopLoadingUi } from '../ui/uiSlice'
+import { loadingUi, setErrors, stopLoadingUi, clearErrors as clearTheErrors } from '../ui/uiSlice'
 import { likePost as userLikePost, unlikePost as userUnlikePost } from '../users/usersSlice'
 import axios from 'axios'
 
@@ -21,6 +21,7 @@ export const likePost = postId => dispatch => {
   return axios
     .get(`/post/${postId}/like`)
     .then(res => {
+			console.log(res.data)
 			dispatch(likeThePost(res.data))
 			dispatch(userLikePost(res.data))
 		})
@@ -49,11 +50,12 @@ export const createPost = newPost => dispatch => {
   return axios
     .post('/post', newPost)
     .then(res => {
-			dispatch(createPost(res.data))
+			console.log(res.data)
+			dispatch(createThePost(res.data))
 			dispatch(clearErrors());
 			window.location.reload();
     })
-    .catch(err => dispatch(setErrors(err.response.data)))
+    .catch(err => dispatch(setErrors(err.response)))
 };
 
 export const getPost = postId => dispatch => {
@@ -77,7 +79,9 @@ export const submitComment = (postId, commentData) => dispatch => {
     .catch(err => dispatch(setErrors(err.response.data)))
 };
 
-export const clearErrors = () => dispatch => dispatch(clearErrors())
+export const clearErrors = () => dispatch => {
+	dispatch(clearTheErrors())
+}
 
 const dataSlice = createSlice({
   name: 'data',
