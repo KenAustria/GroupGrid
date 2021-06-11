@@ -20,8 +20,10 @@ const Home = () => {
 
   let currentPosts = loading ? (
     <p>Loading..</p>
-  ) : (
+  ) : posts.length > 0 ? (
     posts.map(post => <Post key={post.postId} post={post} />)
+  ) : (
+    <p>No Posts Yet.</p>
   );
 
   return (
