@@ -115,11 +115,24 @@ const usersSlice = createSlice({
 			state.loading = true
 		},
 		likePost(state, action) {
-			state.likes.userHandle = state.credentials.handle
-			state.likes.postId = action.payload.postId
+			return {
+				...state,
+					likes: [
+						...state.likes,
+							{
+								userHandle: state.credentials.handle,
+								postId: action.payload.postId
+							}
+					]
+			};
 		},
 		unlikePost(state, action) {
-			state.likes = state.likes.filter(like => like.postId !== action.payload.postId)
+			return {
+				...state,
+				likes: state.likes.filter(
+					(like) => like.postId !== action.payload.postId
+				)
+			};
 		},
 		markTheNotificationsRead(state, action) {
 			state.notifications.forEach(notification => (notification.read = true));

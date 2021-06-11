@@ -19,7 +19,9 @@ const LikeButton = ({ postId }) => {
   const handleLikeCheck = () => {
     if (likes && likes.find(like => like.postId === postId)) {
       return true;
-    } else return false;
+    } else {
+      return false;
+    }
   };
 
   const handleLikePost = () => dispatch(likePost(postId));

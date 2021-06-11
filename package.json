@@ -4,14 +4,17 @@
   "description": "<img src=\"client/src/images/groupgridicon.png\">",
   "main": "index.js",
   "dependencies": {
+    "@material-ui/core": "^4.11.4",
     "@reduxjs/toolkit": "^1.5.1",
     "axios": "^0.21.1",
+    "codesandboxer-fs": "^1.0.3",
     "express": "^4.17.1",
     "firebase": "^7.8.2",
     "firebase-functions": "^3.3.0",
     "prettier": "^1.19.1",
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.1.2",
+    "react-scripts": "^4.0.3",
     "redux": "^4.1.0",
     "redux-devtools-extension": "^2.13.9",
     "webpack-bundle-analyzer": "^3.7.0"
