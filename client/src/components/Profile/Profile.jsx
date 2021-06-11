@@ -12,7 +12,6 @@ import {
 // Libraries
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
-import { BrowserRouter as Router } from 'react-router-dom';
 // Material-UI
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -102,86 +101,82 @@ const Profile = ({ classes }) => {
   const handleLogout = () => dispatch(logoutUser());
 
   let userProfile = authenticated ? (
-    <Router>
-      <Paper className={paper}>
-        <div className={profile}>
-          <div className='image-wrapper'>
-            <img src={profileImage} alt='profile' className='profile-image' />
-            <input
-              type='file'
-              id='imageInput'
-              hidden='hidden'
-              onChange={handleProfileImageChange}
-            />
-            <MyButton
-              title='Update Profile Photo'
-              onClick={handlePreProfileImageChange}
-              btnClassName='button'>
-              <EditIcon color='primary' />
-            </MyButton>
-          </div>
-          <hr />
-          <div className='profile-details'>
-            <MuiLink
-              component={Link}
-              to={`/users/${handle}`}
-              color='primary'
-              variant='h5'>
-              @{handle}
-            </MuiLink>
-            <hr />
-            {bio && <Typography variant='body2'>{bio}</Typography>}
-            <hr />
-            {location && (
-              <>
-                <LocationOn color='primary' /> <span>{location}</span>
-                <hr />
-              </>
-            )}
-            {website && (
-              <>
-                <LinkIcon color='primary' />
-                <a href={website} target='_blank' rel='noopener noreferrer'>
-                  {' '}
-                  {website}
-                </a>
-                <hr />
-              </>
-            )}
-            <CalendarToday color='primary' />{' '}
-            <span>Joined {dayjs(createdAt).format('MMM YYYY')}</span>
-          </div>
-          <MyButton tip='Logout' onClick={handleLogout}>
-            <KeyboardReturn color='primary' />
+    <Paper className={paper}>
+      <div className={profile}>
+        <div className='image-wrapper'>
+          <img src={profileImage} alt='profile' className='profile-image' />
+          <input
+            type='file'
+            id='imageInput'
+            hidden='hidden'
+            onChange={handleProfileImageChange}
+          />
+          <MyButton
+            title='Update Profile Photo'
+            onClick={handlePreProfileImageChange}
+            btnClassName='button'>
+            <EditIcon color='primary' />
           </MyButton>
-          <EditProfileDetails />
         </div>
-      </Paper>
-    </Router>
-  ) : (
-    <Router>
-      <Paper className={paper}>
-        <Typography variant='body2' align='center'>
-          No profile found, please login again
-        </Typography>
-        <div className={buttons}>
-          <Button
-            variant='contained'
+        <hr />
+        <div className='profile-details'>
+          <MuiLink
+            component={Link}
+            to={`/users/${handle}`}
             color='primary'
-            component={Link}
-            to='/login'>
-            Login
-          </Button>
-          <Button
-            variant='contained'
-            color='secondary'
-            component={Link}
-            to='/signup'>
-            Signup
-          </Button>
+            variant='h5'>
+            @{handle}
+          </MuiLink>
+          <hr />
+          {bio && <Typography variant='body2'>{bio}</Typography>}
+          <hr />
+          {location && (
+            <>
+              <LocationOn color='primary' /> <span>{location}</span>
+              <hr />
+            </>
+          )}
+          {website && (
+            <>
+              <LinkIcon color='primary' />
+              <a href={website} target='_blank' rel='noopener noreferrer'>
+                {' '}
+                {website}
+              </a>
+              <hr />
+            </>
+          )}
+          <CalendarToday color='primary' />{' '}
+          <span>Joined {dayjs(createdAt).format('MMM YYYY')}</span>
         </div>
-      </Paper>
-    </Router>
+        <MyButton tip='Logout' onClick={handleLogout}>
+          <KeyboardReturn color='primary' />
+        </MyButton>
+        <EditProfileDetails />
+      </div>
+    </Paper>
+  ) : (
+    <Paper className={paper}>
+      <Typography variant='body2' align='center'>
+        No profile found, please login again
+      </Typography>
+      <div className={buttons}>
+        <Button
+          variant='contained'
+          color='primary'
+          component={Link}
+          to='/login'>
+          Login
+        </Button>
+        <Button
+          variant='contained'
+          color='secondary'
+          component={Link}
+          to='/signup'>
+          Signup
+        </Button>
+      </div>
+    </Paper>
   );
 
   return userProfile;

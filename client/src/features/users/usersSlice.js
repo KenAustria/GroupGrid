@@ -26,6 +26,7 @@ export const loginUser = (userData, history) => dispatch => {
     .then(res => {
 			setAuthorizationHeader(res.data.token);
       dispatch(getUserData());
+			dispatch(setAuthenticated())
       dispatch(clearErrors());
       history.push('/');
     })
@@ -39,6 +40,7 @@ export const signupUser = (newUserData, history) => dispatch => {
     .then(res => {
       setAuthorizationHeader(res.data.token);
       dispatch(getUserData());
+			dispatch(setAuthenticated())
       dispatch(clearErrors());
       history.push('/');
     })
@@ -113,11 +115,24 @@ const usersSlice = createSlice({
 			state.loading = true
 		},
 		likePost(state, action) {
-			state.likes.userHandle = state.credentials.handle
-			state.likes.postId = action.payload.postId
+			return {
+				...state,
+					likes: [
+						...state.likes,
+							{
+								userHandle: state.credentials.handle,
+								postId: action.payload.postId
+							}
+					]
+			};
 		},
 		unlikePost(state, action) {
-			state.likes = state.likes.filter(like => like.postId !== action.payload.postId)
+			return {
+				...state,
+				likes: state.likes.filter(
+					(like) => like.postId !== action.payload.postId
+				)
+			};
 		},
 		markTheNotificationsRead(state, action) {
 			state.notifications.forEach(notification => (notification.read = true));

@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { loadingUi, setErrors, stopLoadingUi } from '../ui/uiSlice'
+import { likePost as userLikePost, unlikePost as userUnlikePost } from '../users/usersSlice'
 import axios from 'axios'
 
 const initialState = {
@@ -19,14 +20,20 @@ export const getPosts = () => dispatch => {
 export const likePost = postId => dispatch => {
   return axios
     .get(`/post/${postId}/like`)
-    .then(res => dispatch(likeThePost(res.data)))
-    .catch(err => console.log(err));
+    .then(res => {
+			dispatch(likeThePost(res.data))
+			dispatch(userLikePost(res.data))
+		})
+		.catch(err => console.log(err));
 };
 
 export const unlikePost = postId => dispatch => {
   return axios
     .get(`/post/${postId}/unlike`)
-    .then(res => dispatch(unlikeThePost(res.data)))
+    .then(res => {
+			dispatch(unlikeThePost(res.data))
+			dispatch(userUnlikePost(res.data))
+		})
     .catch(err => console.log(err));
 };
 

@@ -8,7 +8,6 @@ import { signupUser, loadingUser } from '../../features/users/usersSlice';
 // Libraries
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router';
-import { BrowserRouter as Router } from 'react-router-dom';
 // Material-UI
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { withStyles } from '@material-ui/core/styles';
@@ -126,10 +125,7 @@ const Signup = ({ classes }) => {
           </Button>
           <br />
           <small>
-            Already have an account? Log in{' '}
-            <Router>
-              <Link to='/login'>here</Link>
-            </Router>
+            Already have an account? Log in <Link to='/login'>here</Link>
           </small>
         </form>
       </Grid>

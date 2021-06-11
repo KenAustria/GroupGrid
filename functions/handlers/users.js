@@ -238,7 +238,7 @@ exports.getAnyUserDetails = (req, res) => {
           .orderBy('createdAt', 'desc')
           .get();
       } else {
-        return res.status(404).json({ errror: 'User not found' });
+        return res.status(404).json({ error: 'User not found' });
       }
     })
     .then(data => {

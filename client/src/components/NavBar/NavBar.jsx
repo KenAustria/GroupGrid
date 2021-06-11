@@ -7,7 +7,6 @@ import './NavBar.css';
 import { useSelector } from 'react-redux';
 // Libraries
 import { Link } from 'react-router-dom';
-import { BrowserRouter as Router } from 'react-router-dom';
 // Material-UI
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -22,39 +21,37 @@ const NavBar = () => {
 
   return (
     <div>
-      <Router>
-        <AppBar position='static'>
-          <Toolbar className='nav-container'>
-            {authenticated ? (
-              <>
-                <CreatePost />
-                <Link to='/'>
-                  <Tooltip title='Home' placement='top'>
-                    <IconButton>
-                      <HomeIcon className='icon-color' />
-                    </IconButton>
-                  </Tooltip>
-                </Link>
-                <Notifications />
-              </>
-            ) : (
-              <>
-                <Typography variant='h6'>
-                  <Button color='inherit' component={Link} to='/'>
-                    GroupGrid
-                  </Button>
-                </Typography>
-                <Button color='inherit' component={Link} to='/login'>
-                  Login
+      <AppBar position='static'>
+        <Toolbar className='nav-container'>
+          {authenticated ? (
+            <>
+              <CreatePost />
+              <Link to='/'>
+                <Tooltip title='Home' placement='top'>
+                  <IconButton>
+                    <HomeIcon className='icon-color' />
+                  </IconButton>
+                </Tooltip>
+              </Link>
+              <Notifications />
+            </>
+          ) : (
+            <>
+              <Typography variant='h6'>
+                <Button color='inherit' component={Link} to='/'>
+                  GroupGrid
                 </Button>
-                <Button color='inherit' component={Link} to='/signup'>
-                  Signup
-                </Button>
-              </>
-            )}
-          </Toolbar>
-        </AppBar>
-      </Router>
+              </Typography>
+              <Button color='inherit' component={Link} to='/login'>
+                Login
+              </Button>
+              <Button color='inherit' component={Link} to='/signup'>
+                Signup
+              </Button>
+            </>
+          )}
+        </Toolbar>
+      </AppBar>
     </div>
   );
 };
