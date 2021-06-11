@@ -73,10 +73,10 @@ export const submitComment = (postId, commentData) => dispatch => {
   return axios
     .post(`/post/${postId}/comment`, commentData)
     .then(res => {
-			dispatch(submitComment(res.data))
+			dispatch(submitTheComment(res.data))
       dispatch(clearErrors());
     })
-    .catch(err => dispatch(setErrors(err.response.data)))
+    .catch(err => dispatch(setErrors(err.response)))
 };
 
 export const clearErrors = () => dispatch => {
@@ -124,7 +124,7 @@ const dataSlice = createSlice({
 			state.post = action.payload
 		},
 		submitTheComment(state, action) {
-			state.post.comments = action.payload
+			state.post.comments.push(action.payload)
 		}
   },
 })
