@@ -108,9 +108,14 @@ const usersSlice = createSlice({
 			state = initialState
 		},
 		setUser(state, action) {
-			state.authenticated = true
-			state.loading = false
-			return action.payload
+			// state.authenticated = true
+			// state.loading = false
+			// return action.payload
+			return {
+				authenticated: true,
+				loading: false,
+				...action.payload
+			}
 		},
 		loadingUser(state, action) {
 			state.loading = true
