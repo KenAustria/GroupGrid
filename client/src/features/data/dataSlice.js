@@ -41,7 +41,7 @@ export const unlikePost = postId => dispatch => {
 export const deletePost = postId => dispatch => {
   return axios
     .delete(`/post/${postId}`)
-    .then(() => dispatch(deletePost(postId)))
+    .then(() => dispatch(deleteThePost(postId)))
     .catch(err => console.log(err));
 };
 
