@@ -58,7 +58,8 @@ export const getUserData = () => dispatch => {
 export const logoutUser = () => dispatch => {
 	localStorage.removeItem('FirebaseIdToken');
 	delete axios.defaults.headers.common['Authorization'];
-	dispatch(setAuthenticated())
+	dispatch(setUnauthenticated())
+	window.location.reload();
 };
 
 export const uploadProfileImage = formData => dispatch => {
